@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vinalitica — Mi Bodega</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--r:#B95955;--bg:#252E33;--card:#2D363B;--bdr:#3A444A;--cream:#EFEEEC;--stone:#D0CBC6;--muted:#948E88;--dim:#7A756F;--green:#8CBA80;--gold:#E8B84B;--salmon:#D4796A;--sl:#3C4E5A;--my:#2D6A4F}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--cream);font-size:14px;line-height:1.6}
+.hero{background:linear-gradient(135deg,#3A2129 0%,#252E33 50%,#1A2328 100%);padding:44px 40px 36px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40%;right:-5%;width:600px;height:600px;background:radial-gradient(circle,rgba(45,106,79,.1) 0%,transparent 60%);pointer-events:none}
+.hi{max-width:1100px;margin:0 auto;position:relative}
+.badge-line{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.hb{font-family:Montserrat;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--my);border:1.5px solid var(--my);padding:4px 12px;border-radius:4px}
+.sb{font-family:Montserrat;font-size:9px;font-weight:700;padding:4px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}
+.sb.entry{background:rgba(148,142,136,.15);color:var(--muted)}.sb.premium{background:rgba(140,186,128,.12);color:var(--green)}.sb.super{background:rgba(232,184,75,.12);color:var(--gold)}.sb.ultra{background:rgba(185,89,85,.12);color:var(--r)}
+.tb{font-family:Montserrat;font-size:9px;font-weight:700;padding:4px 10px;border-radius:4px;background:rgba(60,78,90,.3);color:var(--stone);cursor:help}
+.hn{font-family:Montserrat;font-size:34px;font-weight:900;letter-spacing:-1.5px;line-height:1.1;margin-bottom:4px}
+.hs{font-size:13px;color:var(--stone);margin-bottom:4px}
+.mx{max-width:1100px;margin:0 auto;padding:0 28px}
+.sec{margin:36px 0}.st{font-family:Montserrat;font-size:17px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}.ss{font-size:12px;color:var(--muted);margin-bottom:12px}
+.card{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:20px;margin-bottom:14px}
+.ctx{background:rgba(60,78,90,.2);border:1px solid var(--bdr);border-radius:8px;padding:16px 20px;margin-bottom:16px;font-size:13px;color:var(--stone);line-height:2}.ctx b{color:var(--cream)}
+.ct{font-family:Montserrat;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.disc{font-size:10px;color:var(--dim);font-style:italic;margin-top:10px;padding:6px 10px;border-left:2px solid var(--bdr);line-height:1.5}
+.tabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap}.tab{font-family:Montserrat;font-size:10px;font-weight:700;padding:5px 14px;border-radius:5px;cursor:pointer;color:var(--muted);background:transparent;border:1px solid var(--bdr);transition:.15s}.tab.a{background:var(--my);color:white;border-color:var(--my)}
+table{width:100%;border-collapse:collapse;font-size:12px}th{font-family:Montserrat;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:2px solid var(--bdr)}th.n{text-align:right}td{padding:6px 8px;border-bottom:1px solid rgba(58,68,74,.3)}td.n{text-align:right;font-family:Montserrat;font-weight:600}
+.mr{background:rgba(45,106,79,.08);border-left:3px solid var(--my)}
+.bg{display:inline-block;padding:2px 7px;border-radius:4px;font-family:Montserrat;font-size:10px;font-weight:700}.bg.pos{background:rgba(140,186,128,.12);color:var(--green)}.bg.neg{background:rgba(185,89,85,.12);color:var(--salmon)}
+.pos{color:var(--green)}.neg{color:var(--r)}
+.spark{display:inline-flex;align-items:flex-end;gap:2px;height:24px;vertical-align:middle}.spark-b{width:10px;border-radius:2px 2px 0 0;min-height:2px}
+.bg2{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.bc{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:16px}.bc:hover{border-color:var(--my)}
+.bn{font-family:Montserrat;font-size:14px;font-weight:800;margin-bottom:2px}
+.bk{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}.bv{font-family:Montserrat;font-size:15px;font-weight:800}.bl{font-size:9px;color:var(--dim);font-family:Montserrat;font-weight:600;text-transform:uppercase}
+.bmkt{font-size:11px;color:var(--stone);margin:6px 0;line-height:1.6}
+.bcomp{font-size:11px;color:var(--stone);border-top:1px solid var(--bdr);padding-top:8px;margin-top:6px;line-height:1.6}.bcomp b{color:var(--cream)}
+.og{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.oc{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:18px}.oc.g{border-left:3px solid var(--green)}.oc.rd{border-left:3px solid var(--salmon)}
+.ot{font-family:Montserrat;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}.ot.g{color:var(--green)}.ot.rd{color:var(--salmon)}
+.on{font-family:Montserrat;font-size:14px;font-weight:800;margin-bottom:4px}.ox{font-size:12px;color:var(--stone);line-height:1.6}
+.om{display:flex;align-items:baseline;gap:6px;margin-top:8px}.ov{font-family:Montserrat;font-size:20px;font-weight:900;letter-spacing:-1px}.ol{font-size:10px;color:var(--muted)}
+.locked{position:relative;min-height:100px;overflow:hidden}.locked-blur{filter:blur(8px);opacity:.3;pointer-events:none}.locked-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(37,46,51,.6);z-index:2;border-radius:12px}
+.lt{font-family:Montserrat;font-size:15px;font-weight:800;color:var(--gold);margin-bottom:4px}.ls{font-size:12px;color:var(--stone);max-width:400px;text-align:center;margin-bottom:10px}
+.cta{display:inline-block;font-family:Montserrat;font-size:12px;font-weight:800;background:var(--gold);color:#1A1A1A;padding:10px 22px;border-radius:8px;text-decoration:none;transition:.2s}.cta:hover{background:#d4a43d}
+.il{display:flex;gap:16px;margin-bottom:8px;font-size:11px;color:var(--stone)}.il span{display:flex;align-items:center;gap:4px}.id{width:10px;height:3px;border-radius:2px}
+/* Market context cards */
+.mctx-item{display:inline-block;cursor:pointer;font-size:11px;font-family:Montserrat;font-weight:600;padding:4px 10px;border-radius:5px;border:1px solid var(--bdr);color:var(--muted);margin:3px;transition:.15s}.mctx-item:hover,.mctx-item.open{background:var(--card);color:var(--cream);border-color:var(--my)}
+.mctx-body{display:none;background:rgba(60,78,90,.15);border:1px solid var(--bdr);border-radius:8px;padding:12px 16px;margin-top:8px;font-size:12px;color:var(--stone);line-height:1.7}
+.mctx-body.open{display:block}
+.ft{max-width:1100px;margin:24px auto;padding:16px 28px;border-top:1px solid var(--bdr);font-size:10px;color:var(--dim);display:flex;justify-content:space-between}.ft a{color:var(--r);text-decoration:none}
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px}
+.sp{width:40px;height:40px;border:3px solid var(--bdr);border-top-color:var(--my);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media(max-width:900px){.hn{font-size:24px}.bg2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="app"><div class="loading"><div class="sp"></div><div style="font-family:Montserrat;font-size:13px;color:var(--muted)">Cargando scorecard...</div></div></div>
+<script>
+var P=new URLSearchParams(location.search),API='https://vinalitica-api-production.up.railway.app',KEY=P.get('key')||'',SUB=P.get('sub')==='1',BOD=P.get('bodega')||'',MES=parseInt(P.get('mes')||P.get('month')||'2'),ANO=parseInt(P.get('ano')||P.get('year')||'2026'),H=KEY?{'x-api-key':KEY}:{};
+var MN=['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+var MNF=['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+function $(id){return document.getElementById(id);}
+function f$(v){return v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+Math.round(v/1e3)+'K':'$'+Math.round(v);}
+function chg(v){if(v==null)return'—';return(v>=0?'+':'')+v.toFixed(1)+'%';}
+function chgH(v){if(v==null)return'<span class="bg">—</span>';return'<span class="bg '+(v>=0?'pos':'neg')+'">'+(v>=0?'+':'')+v.toFixed(1)+'%</span>';}
+function cls(v){return v>=0?'pos':'neg';}
+function segL(s){return{entry:'Entry',premium:'Premium',super:'Super-Premium',ultra:'Ultra-Premium'}[s]||s;}
+function sparkH(t){if(!t||!t.length)return'';var mx=Math.max.apply(null,t.map(function(x){return x.fob;}))||1;return'<span class="spark">'+t.map(function(x){var h=Math.max(2,Math.round(x.fob/mx*24));return'<span class="spark-b" style="height:'+h+'px;background:'+(x.fob>0?'var(--green)':'var(--bdr)')+'" title="'+MN[x.mes]+': '+f$(x.fob)+'"></span>';}).join('')+'</span>';}
+function rkTbl(nb){var h='<table><thead><tr><th>#</th><th>Bodega</th><th class="n">FOB</th><th class="n">$/cj</th></tr></thead><tbody>';nb.forEach(function(n){h+='<tr class="'+(n.isMe?'mr':'')+'"><td><b>#'+n.rank+'</b></td><td>'+(n.isMe?'<b style="color:var(--my)">'+n.name+'</b>':n.name)+'</td><td class="n">'+f$(n.fob)+'</td><td class="n">'+(n.priceCj?'$'+n.priceCj:'—')+'</td></tr>';});return h+'</tbody></table>';}
+
+var D=null;
+async function load(){
+  if(!BOD){$('app').innerHTML='<div class="loading"><div style="font-family:Montserrat;font-size:16px;font-weight:800;color:var(--salmon)">Parámetro bodega requerido</div></div>';return;}
+  try{var r=await fetch(API+'/api/scorecard/'+encodeURIComponent(BOD)+'?mes='+MES+'&ano='+ANO,{headers:H});D=await r.json();if(D.error)throw new Error(D.error);render(D);}
+  catch(e){$('app').innerHTML='<div class="loading"><div style="font-family:Montserrat;font-size:16px;font-weight:800;color:var(--salmon)">'+e.message+'</div></div>';}
+}
+
+function render(D){
+  var s=D.segment,k12=D.kpis.y12,mt=D.marketTotal,h='';
+
+  // ═══ HERO ═══
+  h+='<div class="hero"><div class="hi"><div class="badge-line"><span class="hb">MI BODEGA</span>';
+  s.bodegaType.forEach(function(t){h+='<span class="tb" title="'+t.desc+'">'+t.name+'</span>';});
+  h+='<span class="sb '+s.priceSegment+'" title="'+s.priceSegmentDesc+'">'+segL(s.priceSegment)+' · $'+s.priceCj+'/cj</span>';
+  h+='<span style="font-size:10px;color:var(--dim)">'+s.mainType+'</span></div>';
+  h+='<h1 class="hn">'+D.bodega+'</h1>';
+  h+='<div class="hs">'+(D.provincia||'')+' · '+(D.exportador||'')+' · '+k12.cur.markets+' mercados · '+k12.cur.brands+' marcas · '+MNF[MES]+' '+ANO+'</div>';
+  // Segment explanation
+  if(s.bodegaType.length>0){h+='<div style="font-size:11px;color:var(--stone);margin-top:6px;line-height:1.5">';s.bodegaType.forEach(function(t){h+='<b style="color:var(--cream)">'+t.name+':</b> '+t.desc+' ';});h+='</div>';}
+  h+='</div></div><div class="mx">';
+
+  // ═══ CONTEXT ═══
+  h+='<div class="sec"><div id="gCtx"></div><div class="disc">Fuente: Aduana Argentina (NCM 2204). Las variaciones reflejan también factores macroeconómicos (tipo de cambio, inflación, costos logísticos) no capturados por los datos aduaneros.</div></div>';
+
+  // ═══ KPIs ═══
+  h+='<div class="sec"><div class="st">📊 Indicadores clave</div><div class="ss">Tres horizontes: el mes, los últimos 3 meses y los últimos 12 meses, para distinguir tendencia de ruido. Mercado total '+MNF[MES]+': '+f$(mt.fob)+' ('+chg(mt.chg)+' interanual)</div>';
+  h+='<div class="card"><table><thead><tr><th>Período</th><th class="n">FOB</th><th class="n">Δ interanual</th><th class="n">Cajas 9L</th><th class="n">Δ cajas</th><th class="n">$/cj</th><th class="n">Mercados</th><th class="n">Marcas</th></tr></thead><tbody>';
+  [{k:'month',l:MNF[MES]+' '+ANO},{k:'q3',l:'Últimos 3 meses'},{k:'y12',l:'Últimos 12 meses'}].forEach(function(p){var kp=D.kpis[p.k];h+='<tr><td><b>'+p.l+'</b></td><td class="n">'+f$(kp.cur.fob)+'</td><td class="n">'+chgH(kp.fobChg)+'</td><td class="n">'+Math.round(kp.cur.cj).toLocaleString()+'</td><td class="n">'+chgH(kp.cjChg)+'</td><td class="n">$'+kp.cur.priceCj+'</td><td class="n">'+kp.cur.markets+'</td><td class="n">'+kp.cur.brands+'</td></tr>';});
+  h+='</tbody></table></div></div>';
+
+  // ═══ RANKINGS ═══
+  h+='<div class="sec"><div class="st">🏆 Ranking competitivo</div><div class="ss">Tu posición entre las bodegas exportadoras. Cada pestaña muestra un horizonte o un modo de comparación diferente.</div>';
+  h+='<div class="tabs">';
+  h+='<span class="tab a" onclick="sR(\'month\',\'g\',this)">Mes</span>';
+  h+='<span class="tab" onclick="sR(\'q3\',\'g\',this)">3 meses</span>';
+  h+='<span class="tab" onclick="sR(\'y12\',\'g\',this)">12 meses</span>';
+  if(D.rankings.y12.segment)h+='<span class="tab" onclick="sR(\'y12\',\'s\',this)">'+s.bodegaType[0].name+'</span>';
+  if(s.priceSegRank)h+='<span class="tab" onclick="sR(\'y12\',\'p\',this)">'+segL(s.priceSegment)+'</span>';
+  h+='</div><div id="rC"></div>';
+
+  // Rank history
+  if(D.rankHistory&&D.rankHistory.length){var maxRk=Math.max.apply(null,D.rankHistory.filter(function(r){return r.rank;}).map(function(r){return r.rank;}))||100;
+    h+='<div class="card" style="margin-top:12px"><div style="font-family:Montserrat;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Evolución ranking global (14 meses)</div>';
+    h+='<div style="display:flex;gap:3px;align-items:flex-end;height:50px">';
+    D.rankHistory.forEach(function(rh,i){var ic=i===D.rankHistory.length-1;var ht=rh.rank?Math.max(8,Math.round((1-((rh.rank-1)/maxRk))*50)):4;
+      h+='<div style="text-align:center;flex:1"><div style="width:100%;height:'+ht+'px;border-radius:3px 3px 0 0;background:'+(ic?'var(--my)':'var(--bdr)')+'" title="#'+(rh.rank||'—')+'"></div><div style="font-size:7px;color:'+(ic?'var(--my)':'var(--dim)')+';margin-top:2px">'+(rh.rank||'—')+'</div><div style="font-size:7px;color:var(--dim)">'+MN[rh.mes]+'</div></div>';});
+    h+='</div></div>';}
+  h+='</div>';
+
+  // ═══ INDEX 100 (rolling 12M) ═══
+  if(D.indexEvolution&&D.indexEvolution.length>3){
+    h+='<div class="sec"><div class="st">📈 Índice de performance</div><div class="ss">Evolución del FOB acumulado 12 meses glissants, base 100 al primer punto disponible. Permite comparar la tendencia de tu bodega con la del mercado total independientemente del tamaño.</div>';
+    h+='<div class="card"><div class="il"><span><span class="id" style="background:var(--r)"></span> '+D.bodega+'</span><span><span class="id" style="background:var(--sl)"></span> Mercado total ARG</span><span><span class="id" style="background:var(--muted);border-top:1px dashed var(--muted)"></span> Base 100</span></div><canvas id="iC" height="200"></canvas></div></div>';
+  }
+
+  // ═══ MARKETS ═══
+  h+='<div class="sec"><div class="st">🌍 Mis mercados — últimos 12 meses</div><div class="ss">Clic en un mercado para ver el ranking local y las bodegas vecinas</div>';
+  h+='<div class="card"><table><thead><tr><th>Mercado</th><th class="n">FOB</th><th class="n">Cuota</th><th class="n">Posición</th><th class="n">Δ interanual</th><th>Tendencia 6 meses</th></tr></thead><tbody>';
+  D.markets.forEach(function(m,i){h+='<tr style="cursor:pointer" onclick="sM('+i+')"><td><b>'+m.name+'</b></td><td class="n">'+f$(m.fob12m)+'</td><td class="n">'+m.share+'%</td><td class="n"><b>#'+(m.rank||'—')+'</b></td><td class="n">'+chgH(m.fobChg)+'</td><td>'+sparkH(m.trend)+'</td></tr>';});
+  h+='</tbody></table><div id="mD" style="margin-top:12px"></div><div id="mCtx" style="margin-top:12px"></div></div></div>';
+
+  // ═══ BRANDS ═══
+  h+='<div class="sec"><div class="st">🏷️ Mis marcas — últimos 12 meses</div><div class="ss">Cada marca avec son segment de prix, ses marchés principaux et les marques concurrentes du même segment</div>';
+  h+='<div class="bg2">';
+  D.brands.forEach(function(b){
+    h+='<div class="bc"><div class="bn">'+b.name+'</div><div class="sb '+b.segment+'" style="margin-bottom:8px">'+segL(b.segment)+' · $'+b.priceCj+'/cj</div>';
+    h+='<div class="bk"><div><div class="bv">'+f$(b.fob)+'</div><div class="bl">FOB</div></div><div><div class="bv '+(b.fobChg!=null?cls(b.fobChg):'')+'">'+chg(b.fobChg)+'</div><div class="bl">Δ interanual</div></div><div><div class="bv">'+b.pctBodega+'%</div><div class="bl">% bodega</div></div></div>';
+    // Top markets
+    if(b.topMarkets&&b.topMarkets.length){h+='<div class="bmkt"><b>Mercados:</b> '+b.topMarkets.map(function(tm){return tm.name+' '+tm.pct+'%';}).join(' · ')+'</div>';}
+    // Competitors
+    if(SUB&&b.competitors&&b.competitors.length){h+='<div class="bcomp"><b>Marcas competidoras (mismo rango de precio):</b><br>';
+      b.competitors.slice(0,3).forEach(function(c){h+=c.name+' <span style="color:var(--dim)">('+c.bodega+')</span> · $'+c.priceCj+'/cj · '+f$(c.fob)+'<br>';});
+      h+='</div>';}
+    h+='</div>';
+  });
+  h+='</div></div>';
+
+  // ═══ OPP & RISKS ═══
+  h+='<div class="sec"><div class="st">🎯 Oportunidades y riesgos — últimos 12 meses</div><div class="ss">Oportunidades: mercados donde al menos 2 bodegas de perfil de precio similar exportan pero no vos. Riesgos: mercados donde tu FOB cayó más de 10% en 12 meses.</div>';
+  if(SUB){
+    var hasO=D.opportunities&&D.opportunities.length>0,hasR=D.risks&&D.risks.length>0;
+    if(hasO||hasR){h+='<div class="og">';
+      if(hasO)D.opportunities.forEach(function(o){h+='<div class="oc g"><div class="ot g">OPORTUNIDAD</div><div class="on">'+o.name+'</div><div class="ox">Mercado total: '+f$(o.marketFob)+'. '+o.simCount+' bodegas de precio similar ya operan allí: '+o.simPresent+'.</div><div class="om"><div class="ov" style="color:var(--green)">'+f$(o.marketFob)+'</div><div class="ol">mercado total</div></div></div>';});
+      if(hasR)D.risks.forEach(function(r){h+='<div class="oc rd"><div class="ot rd">RIESGO</div><div class="on">'+r.name+'</div><div class="ox">Tu FOB cayó '+Math.abs(r.fobChg).toFixed(1)+'% en los últimos 12 meses. Cuota actual: '+r.share+'%. Posición #'+(r.rank||'—')+'.</div><div class="om"><div class="ov" style="color:var(--salmon)">'+chg(r.fobChg)+'</div><div class="ol">variación 12M</div></div></div>';});
+      h+='</div>';}
+    else h+='<div class="card" style="text-align:center;color:var(--muted);padding:30px">No se detectaron oportunidades ni riesgos significativos.</div>';
+    h+='<div class="disc"><b>Limitaciones:</b> Basado en registros aduaneros (NCM 2204). No captura acuerdos en negociación, stocks, canales de distribución ni estrategia interna.</div>';
+  }else{
+    h+='<div class="locked"><div class="locked-blur"><div class="og"><div class="oc g"><div class="ot g">OPORTUNIDAD</div><div class="on">Mercado sin presencia</div></div><div class="oc rd"><div class="ot rd">RIESGO</div><div class="on">Pérdida de cuota</div></div></div></div><div class="locked-ov"><div class="lt">🎯 Oportunidades y riesgos</div><div class="ls">Calculados a partir de tu posición y la de bodegas similares.</div><a class="cta" href="#" onclick="event.preventDefault()">Suscribirse →</a></div></div>';
+  }
+  h+='</div>';
+
+  // CTA
+  h+='<div style="text-align:center;padding:40px 0">';
+  if(SUB)h+='<div style="font-family:Montserrat;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--my);margin-bottom:10px">VINALITICA</div><div style="font-family:Montserrat;font-size:22px;font-weight:900;letter-spacing:-1px">Este análisis se actualiza cada mes</div>';
+  else h+='<div style="font-family:Montserrat;font-size:22px;font-weight:900;letter-spacing:-1px;margin-bottom:8px">¿Querés la inteligencia completa?</div><a class="cta" href="#" onclick="event.preventDefault()">Contactar a Vinalitica →</a>';
+  h+='</div></div>';
+  h+='<footer class="ft"><div>© '+ANO+' Vinalitica · <a href="https://vinalitica.com">vinalitica.com</a></div><div style="font-family:Montserrat;font-weight:700">'+MNF[MES]+' '+ANO+'</div></footer>';
+
+  $('app').innerHTML=h;
+  sR('month','g',document.querySelector('.tab.a'));
+  if(D.indexEvolution&&D.indexEvolution.length>3)dI();
+  lC();
+}
+
+// ═══ RANK TAB ═══
+function sR(period,mode,el){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('a');});if(el)el.classList.add('a');
+  var h='';
+  if(mode==='s'){var sr=D.rankings[period].segment;if(!sr){$('rC').innerHTML='';return;}
+    h+='<div class="card"><div style="display:flex;align-items:baseline;gap:12px;margin-bottom:4px"><span style="font-family:Montserrat;font-size:28px;font-weight:900;color:var(--my)">#'+sr.rank+'</span><span style="font-size:13px;color:var(--stone)">de '+sr.total+' bodegas <b>'+D.segment.bodegaType[0].name+'</b></span></div>';
+    h+='<div style="font-size:11px;color:var(--dim);margin-bottom:12px">'+D.segment.bodegaType[0].desc+'</div>';
+    h+=rkTbl(sr.neighbors)+'</div>';
+  }else if(mode==='p'){var pr=D.segment.priceSegRank;if(!pr){$('rC').innerHTML='';return;}
+    h+='<div class="card"><div style="display:flex;align-items:baseline;gap:12px;margin-bottom:4px"><span style="font-family:Montserrat;font-size:28px;font-weight:900;color:var(--my)">#'+pr.rank+'</span><span style="font-size:13px;color:var(--stone)">de '+pr.total+' bodegas en rango <b>'+segL(D.segment.priceSegment)+'</b></span></div>';
+    h+='<div style="font-size:11px;color:var(--dim);margin-bottom:12px">'+D.segment.priceSegmentDesc+'</div>';
+    h+=rkTbl(pr.neighbors)+'</div>';
+  }else{var rk=D.rankings[period];if(!rk){$('rC').innerHTML='';return;}
+    h+='<div class="card"><div style="display:flex;align-items:baseline;gap:12px;margin-bottom:12px"><span style="font-family:Montserrat;font-size:28px;font-weight:900;color:var(--my)">#'+(rk.current||'—')+'</span><span style="font-size:13px;color:var(--stone)">de '+rk.total+' bodegas</span>';
+    if(rk.delta!=null)h+='<span class="bg '+(rk.delta>=0?'pos':'neg')+'">'+(rk.delta>0?'↑'+rk.delta:rk.delta<0?'↓'+Math.abs(rk.delta):'=')+'</span>';
+    h+='</div>'+rkTbl(rk.neighbors)+'</div>';}
+  $('rC').innerHTML=h;
+}
+
+function sM(i){var m=D.markets[i];if(!m)return;
+  var h='<div class="card" style="border-left:3px solid var(--my)"><div style="font-family:Montserrat;font-size:13px;font-weight:800;margin-bottom:8px">'+m.name+' — Ranking local (últimos 12 meses)</div>';
+  if(m.neighbors&&m.neighbors.length){h+='<table><thead><tr><th>#</th><th>Bodega</th><th class="n">FOB</th></tr></thead><tbody>';m.neighbors.forEach(function(n){h+='<tr class="'+(n.isMe?'mr':'')+'"><td><b>#'+n.rank+'</b></td><td>'+(n.isMe?'<b style="color:var(--my)">'+n.name+'</b>':n.name)+'</td><td class="n">'+f$(n.fob)+'</td></tr>';});h+='</tbody></table>';}
+  h+='</div>';$('mD').innerHTML=h;$('mD').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ═══ INDEX 100 ═══
+function dI(){var c=$('iC');if(!c)return;var ctx=c.getContext('2d');var data=D.indexEvolution;
+  var W=c.width=c.parentElement.offsetWidth-40;var CH=200;c.height=CH;
+  var pad={l:44,r:20,t:10,b:28};var cw=W-pad.l-pad.r;var ch=CH-pad.t-pad.b;
+  var allV=[];data.forEach(function(d){allV.push(d.bodIdx,d.mktIdx);});
+  var mn=Math.min.apply(null,allV.filter(function(v){return v>0;}))||80;var mx=Math.max.apply(null,allV)||120;
+  mn=Math.max(0,mn-10);mx+=10;var range=mx-mn||1;
+  function x(i){return pad.l+i/(data.length-1)*cw;}
+  function y(v){return pad.t+ch-(v-mn)/range*ch;}
+  ctx.strokeStyle='#3A444A';ctx.lineWidth=.5;
+  for(var g=0;g<=4;g++){var gv=mn+g/4*range;ctx.beginPath();ctx.moveTo(pad.l,y(gv));ctx.lineTo(pad.l+cw,y(gv));ctx.stroke();ctx.fillStyle='#7A756F';ctx.font='9px Montserrat';ctx.textAlign='right';ctx.fillText(Math.round(gv),pad.l-6,y(gv)+3);}
+  if(mn<100&&mx>100){ctx.strokeStyle='#948E88';ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(pad.l,y(100));ctx.lineTo(pad.l+cw,y(100));ctx.stroke();ctx.setLineDash([]);}
+  ctx.strokeStyle='#3C4E5A';ctx.lineWidth=1.5;ctx.beginPath();data.forEach(function(d,i){i===0?ctx.moveTo(x(i),y(d.mktIdx)):ctx.lineTo(x(i),y(d.mktIdx));});ctx.stroke();
+  ctx.strokeStyle='#B95955';ctx.lineWidth=2.5;ctx.beginPath();data.forEach(function(d,i){i===0?ctx.moveTo(x(i),y(d.bodIdx)):ctx.lineTo(x(i),y(d.bodIdx));});ctx.stroke();
+  var last=data[data.length-1];
+  ctx.fillStyle='#B95955';ctx.beginPath();ctx.arc(x(data.length-1),y(last.bodIdx),4,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#3C4E5A';ctx.beginPath();ctx.arc(x(data.length-1),y(last.mktIdx),4,0,Math.PI*2);ctx.fill();
+  // X labels
+  ctx.fillStyle='#7A756F';ctx.font='9px Montserrat';ctx.textAlign='center';
+  data.forEach(function(d,i){if(i%3===0||i===data.length-1)ctx.fillText(MN[d.mes]+"'"+String(d.ano).slice(-2),x(i),CH-6);});
+}
+
+// ═══ CONTEXTS ═══
+async function lC(){
+  try{var r=await fetch(API+'/api/context/'+MES+'/'+ANO,{headers:H});var d=await r.json();
+    if(d.context)$('gCtx').innerHTML='<div class="ctx"><div class="ct">📰 Contexto del mercado — '+MNF[MES]+' '+ANO+'</div>'+d.context+(d.sources?'<div style="font-size:10px;color:var(--dim);margin-top:6px;font-style:italic">Fuentes: '+d.sources+'</div>':'')+'</div>';
+  }catch(e){}
+  // Per-market context as expandable pills
+  try{var r2=await fetch(API+'/api/context/markets/'+MES+'/'+ANO,{headers:H});var d2=await r2.json();
+    if(d2.markets&&d2.markets.length>0){
+      var h='<div style="margin-top:8px"><div style="font-family:Montserrat;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Contexto por mercado</div>';
+      d2.markets.forEach(function(m,i){h+='<span class="mctx-item" onclick="tMC('+i+')">'+m.market+'</span>';});
+      d2.markets.forEach(function(m,i){h+='<div class="mctx-body" id="mc'+i+'"><b>'+m.market+':</b> '+m.context+'</div>';});
+      h+='</div>';$('mCtx').innerHTML=h;
+    }
+  }catch(e){}
+}
+function tMC(i){var el=$('mc'+i);if(!el)return;var open=el.classList.contains('open');
+  document.querySelectorAll('.mctx-body').forEach(function(e){e.classList.remove('open');});
+  document.querySelectorAll('.mctx-item').forEach(function(e){e.classList.remove('open');});
+  if(!open){el.classList.add('open');document.querySelectorAll('.mctx-item')[i].classList.add('open');}
+}
+
+load();
+</script>
+</body>
+</html>
