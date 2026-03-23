@@ -3,349 +3,443 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Argentina 2026-2028 — Simulador de escenarios</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Archivo:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Argentina 2026-2028 — Simulador sistémico</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-:root{--bg:#f5f2ed;--ink:#1c1a17;--paper:#fffdf9;--cream:#f0ece5;--red:#b02a1a;--red-l:#f5ddd8;--blue:#1a4a6e;--blue-l:#d5e4ef;--green:#2a6e42;--green-l:#d6eddf;--gold:#8a6b1a;--gold-l:#f5ecd0;--mut:#8a837a;--brd:#d6d0c6;--sf:'Playfair Display',Georgia,serif;--sn:'Archivo',system-ui,sans-serif;--mn:'JetBrains Mono',monospace}
+:root{--bg:#faf9f6;--ink:#18181b;--paper:#fff;--cream:#f3f1ec;--red:#c23a22;--red-l:#fce8e4;--blue:#1e5f8a;--blue-l:#e1eef6;--green:#2d7a4f;--green-l:#e2f3ea;--gold:#a07d1c;--gold-l:#faf3dc;--mut:#8c877d;--brd:#e2ddd5;--sf:'Newsreader',Georgia,serif;--sn:'DM Sans',system-ui,sans-serif;--mn:'JetBrains Mono',monospace}
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:var(--sn);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7}
+body{font-family:var(--sn);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.7}
 ::selection{background:var(--red-l)}
 
-.hero{background:var(--ink);color:var(--bg);padding:48px 24px 36px;text-align:center}
-.hero h1{font-family:var(--sf);font-size:clamp(1.5rem,4vw,2.4rem);font-weight:400;margin-bottom:8px}
-.hero h1 em{font-style:italic;color:#e8c47a}
-.hero p{font-size:14px;color:rgba(245,242,237,.5);max-width:600px;margin:0 auto}
+.hero{background:var(--ink);color:var(--bg);padding:40px 20px 32px;text-align:center}
+.hero h1{font-family:var(--sf);font-size:clamp(1.4rem,3.5vw,2.2rem);font-weight:300;margin-bottom:6px}
+.hero h1 em{color:#e8c47a;font-style:italic}
+.hero p{font-size:13px;color:rgba(250,249,246,.45);max-width:600px;margin:0 auto}
 
-.w{max-width:900px;margin:0 auto;padding:24px}
+.wrap{max-width:1100px;margin:0 auto;padding:20px}
+.layout{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
+@media(max-width:800px){.layout{grid-template-columns:1fr}}
 
-/* PARAMETER CARDS */
-.params{display:grid;grid-template-columns:1fr;gap:16px;margin:24px 0}
-.pm{background:var(--paper);border:1px solid var(--brd);border-radius:10px;padding:20px}
-.pm-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.pm-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.pm-title{font-family:var(--sf);font-size:16px;font-weight:700}
-.pm-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:10px;color:#fff}
-.pm-desc{font-size:12px;color:var(--mut);margin-bottom:14px;line-height:1.6}
-.pm-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.pm-opt{border:2px solid var(--brd);border-radius:8px;padding:10px 8px;text-align:center;cursor:pointer;transition:.2s;font-size:12px;line-height:1.4;background:var(--paper)}
-.pm-opt:hover{border-color:var(--gold);background:var(--gold-l)}
-.pm-opt.sel{border-color:var(--gold);background:var(--gold);color:#fff;font-weight:700}
-.pm-opt .val{font-family:var(--mn);font-size:15px;font-weight:700;display:block;margin-bottom:2px}
+/* ═══ PARAMS PANEL ═══ */
+.panel{background:var(--paper);border:1px solid var(--brd);border-radius:12px;padding:16px;position:sticky;top:12px}
+.panel h3{font-family:var(--sf);font-size:15px;margin-bottom:12px}
+.pgroup{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--cream)}
+.pgroup:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.pgroup-t{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.pgroup-t .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
 
-/* RESULT */
-.result{margin-top:32px;opacity:0;transform:translateY(20px);transition:.5s}
-.result.show{opacity:1;transform:translateY(0)}
-.res-header{padding:28px 24px;border-radius:12px 12px 0 0;color:#fff}
-.res-header h2{font-family:var(--sf);font-size:clamp(1.2rem,3vw,1.7rem);margin-bottom:4px}
-.res-header .prob{font-size:13px;opacity:.8}
-.res-body{background:var(--paper);border:1px solid var(--brd);border-top:0;border-radius:0 0 12px 12px;padding:24px}
+.param{margin-bottom:10px}
+.param label{display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:3px}
+.param label span{font-family:var(--mn);font-size:11px;color:var(--mut)}
+.param input[type=range]{width:100%;height:6px;-webkit-appearance:none;background:var(--cream);border-radius:3px;outline:none}
+.param input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--ink);cursor:pointer;border:2px solid var(--bg);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.param .labels{display:flex;justify-content:space-between;font-size:9px;color:var(--mut)}
 
-/* GAUGES */
-.gauges{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:20px 0}
-.gauge{text-align:center;padding:14px 8px;border-radius:8px;background:var(--cream)}
-.gauge .gv{font-family:var(--mn);font-size:22px;font-weight:700}
-.gauge .gl{font-size:10px;color:var(--mut);margin-top:2px}
+/* ═══ RESULTS ═══ */
+.results{min-height:600px}
+.verdict-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.verdict{padding:10px 16px;border-radius:8px;flex:1;min-width:100px;text-align:center}
+.verdict .vv{font-family:var(--mn);font-size:18px;font-weight:700}
+.verdict .vl{font-size:9px;color:var(--mut)}
 
-/* NARRATIVE */
-.narr{font-size:14px;line-height:1.8;margin:18px 0}
-.narr strong{color:var(--gold)}
+.chart-box{background:var(--paper);border:1px solid var(--brd);border-radius:12px;padding:16px;margin-bottom:16px}
+.chart-box h4{font-family:var(--sf);font-size:14px;margin-bottom:8px}
+.chart-wrap{position:relative;height:280px}
 
-/* RISK BAR */
-.risk-bar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--green),var(--gold),var(--red));position:relative;margin:16px 0 8px}
-.risk-dot{width:16px;height:16px;border-radius:50%;background:var(--ink);border:3px solid #fff;position:absolute;top:-4px;transition:.4s;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+/* ═══ ALERTS ═══ */
+.alerts{margin:12px 0}
+.alert{padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:6px;display:flex;align-items:center;gap:8px;animation:fadeIn .3s}
+.alert-red{background:var(--red-l);border-left:3px solid var(--red)}
+.alert-gold{background:var(--gold-l);border-left:3px solid var(--gold)}
+.alert-green{background:var(--green-l);border-left:3px solid var(--green)}
+@keyframes fadeIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
 
-/* TIMELINE */
-.tl-mini{border-left:2px solid var(--brd);padding-left:16px;margin:18px 0}
-.tl-mini .step{margin-bottom:14px;position:relative}
-.tl-mini .step::before{content:'';position:absolute;left:-21px;top:6px;width:10px;height:10px;border-radius:50%;border:2px solid var(--brd);background:var(--paper)}
-.tl-mini .step.warn::before{background:var(--red);border-color:var(--red)}
-.tl-mini .step.ok::before{background:var(--green);border-color:var(--green)}
-.tl-mini .sd{font-size:10px;font-weight:700;color:var(--mut);letter-spacing:1px}
-.tl-mini .st{font-size:13px;font-weight:600}
-.tl-mini .sp{font-size:12px;color:var(--mut)}
+/* ═══ NARRATIVE ═══ */
+.narrative{background:var(--cream);border-radius:12px;padding:20px;margin-top:16px;font-size:13px;line-height:1.9}
+.narrative h4{font-family:var(--sf);font-size:16px;margin-bottom:8px}
+.narrative strong{color:var(--gold)}
 
-.parallel{background:var(--blue-l);border-left:3px solid var(--blue);padding:14px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:13px}
-.parallel strong{color:var(--blue)}
-
-.src{font-size:10px;color:var(--mut);display:block;margin-top:16px;border-top:1px solid var(--brd);padding-top:8px}
-
-.reset-btn{display:block;margin:24px auto;background:none;border:1px solid var(--brd);padding:8px 20px;border-radius:20px;font-family:var(--sn);font-size:12px;color:var(--mut);cursor:pointer}
-.reset-btn:hover{background:var(--cream)}
-
-@media(min-width:700px){.params{grid-template-columns:1fr 1fr}}
+/* ═══ LOOPS DIAGRAM ═══ */
+.loops{margin-top:12px;font-size:11px;color:var(--mut)}
+.loop{padding:6px 10px;background:var(--paper);border:1px solid var(--brd);border-radius:6px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.loop.active{border-color:var(--red);background:var(--red-l);color:var(--red)}
+.loop.positive{border-color:var(--green);background:var(--green-l);color:var(--green)}
 </style>
 </head>
 <body>
 
-<div style="position:fixed;top:0;left:0;right:0;z-index:250;background:rgba(28,26,23,.95);padding:6px 16px;display:flex;align-items:center;gap:12px;font-size:12px">
-  <a href="../index.html" style="color:#e8c47a;text-decoration:none;font-weight:700">← Hub</a>
-  <a href="radiografia.html" style="color:rgba(245,242,237,.5);text-decoration:none">Informe completo</a>
-</div>
-
-<header class="hero" style="padding-top:68px">
-  <h1>Argentina 2026-2028<br><em>Simulador de escenarios</em></h1>
-  <p>Elegí una combinación de 5 parámetros y obtené el escenario más probable con sus consecuencias. Basado en datos del informe "Radiografía económica" (marzo 2026).</p>
+<header class="hero">
+  <h1>Argentina 2026-2028: <em>Simulador sistémico</em></h1>
+  <p>8 parámetros, 6 bucles de retroalimentación, umbrales de ruptura. El modelo simula 8 trimestres con interacciones dinámicas entre variables.</p>
 </header>
 
-<div class="w">
+<div class="wrap">
+<div class="layout">
 
-<p style="font-size:14px;color:var(--mut);margin-bottom:8px;text-align:center">Seleccioná una opción en cada parámetro. El escenario se actualiza automáticamente.</p>
+<!-- ═══════════ LEFT PANEL ═══════════ -->
+<div class="panel">
+  <h3>Parámetros iniciales</h3>
 
-<div class="params" id="params">
-
-  <!-- P1: BRENT -->
-  <div class="pm">
-    <div class="pm-head">
-      <div class="pm-icon" style="background:var(--blue-l)">🛢️</div>
-      <div><div class="pm-title">Precio del petróleo (Brent)</div><span class="pm-tag" style="background:var(--blue)">EXTERNO</span></div>
-    </div>
-    <div class="pm-desc">Determinado por el conflicto en Irán, la OPEP+ y la demanda global. Impacta directamente el superávit energético de Vaca Muerta y la balanza comercial.</div>
-    <div class="pm-opts" data-param="brent">
-      <div class="pm-opt" data-val="0" onclick="sel(this)"><span class="val">$55-65</span>Irán resuelto rápido, exceso de oferta</div>
-      <div class="pm-opt" data-val="1" onclick="sel(this)"><span class="val">$75-90</span>Tensión moderada, equilibrio</div>
-      <div class="pm-opt" data-val="2" onclick="sel(this)"><span class="val">$100+</span>Conflicto extendido, Ormuz restringido</div>
-    </div>
+  <div class="pgroup">
+    <div class="pgroup-t"><span class="dot" style="background:var(--blue)"></span> CONTEXTO EXTERNO</div>
+    <div class="param"><label>Petróleo (Brent) <span id="v_brent">$75-90</span></label><input type="range" min="0" max="2" value="1" id="p_brent" oninput="run()"><div class="labels"><span>$55-65</span><span>$75-90</span><span>$100+</span></div></div>
+    <div class="param"><label>Tasa Fed <span id="v_fed">3,5-4%</span></label><input type="range" min="0" max="2" value="1" id="p_fed" oninput="run()"><div class="labels"><span>Baja 2,5-3%</span><span>Estable</span><span>Sube >4%</span></div></div>
+    <div class="param"><label>Precio soja/maíz <span id="v_soja">Normal</span></label><input type="range" min="0" max="2" value="1" id="p_soja" oninput="run()"><div class="labels"><span>Bajo</span><span>Normal</span><span>Alto</span></div></div>
+    <div class="param"><label>Riesgo global <span id="v_global">Estable</span></label><input type="range" min="0" max="2" value="1" id="p_global" oninput="run()"><div class="labels"><span>Recesión</span><span>Estable</span><span>Boom</span></div></div>
   </div>
 
-  <!-- P2: FED -->
-  <div class="pm">
-    <div class="pm-head">
-      <div class="pm-icon" style="background:var(--blue-l)">🏦</div>
-      <div><div class="pm-title">Tasa de la Reserva Federal (EE.UU.)</div><span class="pm-tag" style="background:var(--blue)">EXTERNO</span></div>
-    </div>
-    <div class="pm-desc">Si la Fed baja tasas, el carry trade argentino es más atractivo (más capitales entran). Si las sube, los capitales se van a EE.UU. donde es más seguro.</div>
-    <div class="pm-opts" data-param="fed">
-      <div class="pm-opt" data-val="0" onclick="sel(this)"><span class="val">Baja a 2,5-3%</span>Dovish, recortes agresivos</div>
-      <div class="pm-opt" data-val="1" onclick="sel(this)"><span class="val">Estable 3,5-4%</span>Pausa cautelosa</div>
-      <div class="pm-opt" data-val="2" onclick="sel(this)"><span class="val">Sube >4%</span>Hawkish, inflación EE.UU.</div>
-    </div>
+  <div class="pgroup">
+    <div class="pgroup-t"><span class="dot" style="background:var(--gold)"></span> DECISIONES POLÍTICAS</div>
+    <div class="param"><label>Superávit fiscal <span id="v_fiscal">Mantenido</span></label><input type="range" min="0" max="2" value="2" id="p_fiscal" oninput="run()"><div class="labels"><span>Déficit</span><span>Erosionado</span><span>Mantenido</span></div></div>
+    <div class="param"><label>Régimen cambiario <span id="v_cambio">Bandas</span></label><input type="range" min="0" max="2" value="2" id="p_cambio" oninput="run()"><div class="labels"><span>Flotación</span><span>Deval. admin.</span><span>Bandas</span></div></div>
+    <div class="param"><label>Política industrial <span id="v_indus">Apertura total</span></label><input type="range" min="0" max="2" value="0" id="p_indus" oninput="run()"><div class="labels"><span>Apertura total</span><span>Selectiva</span><span>Protección</span></div></div>
   </div>
 
-  <!-- P3: COSECHA -->
-  <div class="pm">
-    <div class="pm-head">
-      <div class="pm-icon" style="background:var(--green-l)">🌾</div>
-      <div><div class="pm-title">Cosecha (soja, maíz, trigo)</div><span class="pm-tag" style="background:var(--green)">MIXTO</span></div>
-    </div>
-    <div class="pm-desc">La soja es el 25% de las exportaciones. Una buena cosecha trae dólares; una sequía los quita. Depende del clima (La Niña/El Niño) y de los precios internacionales.</div>
-    <div class="pm-opts" data-param="cosecha">
-      <div class="pm-opt" data-val="0" onclick="sel(this)"><span class="val">Mala</span>Sequía o precios en baja</div>
-      <div class="pm-opt" data-val="1" onclick="sel(this)"><span class="val">Normal</span>Cosecha promedio</div>
-      <div class="pm-opt" data-val="2" onclick="sel(this)"><span class="val">Récord</span>Clima ideal + precios altos</div>
-    </div>
+  <div class="pgroup">
+    <div class="pgroup-t"><span class="dot" style="background:var(--green)"></span> ESTADO INICIAL</div>
+    <div class="param"><label>Reservas netas <span id="v_reservas">USD 5-10B</span></label><input type="range" min="0" max="2" value="1" id="p_reservas" oninput="run()"><div class="labels"><span>&lt;5B</span><span>5-10B</span><span>&gt;10B</span></div></div>
   </div>
 
-  <!-- P4: FISCAL -->
-  <div class="pm">
-    <div class="pm-head">
-      <div class="pm-icon" style="background:var(--gold-l)">📊</div>
-      <div><div class="pm-title">Superávit fiscal</div><span class="pm-tag" style="background:var(--gold)">INTERNO</span></div>
-    </div>
-    <div class="pm-desc">El ancla del programa Milei. Se mantiene recortando subsidios, obra pública y empleo estatal. Si se pierde (por presión social o electoral), el programa entero pierde credibilidad.</div>
-    <div class="pm-opts" data-param="fiscal">
-      <div class="pm-opt" data-val="2" onclick="sel(this)"><span class="val">>1% PBI</span>Mantenido con firmeza</div>
-      <div class="pm-opt" data-val="1" onclick="sel(this)"><span class="val">0-1% PBI</span>Se erosiona (presión social)</div>
-      <div class="pm-opt" data-val="0" onclick="sel(this)"><span class="val">Déficit</span>Se pierde (año electoral)</div>
-    </div>
-  </div>
-
-  <!-- P5: CAPITALES -->
-  <div class="pm">
-    <div class="pm-head">
-      <div class="pm-icon" style="background:var(--red-l)">💸</div>
-      <div><div class="pm-title">Flujos de capital (carry trade)</div><span class="pm-tag" style="background:var(--red)">INTERNO</span></div>
-    </div>
-    <div class="pm-desc">Los inversores ponen dólares en pesos para ganar tasas altas. Si se van todos juntos, el peso se devalúa bruscamente. Depende de la confianza, de la Fed y del tipo de cambio.</div>
-    <div class="pm-opts" data-param="carry">
-      <div class="pm-opt" data-val="2" onclick="sel(this)"><span class="val">Entrada fuerte</span>Confianza alta, tasas atractivas</div>
-      <div class="pm-opt" data-val="1" onclick="sel(this)"><span class="val">Moderado</span>Flujos estables, sin boom</div>
-      <div class="pm-opt" data-val="0" onclick="sel(this)"><span class="val">Salida</span>Desarme, fuga de capitales</div>
-    </div>
-  </div>
-
-</div>
-
-<!-- RESULT -->
-<div class="result" id="result">
-  <div class="res-header" id="resHead">
-    <h2 id="resTitle">...</h2>
-    <div class="prob" id="resProb">...</div>
-  </div>
-  <div class="res-body">
-    <div style="font-size:11px;font-weight:700;color:var(--mut);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Indicadores proyectados 2026-2027</div>
-    <div class="gauges" id="gauges"></div>
-    <div style="font-size:11px;font-weight:700;color:var(--mut);letter-spacing:1px;text-transform:uppercase;margin:18px 0 6px">Nivel de riesgo</div>
-    <div class="risk-bar"><div class="risk-dot" id="riskDot"></div></div>
-    <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--mut)"><span>Bajo</span><span>Moderado</span><span>Elevado</span><span>Crítico</span></div>
-    <div style="font-size:11px;font-weight:700;color:var(--mut);letter-spacing:1px;text-transform:uppercase;margin:22px 0 6px">Lo que pasa en este escenario</div>
-    <div class="narr" id="narr"></div>
-    <div style="font-size:11px;font-weight:700;color:var(--mut);letter-spacing:1px;text-transform:uppercase;margin:18px 0 6px">Cronología probable</div>
-    <div class="tl-mini" id="timeline"></div>
-    <div id="parallelBox"></div>
+  <div style="font-size:10px;color:var(--mut);margin-top:8px">
+    <strong>Bucles activos:</strong>
+    <div class="loops" id="loopsBox"></div>
   </div>
 </div>
 
-<button class="reset-btn" onclick="reset()">↺ Reiniciar parámetros</button>
+<!-- ═══════════ RIGHT: RESULTS ═══════════ -->
+<div class="results">
+  <div class="verdict-bar" id="verdictBar"></div>
+  <div class="alerts" id="alerts"></div>
+  <div class="chart-box"><h4>Reservas netas & flujos de carry (USD miles de millones)</h4><div class="chart-wrap"><canvas id="cReservas"></canvas></div></div>
+  <div class="chart-box"><h4>Inflación mensual (%) & ITCRM (competitividad)</h4><div class="chart-wrap"><canvas id="cInflacion"></canvas></div></div>
+  <div class="chart-box"><h4>Empleo industrial (índice) & Morosidad familias (%)</h4><div class="chart-wrap"><canvas id="cSocial"></canvas></div></div>
+  <div class="narrative" id="narrative"></div>
+</div>
 
-<p class="src">Simulador basado en datos oficiales (INDEC, BCRA, FMI, EIA) y análisis del informe "Radiografía económica de Argentina" (marzo 2026). Las proyecciones son indicativas y reflejan la interacción estimada de las variables seleccionadas. No constituyen asesoramiento financiero. Elaboración propia.</p>
-
+</div>
 </div>
 
 <script>
-var state={brent:null,fed:null,cosecha:null,fiscal:null,carry:null};
+var Q=['T2-26','T3-26','T4-26','T1-27','T2-27','T3-27','T4-27','T1-28'];
+var chartR,chartI,chartS;
+var lblBrent=['$55-65','$75-90','$100+'],lblFed=['Baja 2,5-3%','Estable 3,5-4%','Sube >4%'],lblSoja=['Bajo','Normal','Alto'],lblGlobal=['Recesión','Estable','Boom'],lblFiscal=['Déficit','Erosionado','Mantenido'],lblCambio=['Flotación','Deval. admin.','Bandas'],lblIndus=['Apertura total','Selectiva','Protección'],lblRes=['<5B','5-10B','>10B'];
 
-function sel(el){
-  var p=el.parentElement.dataset.param;
-  var v=parseInt(el.dataset.val);
-  state[p]=v;
-  el.parentElement.querySelectorAll('.pm-opt').forEach(function(o){o.classList.remove('sel')});
-  el.classList.add('sel');
-  if(state.brent!==null&&state.fed!==null&&state.cosecha!==null&&state.fiscal!==null&&state.carry!==null){
-    compute();
+function gv(id){return parseInt(document.getElementById(id).value)}
+
+function run(){
+  // Read params
+  var brent=gv('p_brent'),fed=gv('p_fed'),soja=gv('p_soja'),glob=gv('p_global');
+  var fiscal=gv('p_fiscal'),cambio=gv('p_cambio'),indus=gv('p_indus'),resInit=gv('p_reservas');
+
+  // Update labels
+  document.getElementById('v_brent').textContent=lblBrent[brent];
+  document.getElementById('v_fed').textContent=lblFed[fed];
+  document.getElementById('v_soja').textContent=lblSoja[soja];
+  document.getElementById('v_global').textContent=lblGlobal[glob];
+  document.getElementById('v_fiscal').textContent=lblFiscal[fiscal];
+  document.getElementById('v_cambio').textContent=lblCambio[cambio];
+  document.getElementById('v_indus').textContent=lblIndus[indus];
+  document.getElementById('v_reservas').textContent=lblRes[resInit];
+
+  // ═══════════ SIMULATION ENGINE ═══════════
+  // State variables (initial conditions T1-2026)
+  var st={
+    reservas: [3,7.5,12][resInit],         // USD billions net
+    itcrm: cambio===2?100:(cambio===1?115:125), // index
+    inflacion: 2.4,                         // monthly %
+    empleo_ind: 93,                         // index 100=2019
+    morosidad: 10.6,                        // % households
+    superavit: [-.5,.5,1.4][fiscal],        // % GDP
+    riesgo_pais: 750,                       // bps
+    carry_flow: 2.0,                        // USD B/quarter net
+    pbi_growth: 0                           // quarterly annualized
+  };
+
+  var series={reservas:[],itcrm:[],inflacion:[],empleo_ind:[],morosidad:[],carry_flow:[],riesgo_pais:[],superavit:[]};
+  var alerts=[];
+  var loopsActive={paradox:false,carry_spiral:false,industrial:false,fiscal_virtue:false,debt_spiral:false,wall:false};
+
+  // External factors per quarter (slight variation)
+  var brentUSD=[65,80,105][brent];
+  var fedRate=[2.75,3.75,4.5][fed];
+  var sojaFactor=[-.15,0,.15][soja]; // impact on trade balance
+  var globalFactor=[-1,0,.5][glob];  // general confidence
+
+  for(var q=0;q<8;q++){
+    // Seasonal: cosecha gruesa in Q1-Q2 (q=2,3 → T4-26, T1-27)
+    var cosechaBonus=(q>=2&&q<=4)?sojaFactor*1.5:sojaFactor*.5;
+
+    // ── BOUCLE 1: Paradoxe du succès ──
+    // Brent élevé → plus de dollars → peso s'apprécie → industrie souffre
+    var energySurplus=(brentUSD-45)*0.05; // USD B/quarter approx
+    if(brentUSD>100) energySurplus*=1.2;
+    if(brentUSD<60) energySurplus*=0.5;
+    var dollarInflow=energySurplus+cosechaBonus+Math.max(0,st.carry_flow);
+
+    // ITCRM: baisse si beaucoup de dollars entrent (appréciation)
+    var itcrmPressure=-dollarInflow*1.5; // more inflow → more appreciation
+    if(cambio===2) itcrmPressure*=1.3; // bandas amplifient
+    if(cambio===0) itcrmPressure*=0.4; // flotation absorbe
+    if(indus===2) itcrmPressure*=0.8; // protection limite l'impact
+    st.itcrm=Math.max(60,Math.min(160,st.itcrm+itcrmPressure));
+
+    // Industrial employment: depends on ITCRM and industrial policy
+    var itcrmEffect=(st.itcrm-105)*0.15; // below 105 = bad for industry
+    var indusPolicy=[-.8,0,.4][indus]; // aperture hurts, protection helps
+    st.empleo_ind=Math.max(50,st.empleo_ind+itcrmEffect+indusPolicy);
+    if(st.itcrm<85){st.empleo_ind-=1.5; loopsActive.industrial=true;} // threshold
+    if(st.itcrm<85&&q>0) loopsActive.paradox=true;
+
+    // ── BOUCLE 2: Spirale du carry ──
+    var carryAttractiveness=st.inflacion*2-fedRate*3+(2-fed)*2+st.superavit*1.5+globalFactor;
+    if(st.riesgo_pais>1200) carryAttractiveness-=5; // threshold
+    if(st.reservas<5) carryAttractiveness-=4; // threshold
+    if(cambio===0) carryAttractiveness-=3; // float = risky for carry
+    st.carry_flow=Math.max(-5,Math.min(6,carryAttractiveness*0.4));
+    if(st.carry_flow<-1.5){loopsActive.carry_spiral=true;}
+
+    // Reserves
+    var tradeBalance=energySurplus+cosechaBonus-([1.5,.8,.3][indus]); // imports drain
+    var fmiDisbursement=(q<2)?2:((q<4)?0.5:0); // FMI front-loaded
+    var fmiPayment=(q>=6)?-2.5:0; // payments start Q7 (T4-27)
+    st.reservas+=tradeBalance+st.carry_flow+fmiDisbursement+fmiPayment;
+    st.reservas=Math.max(-5,st.reservas);
+
+    // ── THRESHOLD: Réserves critiques ──
+    if(st.reservas<3&&q>1){
+      st.carry_flow=Math.min(st.carry_flow,-2); // forced outflow
+      st.riesgo_pais+=200;
+      if(!alerts.some(function(a){return a.id==='res_crit'})){
+        alerts.push({id:'res_crit',q:q,type:'red',text:'⚠️ T'+Q[q]+': Reservas netas bajo USD 3B — riesgo de corrida cambiaria.'});
+      }
+    }
+    if(st.reservas<0){
+      if(!alerts.some(function(a){return a.id==='res_neg'})){
+        alerts.push({id:'res_neg',q:q,type:'red',text:'🔴 T'+Q[q]+': Reservas netas negativas — crisis cambiaria inminente.'});
+      }
+    }
+
+    // ── BOUCLE 3: Spirale industrielle → fiscal ──
+    if(st.empleo_ind<85){
+      st.superavit-=0.15; // less tax revenue
+      loopsActive.industrial=true;
+    }
+    // Fiscal pressure from social costs
+    if(st.morosidad>15) st.superavit-=0.1;
+
+    // ── BOUCLE 4: Cercle vertueux fiscal ──
+    if(st.superavit>1){
+      st.inflacion*=0.95; // credibility → desinflation
+      st.riesgo_pais-=15;
+      loopsActive.fiscal_virtue=true;
+    } else if(st.superavit<0){
+      st.inflacion*=1.08;
+      st.riesgo_pais+=40;
+      if(!alerts.some(function(a){return a.id==='fiscal_lost'})){
+        alerts.push({id:'fiscal_lost',q:q,type:'red',text:'🔴 T'+Q[q]+': Superávit fiscal perdido — credibilidad del programa en riesgo.'});
+      }
+    }
+
+    // ── BOUCLE 5: Spirale dette familiale ──
+    var salarioRealPressure=-st.inflacion*0.3+(st.empleo_ind-93)*0.05;
+    st.morosidad=Math.max(2,Math.min(35,st.morosidad-salarioRealPressure*0.5));
+    if(st.inflacion>4) st.morosidad+=0.5;
+    if(st.morosidad>15){
+      loopsActive.debt_spiral=true;
+      st.empleo_ind-=0.3; // credit restriction → less activity
+      if(!alerts.some(function(a){return a.id==='mora_crit'})){
+        alerts.push({id:'mora_crit',q:q,type:'red',text:'⚠️ T'+Q[q]+': Morosidad >15% — estrés bancario, restricción de crédito.'});
+      }
+    }
+
+    // ── BOUCLE 6: Mur de la dette ──
+    if(q>=6){
+      loopsActive.wall=true;
+      if(st.riesgo_pais>900){
+        st.reservas-=1; // can't refinance
+        if(!alerts.some(function(a){return a.id==='wall'})){
+          alerts.push({id:'wall',q:q,type:'gold',text:'⏰ T'+Q[q]+': Vencimientos FMI + bonos. Riesgo país >900 → refinanciamiento difícil.'});
+        }
+      }
+    }
+
+    // Inflation dynamics
+    var inflPressure=0;
+    if(st.carry_flow<-1) inflPressure+=1; // devaluation pass-through
+    if(cambio===0) inflPressure+=0.3; // float adds volatility
+    inflPressure-=st.superavit*0.2; // fiscal anchor
+    inflPressure+=brentUSD>110?0.3:0; // imported inflation
+    st.inflacion=Math.max(0.5,Math.min(25,st.inflacion+inflPressure));
+
+    // Riesgo pais dynamics
+    st.riesgo_pais+=st.carry_flow<0?50:-20;
+    st.riesgo_pais+=st.superavit<0?30:-10;
+    st.riesgo_pais+=globalFactor*-30;
+    st.riesgo_pais=Math.max(200,Math.min(3000,st.riesgo_pais));
+
+    // PBI growth (simplified)
+    st.pbi_growth=(st.empleo_ind-90)*0.1+energySurplus*0.5+cosechaBonus*2-st.inflacion*0.2+globalFactor;
+
+    // ── THRESHOLD: ITCRM collapse ──
+    if(st.itcrm<80){
+      if(!alerts.some(function(a){return a.id==='itcrm_crit'})){
+        alerts.push({id:'itcrm_crit',q:q,type:'gold',text:'⚠️ T'+Q[q]+': ITCRM <80 — Argentina extremadamente cara. Déficit turístico insostenible.'});
+      }
+    }
+
+    // Green alerts
+    if(st.reservas>15&&q===3&&!alerts.some(function(a){return a.id==='res_ok'})){
+      alerts.push({id:'res_ok',q:q,type:'green',text:'✅ T'+Q[q]+': Reservas >USD 15B — colchón confortable.'});
+    }
+    if(st.inflacion<1.5&&q>2&&!alerts.some(function(a){return a.id==='infl_ok'})){
+      alerts.push({id:'infl_ok',q:q,type:'green',text:'✅ T'+Q[q]+': Inflación <1,5% mensual — convergencia a estándares internacionales.'});
+    }
+
+    // Store
+    series.reservas.push(Math.round(st.reservas*10)/10);
+    series.itcrm.push(Math.round(st.itcrm));
+    series.inflacion.push(Math.round(st.inflacion*10)/10);
+    series.empleo_ind.push(Math.round(st.empleo_ind));
+    series.morosidad.push(Math.round(st.morosidad*10)/10);
+    series.carry_flow.push(Math.round(st.carry_flow*10)/10);
+    series.riesgo_pais.push(Math.round(st.riesgo_pais));
+    series.superavit.push(Math.round(st.superavit*10)/10);
   }
+
+  // ═══════════ RENDER ═══════════
+  renderVerdicts(st,series);
+  renderAlerts(alerts);
+  renderCharts(series);
+  renderLoops(loopsActive);
+  renderNarrative(st,series,alerts,loopsActive,{brent:brent,fed:fed,soja:soja,fiscal:fiscal,cambio:cambio,indus:indus});
 }
 
-function reset(){
-  state={brent:null,fed:null,cosecha:null,fiscal:null,carry:null};
-  document.querySelectorAll('.pm-opt').forEach(function(o){o.classList.remove('sel')});
-  document.getElementById('result').classList.remove('show');
-}
-
-function compute(){
-  var s=state;
-  // Score: 0=worst, 10=best
-  var score=s.brent+s.fed+s.cosecha+s.fiscal+s.carry; // 0-10
-  // External stress: low brent + high fed = bad
-  var extStress=(2-s.brent)+(s.fed===2?2:s.fed===1?1:0)+(2-s.cosecha);
-  // Internal fragility: no fiscal + carry outflow = bad
-  var intFrag=(2-s.fiscal)+(2-s.carry);
-
-  var sc={};
-  if(score>=8){
-    sc=scenario_boom(s,score);
-  } else if(score>=5){
-    if(intFrag>=3) sc=scenario_stress(s,score);
-    else sc=scenario_central(s,score);
-  } else if(score>=3){
-    if(extStress>=5) sc=scenario_storm(s,score);
-    else sc=scenario_stress(s,score);
-  } else {
-    sc=scenario_storm(s,score);
-  }
-
-  render(sc);
-}
-
-function scenario_boom(s,score){
-  var brentHigh=s.brent===2;
-  var energyBonus=brentHigh?' El Brent alto (>$100) lleva el superávit energético a USD 10.000-12.000 M — récord absoluto. Vaca Muerta se convierte en el motor indiscutido de la economía.':' El precio del petróleo favorable sostiene un superávit energético de USD 8.000-9.000 M.';
-  return {
-    title:'El viento de cola',emoji:'🌿',
-    color:'var(--green)',
-    prob:'Escenario favorable — requiere que la mayoría de los factores se alineen positivamente',
-    risk:15,
-    gdp:'+4 a 5%',infl:'18-22%',desemp:'6,5-7%',reservas:'Suben a USD 50-55.000 M',mora:'8-10%',deuda:'Estable, refinanciable',
-    narr:'<strong>Lo mejor que puede pasar.</strong> La combinación de factores externos favorables y disciplina interna permite a Argentina consolidar su estabilización.'+energyBonus+' Las reservas del BCRA crecen rápidamente. El riesgo país baja a 500-600 puntos, lo que abre el acceso al mercado voluntario de deuda. El crédito se expande sin generar burbujas. La inflación converge a niveles de un dígito alto mensual (~1,5-2%). <strong>La contracara:</strong> la industria no se recupera — se estabiliza en un nivel bajo. El empleo formal crece poco. El modelo funciona macro pero es excluyente: energía, agro y finanzas prosperan mientras que el empleo industrial sigue cayendo. Argentina se consolida como exportador de materias primas con servicios financieros sofisticados, pero con un tejido productivo debilitado. Es el escenario que vende el gobierno y que proyecta el FMI.',
-    timeline:[
-      {d:'T2 2026',t:'Cosecha gruesa récord',p:'Entrada fuerte de dólares agro. Reservas suben.',c:'ok'},
-      {d:'S2 2026',t:'Reformas en el Congreso',p:'Tributaria, laboral. Mejora clima inversor.',c:'ok'},
-      {d:'2027',t:'Elecciones legislativas',p:'Oficialismo consolida bloque. Continuidad del programa.',c:'ok'},
-      {d:'2028',t:'Inicio rembolsos FMI',p:'Perfil manejable si riesgo país <600. Refinanciamiento posible.',c:'ok'}
-    ],
-    parallel:'<strong>Paralelo histórico:</strong> Chile 1985-1990 post-crisis de deuda. Estabilización macro exitosa con modelo exportador de commodities, pero alto costo social y desigualdad persistente. El crecimiento no benefició a todos por igual.'
-  };
-}
-
-function scenario_central(s,score){
-  var brentMid=s.brent===1;
-  var energyNote=s.brent===2?'El Brent alto es un bonus inesperado que compensa parcialmente las fragilidades internas.':s.brent===0?'El Brent bajo comprime el superávit energético a USD 5.000-6.000 M — menos colchón.':'El superávit energético se mantiene en ~USD 7.000-8.000 M, pilar del modelo.';
-  return {
-    title:'El equilibrista avanza, pero cojeando',emoji:'📊',
-    color:'var(--gold)',
-    prob:'Escenario central — prolongación de la trayectoria actual con ajustes',
-    risk:40,
-    gdp:'+2,5 a 3,5%',infl:'22-28%',desemp:'7-8%',reservas:'Suben gradualmente',mora:'10-13%',deuda:'Crece moderadamente',
-    narr:'<strong>Lo más probable.</strong> El programa funciona en lo macro pero genera tensiones sociales crecientes. '+energyNote+' La inflación sigue bajando pero más lento de lo esperado (el IPC de febrero 2026 ya mostró 2,9%, empujado por tarifas). El desempleo no baja del 7% porque el crecimiento viene de sectores que emplean poca gente (energía, minería, finanzas). La industria sigue perdiendo empleo (estimación: 15.000-25.000 puestos más en 2026). La morosidad de las familias se estabiliza en zona alta (10-13%) sin explotar pero sin mejorar. El carry trade se modera: los rendimientos en dólares bajan de los niveles extremos de 2025 pero siguen atractivos. <strong>El punto de quiebre potencial:</strong> en 2028 comienzan los rembolsos al FMI (>USD 15.000 M/año). Si el riesgo país no baja lo suficiente para refinanciar, el estrés financiero reaparece. Argentina funciona, pero genera pocos empleos de calidad y sigue dependiente del clima (cosecha) y de la geopolítica (Brent).',
-    timeline:[
-      {d:'T2 2026',t:'Segunda revisión FMI',p:'Condiciones cumplidas parcialmente. Desembolso con matices.',c:'ok'},
-      {d:'S2 2026',t:'Inflación se estanca en 2-3%/mes',p:'Las tarifas y alquileres frenan la desinflación.',c:'warn'},
-      {d:'2027',t:'Elecciones legislativas',p:'Resultado incierto. Presión social por empleo y poder adquisitivo.',c:'warn'},
-      {d:'2028',t:'Muro de rembolsos FMI',p:'USD 15.000+ M/año entre FMI, bonos, organismos. Hay que refinanciar.',c:'warn'}
-    ],
-    parallel:'<strong>Paralelo histórico:</strong> Argentina 1996-1997 (Convertibilidad media). Indicadores macro sólidos, crecimiento visible, pero industrialización en retroceso y dependencia creciente del financiamiento externo. El modelo duró... hasta que el contexto externo cambió.'
-  };
-}
-
-function scenario_stress(s,score){
-  var trigger=s.carry===0?'La salida de capitales del carry trade es el detonante principal.':s.fiscal===0?'La pérdida del superávit fiscal destruye la credibilidad del programa.':'La combinación de presiones externas e internas erosiona la confianza.';
-  var fedNote=s.fed===2?' La suba de tasas de la Fed acelera la salida de capitales: invertir en bonos del Tesoro de EE.UU. al 5%+ es más seguro que el carry argentino.':'';
-  return {
-    title:'El carry se desarma',emoji:'⚠️',
-    color:'var(--red)',
-    prob:'Escenario de estrés — detonado por pérdida de confianza o shock externo',
-    risk:72,
-    gdp:'0 a +1%',infl:'35-50%',desemp:'8,5-10%',reservas:'Caen rápidamente',mora:'15-20%',deuda:'Insostenible sin refinanciamiento',
-    narr:'<strong>La crisis de confianza.</strong> '+trigger+fedNote+' El tipo de cambio se acerca a la banda superior y la presión no cede. El BCRA interviene quemando reservas (USD 500-1.000 M/semana). En pocas semanas, el peso se devalúa 20-35%. La inflación repunta a 4-5% mensual. La morosidad de las familias salta a 15-20%: los créditos en pesos se vuelven impagables en términos reales. El FMI condiciona el próximo desembolso a un ajuste adicional (fiscal o cambiario). Los depósitos en dólares empiezan a salir del sistema bancario. <strong>No es un default</strong>, pero es una crisis de confianza que obliga a un cambio de régimen: devaluación administrada, posible retorno de controles cambiarios (cepo light), y negociación tensa con el FMI. El superávit fiscal, si se mantiene, es el único amortiguador — pero si se pierde en la tormenta, el escenario pasa a ser la tormenta perfecta.',
-    timeline:[
-      {d:'Detonante',t:'Pérdida de confianza en el carry',p:'Los flujos se invierten en 2-3 semanas.',c:'warn'},
-      {d:'Semanas 1-4',t:'Devaluación 20-35%',p:'El BCRA quema USD 3.000-5.000 M de reservas.',c:'warn'},
-      {d:'Mes 2-3',t:'La inflación repunta',p:'4-5% mensual. Poder adquisitivo en caída.',c:'warn'},
-      {d:'Mes 4-6',t:'El FMI condiciona',p:'Renegociación de condiciones. Ajuste impuesto.',c:'warn'}
-    ],
-    parallel:'<strong>Paralelo histórico:</strong> Argentina abril-septiembre 2018. Mismo equipo económico (Caputo), mismo mecanismo (carry + peso apreciado). Resultado: devaluación de 100% en meses, préstamo FMI de USD 57.000 M, crisis social, derrota electoral. La diferencia esta vez: el superávit fiscal (+1,4% PBI vs -3,8% en 2017).'
-  };
-}
-
-function scenario_storm(s,score){
-  return {
-    title:'Tormenta perfecta',emoji:'🌑',
-    color:'var(--ink)',
-    prob:'Escenario extrême — conjonction de chocs externes et internes',
-    risk:92,
-    gdp:'-2 a -5%',infl:'60-100%+',desemp:'10-14%',reservas:'Se evaporan',mora:'>20%',deuda:'Reestructuración probable',
-    narr:'<strong>Todo sale mal al mismo tiempo.</strong> El Brent se desploma (resolución rápida de Irán) o explota y destruye la demanda mundial. La Fed endurece. La cosecha es mala. El superávit fiscal se quiebra. Los capitales huyen. Argentina pierde acceso al mercado de deuda. El FMI endurece sus condiciones hasta hacerlas políticamente inaceptables. Las reservas se evaporan en 2-3 meses. El peso se devalúa 50-80%. La inflación vuelve a superar el 5% mensual. La morosidad bancaria supera el 20%. Los depósitos en dólares se van del sistema. <strong>No es exactamente 2001</strong> — no hay convertibilidad rígida, y Vaca Muerta produce dólares reales — pero la estructura de la deuda (56% en divisas, rembolsos FMI concentrados 2030-2035) crea una vulnerabilidad comparable. El costo humano sería mayor: pobreza >45%, desempleo >10%, crisis bancaria posible.',
-    timeline:[
-      {d:'Detonante',t:'Shock externo + pérdida de confianza',p:'Combinación simultánea de factores adversos.',c:'warn'},
-      {d:'Mes 1-2',t:'Colapso del peso',p:'Devaluación 50-80%. Corrida bancaria parcial.',c:'warn'},
-      {d:'Mes 3-6',t:'Crisis social',p:'Inflación >60% anualizada. Pobreza en alza brutal.',c:'warn'},
-      {d:'S2 2026',t:'Reestructuración',p:'Negociación con el FMI. Posible cambio político.',c:'warn'}
-    ],
-    parallel:'<strong>Paralelo histórico:</strong> Argentina 2001-2002. Default soberano, corralito, 5 presidentes en 2 semanas, 25% de desempleo, 57% de pobreza. Pero también: la salida de la convertibilidad permitió un rebote espectacular (2003-2007). Cada crisis argentina produjo su propia reconstrucción.'
-  };
-}
-
-function render(sc){
-  var r=document.getElementById('result');
-  document.getElementById('resHead').style.background=sc.color;
-  document.getElementById('resTitle').textContent=sc.emoji+' '+sc.title;
-  document.getElementById('resProb').textContent=sc.prob;
-
-  var g=document.getElementById('gauges');
-  g.innerHTML='';
-  var metrics=[
-    {l:'PBI 2026',v:sc.gdp},{l:'Inflación anual',v:sc.infl},{l:'Desempleo',v:sc.desemp},
-    {l:'Reservas BCRA',v:sc.reservas},{l:'Morosidad familias',v:sc.mora},{l:'Deuda',v:sc.deuda}
+function renderVerdicts(st,s){
+  var b=document.getElementById('verdictBar');
+  var items=[
+    {l:'Reservas fin',v:s.reservas[7]+'B',c:s.reservas[7]>10?'green':s.reservas[7]>3?'gold':'red'},
+    {l:'Inflación fin',v:s.inflacion[7]+'%/m',c:s.inflacion[7]<2?'green':s.inflacion[7]<4?'gold':'red'},
+    {l:'Empleo ind.',v:s.empleo_ind[7],c:s.empleo_ind[7]>95?'green':s.empleo_ind[7]>85?'gold':'red'},
+    {l:'Morosidad fin',v:s.morosidad[7]+'%',c:s.morosidad[7]<10?'green':s.morosidad[7]<15?'gold':'red'},
+    {l:'Riesgo país',v:s.riesgo_pais[7],c:s.riesgo_pais[7]<600?'green':s.riesgo_pais[7]<1000?'gold':'red'},
+    {l:'Superávit',v:s.superavit[7]+'%',c:s.superavit[7]>0.5?'green':s.superavit[7]>0?'gold':'red'}
   ];
-  metrics.forEach(function(m){
-    var d=document.createElement('div');d.className='gauge';
-    d.innerHTML='<div class="gv">'+m.v+'</div><div class="gl">'+m.l+'</div>';
-    g.appendChild(d);
+  b.innerHTML='';
+  items.forEach(function(it){
+    var bg=it.c==='green'?'var(--green-l)':it.c==='gold'?'var(--gold-l)':'var(--red-l)';
+    var fg=it.c==='green'?'var(--green)':it.c==='gold'?'var(--gold)':'var(--red)';
+    b.innerHTML+='<div class="verdict" style="background:'+bg+'"><div class="vv" style="color:'+fg+'">'+it.v+'</div><div class="vl">'+it.l+'</div></div>';
   });
-
-  document.getElementById('riskDot').style.left='calc('+sc.risk+'% - 8px)';
-  document.getElementById('narr').innerHTML=sc.narr;
-
-  var tl=document.getElementById('timeline');tl.innerHTML='';
-  sc.timeline.forEach(function(s){
-    tl.innerHTML+='<div class="step '+s.c+'"><div class="sd">'+s.d+'</div><div class="st">'+s.t+'</div><div class="sp">'+s.p+'</div></div>';
-  });
-
-  document.getElementById('parallelBox').innerHTML='<div class="parallel">'+sc.parallel+'</div>';
-
-  r.classList.add('show');
-  r.scrollIntoView({behavior:'smooth',block:'start'});
 }
+
+function renderAlerts(alerts){
+  var box=document.getElementById('alerts');
+  box.innerHTML='';
+  alerts.sort(function(a,b){return a.q-b.q});
+  alerts.forEach(function(a){
+    box.innerHTML+='<div class="alert alert-'+a.type+'">'+a.text+'</div>';
+  });
+}
+
+function renderCharts(s){
+  var tc='#18181b',gc='rgba(24,24,27,.06)';
+  // Chart 1: Reserves + carry
+  if(chartR) chartR.destroy();
+  chartR=new Chart(document.getElementById('cReservas'),{type:'line',data:{labels:Q,datasets:[
+    {label:'Reservas netas (USD B)',data:s.reservas,borderColor:'#1e5f8a',backgroundColor:'rgba(30,95,138,.08)',fill:true,borderWidth:2.5,pointRadius:4,tension:.3},
+    {label:'Flujo carry (USD B/trim)',data:s.carry_flow,borderColor:'#a07d1c',borderWidth:2,borderDash:[5,3],pointRadius:3,tension:.3,fill:false}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},scales:{x:{grid:{display:false},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc}}}}});
+
+  // Chart 2: Inflation + ITCRM
+  if(chartI) chartI.destroy();
+  chartI=new Chart(document.getElementById('cInflacion'),{type:'line',data:{labels:Q,datasets:[
+    {label:'Inflación mensual (%)',data:s.inflacion,borderColor:'#c23a22',backgroundColor:'rgba(194,58,34,.06)',fill:true,borderWidth:2.5,pointRadius:4,tension:.3,yAxisID:'y'},
+    {label:'ITCRM (competitividad)',data:s.itcrm,borderColor:'#1e5f8a',borderWidth:2,pointRadius:3,tension:.3,fill:false,yAxisID:'y1'}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},scales:{x:{grid:{display:false},ticks:{color:tc}},y:{position:'left',grid:{color:gc},ticks:{color:tc,callback:function(v){return v+'%'}}},y1:{position:'right',grid:{display:false},ticks:{color:tc},min:60,max:160}}}});
+
+  // Chart 3: Employment + morosidad
+  if(chartS) chartS.destroy();
+  chartS=new Chart(document.getElementById('cSocial'),{type:'line',data:{labels:Q,datasets:[
+    {label:'Empleo industrial (2019=100)',data:s.empleo_ind,borderColor:'#2d7a4f',backgroundColor:'rgba(45,122,79,.06)',fill:true,borderWidth:2.5,pointRadius:4,tension:.3,yAxisID:'y'},
+    {label:'Morosidad familias (%)',data:s.morosidad,borderColor:'#c23a22',borderWidth:2,borderDash:[5,3],pointRadius:3,tension:.3,fill:false,yAxisID:'y1'}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},scales:{x:{grid:{display:false},ticks:{color:tc}},y:{position:'left',grid:{color:gc},ticks:{color:tc}},y1:{position:'right',grid:{display:false},ticks:{color:tc,callback:function(v){return v+'%'}}}}}});
+}
+
+function renderLoops(la){
+  var box=document.getElementById('loopsBox');
+  var loops=[
+    {id:'paradox',name:'🔄 Paradoja del éxito',desc:'Dólares entran → peso se aprecia → industria sufre'},
+    {id:'carry_spiral',name:'💸 Espiral del carry',desc:'Capitales salen → devaluación → más salida'},
+    {id:'industrial',name:'🏭 Declive industrial',desc:'Fábricas cierran → menos empleo → menos recaudación'},
+    {id:'fiscal_virtue',name:'✅ Virtud fiscal',desc:'Superávit → credibilidad → menos inflación'},
+    {id:'debt_spiral',name:'🏠 Deuda familias',desc:'Morosidad → restricción crédito → menos actividad'},
+    {id:'wall',name:'⏰ Muro de deuda',desc:'Vencimientos FMI/bonos llegan'}
+  ];
+  box.innerHTML='';
+  loops.forEach(function(l){
+    var active=la[l.id];
+    var cls=active?(l.id==='fiscal_virtue'?'loop positive':'loop active'):'loop';
+    box.innerHTML+='<div class="'+cls+'">'+l.name+'</div>';
+  });
+}
+
+function renderNarrative(st,s,alerts,la,params){
+  var box=document.getElementById('narrative');
+  var finalRes=s.reservas[7];
+  var finalInfl=s.inflacion[7];
+  var finalEmp=s.empleo_ind[7];
+  var finalMor=s.morosidad[7];
+  var finalRP=s.riesgo_pais[7];
+  var crisisCount=alerts.filter(function(a){return a.type==='red'}).length;
+
+  var tone='central';
+  if(crisisCount>=3||finalRes<0) tone='crisis';
+  else if(crisisCount>=1||finalMor>15||finalRes<5) tone='stress';
+  else if(finalRes>12&&finalInfl<2&&finalRP<600) tone='boom';
+
+  var titles={boom:'🌿 Consolidación favorable',central:'📊 El equilibrista avanza',stress:'⚠️ Estrés creciente',crisis:'🌑 Ruptura sistémica'};
+  var colors={boom:'var(--green)',central:'var(--gold)',stress:'var(--red)',crisis:'var(--ink)'};
+
+  var text='<h4 style="color:'+colors[tone]+'">'+titles[tone]+'</h4>';
+
+  if(tone==='boom'){
+    text+='<p>La combinación de factores produce un círculo virtuoso. ';
+    if(params.brent===2) text+='El Brent alto genera un superávit energético excepcional que inunda de dólares al país. ';
+    if(la.fiscal_virtue) text+='El superávit fiscal sostenido ancla las expectativas y la inflación converge a niveles bajos. ';
+    text+='Las reservas alcanzan USD '+finalRes+'B al final del período, lo que reduce el riesgo país a '+finalRP+' puntos y abre el acceso al mercado voluntario de deuda. ';
+    text+='<strong>Pero el paradoja persiste:</strong> el ITCRM termina en '+s.itcrm[7]+', lo que implica una Argentina cara. El empleo industrial cierra en '+finalEmp+' (2019=100). El modelo crece por arriba (energía, finanzas, agro) pero no por abajo (industria, empleo). Es un éxito macro que no se traduce en inclusión.</p>';
+  } else if(tone==='central'){
+    text+='<p>El programa se sostiene pero con tensiones crecientes. ';
+    text+='Las reservas llegan a USD '+finalRes+'B, suficiente para evitar una crisis pero sin holgura. ';
+    text+='La inflación cierra en '+finalInfl+'%/mes — una mejora real pero lejos del objetivo. ';
+    text+='La morosidad de las familias en '+finalMor+'% refleja un estrés silencioso en los hogares. ';
+    if(la.industrial) text+='La espiral industrial está activa: el ITCRM apreciado ('+s.itcrm[7]+') sigue destruyendo empleo manufacturero (índice: '+finalEmp+'). ';
+    if(la.wall) text+='<strong>El muro de deuda</strong> se hace visible hacia 2028: con un riesgo país de '+finalRP+' puntos, el refinanciamiento es '+(finalRP>900?'difícil y costoso':'posible pero tenso')+'. ';
+    text+='Es el escenario del "funciona pero no para todos".</p>';
+  } else if(tone==='stress'){
+    text+='<p>Las tensiones se acumulan y el modelo muestra fisuras. ';
+    if(la.carry_spiral) text+='<strong>La espiral del carry está activa:</strong> los capitales empiezan a salir (flujo: '+s.carry_flow[7]+'B/trim), presionando el tipo de cambio. ';
+    if(finalMor>15) text+='La morosidad de las familias supera el 15% ('+finalMor+'%), lo que activa una restricción crediticia que frena la actividad. ';
+    if(finalRes<5) text+='Las reservas caen a USD '+finalRes+'B — zona de peligro donde cualquier shock puede desatar una corrida. ';
+    text+='El riesgo país sube a '+finalRP+' puntos, encareciendo toda la deuda. ';
+    text+='<strong>Paralelo 2018:</strong> la combinación carry en desarme + reservas en baja + peso apreciado reproduce el patrón que llevó a la crisis de abril-septiembre 2018, con el mismo equipo económico (Caputo). La diferencia: el superávit fiscal ('+s.superavit[7]+'% PBI) si se mantiene.</p>';
+  } else {
+    text+='<p><strong>Ruptura sistémica.</strong> Múltiples bucles de retroalimentación negativa se activaron simultáneamente. ';
+    text+='Reservas: USD '+finalRes+'B. Inflación: '+finalInfl+'%/mes. Riesgo país: '+finalRP+'. Morosidad: '+finalMor+'%. ';
+    text+='En este escenario, el gobierno pierde su principal herramienta de estabilización. ';
+    if(s.superavit[7]<0) text+='El superávit fiscal se perdió, eliminando el ancla del programa. ';
+    text+='Se impone un cambio de régimen: devaluación forzada, posible retorno de controles cambiarios, renegociación con el FMI bajo presión. ';
+    text+='<strong>Paralelo 2001:</strong> no hay convertibilidad fija (eso es una diferencia crucial), y Vaca Muerta genera dólares reales. Pero la estructura de deuda y la dinámica social reproducen un patrón de ruptura que Argentina conoce demasiado bien.</p>';
+  }
+
+  text+='<p style="font-size:11px;color:var(--mut);margin-top:12px"><strong>Nota:</strong> este simulador modela interacciones simplificadas entre variables macroeconómicas. Los resultados son indicativos y no constituyen pronósticos. Los bucles de retroalimentación son estilizados; la realidad es más compleja y está sujeta a shocks imprevisibles.</p>';
+
+  box.innerHTML=text;
+}
+
+// Init
+run();
 </script>
 </body>
 </html>
