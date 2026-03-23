@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "last_updated": "2026-03-23",
+    "sources": "INDEC, BCRA, FMI, Sec. Finanzas, EIA, CAEM/BCR",
+    "currency": "USD millions unless noted"
+  },
+  "flash": {
+    "pbi_2025": {"v": "+4,4%", "src": "INDEC PBI 20/03/26", "tone": "green"},
+    "superavit": {"v": "+1,4% PBI", "src": "Sec. Hacienda", "tone": "green"},
+    "inflacion_mensual": {"v": "2,4%", "label": "dic. 2025", "src": "INDEC IPC", "tone": "green"},
+    "desempleo": {"v": "7,5%", "label": "T4-2025", "src": "INDEC EPH 18/03/26", "tone": "red"},
+    "morosidad": {"v": "10,6%", "label": "ene. 2026", "src": "BCRA Inf. Bancos", "tone": "red"},
+    "empleos_industria": {"v": "-100K", "label": "nov23-feb26", "src": "UBA CEHEAL 10/03/26", "tone": "red"},
+    "petroleo": {"v": "882K bbl/d", "label": "ene. 2026 récord", "src": "Sec. Energía", "tone": "blue"},
+    "superavit_energetico": {"v": "$7.815M", "label": "2025 récord", "src": "INDEC", "tone": "gold"}
+  },
+  "ipc_vs_dolar": {
+    "labels": ["Dic-23","Mar-24","Jun-24","Sep-24","Dic-24","Mar-25","Jun-25","Sep-25","Dic-25","Feb-26"],
+    "ipc_acum": [0,51,90,130,175,210,245,270,300,320],
+    "dolar_acum": [0,2,4,6,12,17,22,28,35,40]
+  },
+  "itcrm": {
+    "labels": ["Nov-23","Dic-23","Feb-24","Abr-24","Jun-24","Ago-24","Oct-24","Dic-24","Feb-25","Abr-25","Jun-25","Ago-25","Oct-25","Dic-25","Feb-26"],
+    "values": [85,160,130,115,105,98,90,85,79,95,100,102,100,98,100],
+    "promedio_historico": 121,
+    "equilibrio_inferior": 105
+  },
+  "bigmac": {
+    "labels": ["2019","2020","2021","2022","2023","2024","2025","2026"],
+    "argentina": [2.0,2.4,2.4,3.5,3.8,5.1,5.9,5.6],
+    "eeuu": [5.7,5.7,5.7,5.2,5.4,5.7,5.8,6.1],
+    "brasil": [4.8,3.9,3.6,3.8,4.6,4.7,4.3,4.0]
+  },
+  "bdp_trimestral": {
+    "labels": ["T1-24","T2-24","T3-24","T4-24","T1-25","T2-25","T3-25"],
+    "cta_corriente": [176,-903,-1200,-2100,-5191,-3016,-1581],
+    "cta_financiera": [2500,1800,1150,4061,7229,2835,2149]
+  },
+  "bcra_mensual": {
+    "labels": ["Ene-25","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic","Ene-26"],
+    "bienes_neto": [425,1100,1800,2200,2800,3100,2500,1900,1500,1200,1600,1800,2014],
+    "servicios_neto": [-1187,-900,-700,-500,-600,-800,-900,-1000,-950,-800,-700,-800,-946],
+    "ingreso_primario": [-911,-800,-700,-750,-600,-500,-700,-800,-900,-1000,-1200,-1500,-2007]
+  },
+  "comercio_2025": {
+    "exportaciones_total": 87111,
+    "importaciones_total": 75000,
+    "complejos": {
+      "labels": ["Soja","Petróleo","Automotriz","Maíz","Oro/plata","Carne","Trigo","Pesca","Lácteo","Otros"],
+      "values": [21442,11772,8784,6660,4886,3500,3050,2091,1522,23404],
+      "pct": [24.6,13.5,10.1,7.6,5.6,4.0,3.5,2.4,1.7,26.9]
+    },
+    "balance_anual": {
+      "labels": ["2022","2023","2024","2025"],
+      "exports": [88446,66788,79711,87111],
+      "imports": [81523,60831,59077,75000],
+      "superavit": [6923,5957,20634,12111]
+    }
+  },
+  "turismo": {
+    "personas_anual": {
+      "labels": ["2017","2018","2019","2020","2021","2022","2023","2024","2025"],
+      "emisivo": [9.2,8.5,8.8,1.5,2.2,5.3,8.3,8.7,11.9],
+      "receptivo": [6.7,6.9,7.4,1.2,1.8,4.5,6.6,6.3,5.3]
+    },
+    "deficit_usd": {
+      "labels": ["2017","2018","2019","2022","2023","2024","2025"],
+      "indec": [-3200,-2800,-2100,-1600,-2400,-3100,-4054],
+      "ieral": [null,null,null,null,null,-5500,-7750]
+    }
+  },
+  "industria": {
+    "indice_100": {
+      "labels": ["2017","2018","2019","2020","2021","2022","2023","2024","H1-25","T4-25","Ene-26"],
+      "values": [109,103.5,100,92.5,107.1,111.5,111.2,101.0,101.8,96.0,93.0]
+    },
+    "capacidad": {
+      "labels": ["Ene-23","Abr","Jul","Oct","Ene-24","Abr","Jul","Oct","Ene-25","Abr","Jul","Oct","Ene-26"],
+      "general": [63.5,66.5,64.8,66.2,54.2,56.8,60.1,62.5,60.4,58.2,56.9,55.3,53.6],
+      "textil": [55,58,52,54,38,35,33,32,34,31,30,29,29]
+    },
+    "pbi_composicion": {
+      "labels": ["2019","2020","2021","2022","2023","2024","2025 (est.)"],
+      "industria": [18.5,17.8,18.9,19.0,19.4,16.5,14.0],
+      "comercio": [19.5,18.0,19.2,19.5,19.9,19.0,18.5],
+      "agro": [6.8,7.2,7.0,6.5,6.9,7.5,7.2],
+      "minas_energia": [4.2,4.0,4.3,4.8,4.6,5.2,5.8],
+      "int_financiera": [4.5,4.8,4.6,4.5,4.8,5.5,6.2],
+      "construccion": [4.5,3.8,4.5,4.8,4.7,3.9,4.2],
+      "otros_servicios": [41.5,44.4,41.5,40.9,39.7,42.4,44.1]
+    },
+    "sectores_burbuja": {
+      "labels": ["Int. financiera","Minas/canteras","Hoteles","Agro","Construcción","Comercio","Industria","Industria T4","Pesca"],
+      "crecimiento": [24.7,8.0,7.4,6.2,4.3,3.6,0.8,-5.0,-15.2],
+      "peso_pbi": [5,5,3,7,5,20,14,14,1]
+    }
+  },
+  "empleo": {
+    "variacion_pp": {
+      "labels": ["Transporte","Hoteles","Comercio","Otros serv.","Construcción","Adm. pub.","Industria manuf."],
+      "values": [1.2,0.9,0.7,0.3,-0.6,-1.1,-1.3],
+      "nota": "INDEC EPH T4-2023 vs T4-2025. Industria: -1,3 p.p. ≈ -100.000 puestos (UBA CEHEAL 10/03/26)"
+    },
+    "cifras_clave": {
+      "desempleo_t4_2025": 7.5,
+      "presion_real_M": 5,
+      "informalidad_pct": 43,
+      "empleo_formal_var": -0.8
+    }
+  },
+  "morosidad": {
+    "labels": ["Dic-24","Ene-25","Mar","May","Jul","Sep","Nov","Dic-25","Ene-26"],
+    "bancos": [2.5,2.67,3.5,4.5,5.8,7.0,8.5,9.3,10.6],
+    "no_bancarias": [8,8.5,11,14,17,20,23,25,27]
+  },
+  "carry_ied": {
+    "labels": ["T1 2025","T2 2025","T3 2025"],
+    "cta_financiera": [7229,2835,2149],
+    "ied_neta": [-800,-600,-100]
+  },
+  "deuda": {
+    "externa_bruta": {
+      "labels": ["T1-24","T2-24","T3-24","T4-24","T1-25","T2-25","T3-25"],
+      "values": [266981,270802,272393,277257,278073,305043,316935]
+    },
+    "composicion_moneda": {
+      "labels": ["Dólares","DEG/FMI","Yuan","Euro","Peso","Otros"],
+      "values": [67.1,20.3,6.5,4.0,1.6,0.5],
+      "montos": [212602,64321,20455,12741,5217,1599]
+    },
+    "fmi": {
+      "programa": "EFF USD 20.000 M",
+      "tasa": "5,63%",
+      "gracia_anios": 4.5,
+      "primer_rembolso": "octubre 2029",
+      "desembolsos_2025": 15000,
+      "deuda_pre": 41400,
+      "deuda_post": 61400
+    }
+  },
+  "vaca_muerta": {
+    "produccion": {
+      "labels": ["2019","2020","2021","2022","2023","2024","2025","Ene-26"],
+      "total_kbbl": [525,490,530,580,620,720,810,882],
+      "vm_kbbl": [180,200,250,310,370,460,575,590]
+    },
+    "brent": {
+      "pre_iran": 71,
+      "pico_mar_2026": 120,
+      "actual_mar_2026": 108,
+      "eia_forecast_2026": 78.84,
+      "breakeven_vm": "35-40"
+    },
+    "superavit_energetico_2025": 7815,
+    "exports_energia_2025": 11086
+  },
+  "litio": {
+    "exports_usd_M": {"2024": 505, "2025": 900, "2026p": 1050},
+    "precio_ton": {"2022": 80000, "2024": 9000, "2025": 8500},
+    "pct_exports_total": 1.0,
+    "nota": "El litio pesa ~1% de las exportaciones. El oro/plata (USD 4.886 M) pesa 5x más."
+  }
+}

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Argentina 2026-2028 — Simulador de escenarios</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Archivo:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ed;--ink:#1c1a17;--paper:#fffdf9;--cream:#f0ece5;--red:#b02a1a;--red-l:#f5ddd8;--blue:#1a4a6e;--blue-l:#d5e4ef;--green:#2a6e42;--green-l:#d6eddf;--gold:#8a6b1a;--gold-l:#f5ecd0;--mut:#8a837a;--brd:#d6d0c6;--sf:'Playfair Display',Georgia,serif;--sn:'Archivo',system-ui,sans-serif;--mn:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sn);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7}
+::selection{background:var(--red-l)}
+
+.hero{background:var(--ink);color:var(--bg);padding:48px 24px 36px;text-align:center}
+.hero h1{font-family:var(--sf);font-size:clamp(1.5rem,4vw,2.4rem);font-weight:400;margin-bottom:8px}
+.hero h1 em{font-style:italic;color:#e8c47a}
+.hero p{font-size:14px;color:rgba(245,242,237,.5);max-width:600px;margin:0 auto}
+
+.w{max-width:900px;margin:0 auto;padding:24px}
+
+/* PARAMETER CARDS */
+.params{display:grid;grid-template-columns:1fr;gap:16px;margin:24px 0}
+.pm{background:var(--paper);border:1px solid var(--brd);border-radius:10px;padding:20px}
+.pm-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.pm-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.pm-title{font-family:var(--sf);font-size:16px;font-weight:700}
+.pm-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:10px;color:#fff}
+.pm-desc{font-size:12px;color:var(--mut);margin-bottom:14px;line-height:1.6}
+.pm-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pm-opt{border:2px solid var(--brd);border-radius:8px;padding:10px 8px;text-align:center;cursor:pointer;transition:.2s;font-size:12px;line-height:1.4;background:var(--paper)}
+.pm-opt:hover{border-color:var(--gold);background:var(--gold-l)}
+.pm-opt.sel{border-color:var(--gold);background:var(--gold);color:#fff;font-weight:700}
+.pm-opt .val{font-family:var(--mn);font-size:15px;font-weight:700;display:block;margin-bottom:2px}
+
+/* RESULT */
+.result{margin-top:32px;opacity:0;transform:translateY(20px);transition:.5s}
+.result.show{opacity:1;transform:translateY(0)}
+.res-header{padding:28px 24px;border-radius:12px 12px 0 0;color:#fff}
+.res-header h2{font-family:var(--sf);font-size:clamp(1.2rem,3vw,1.7rem);margin-bottom:4px}
+.res-header .prob{font-size:13px;opacity:.8}
+.res-body{background:var(--paper);border:1px solid var(--brd);border-top:0;border-radius:0 0 12px 12px;padding:24px}
+
+/* GAUGES */
+.gauges{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:20px 0}
+.gauge{text-align:center;padding:14px 8px;border-radius:8px;background:var(--cream)}
+.gauge .gv{font-family:var(--mn);font-size:22px;font-weight:700}
+.gauge .gl{font-size:10px;color:var(--mut);margin-top:2px}
+
+/* NARRATIVE */
+.narr{font-size:14px;line-height:1.8;margin:18px 0}
+.narr strong{color:var(--gold)}
+
+/* RISK BAR */
+.risk-bar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--green),var(--gold),var(--red));position:relative;margin:16px 0 8px}
+.risk-dot{width:16px;height:16px;border-radius:50%;background:var(--ink);border:3px solid #fff;position:absolute;top:-4px;transition:.4s;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+
+/* TIMELINE */
+.tl-mini{border-left:2px solid var(--brd);padding-left:16px;margin:18px 0}
+.tl-mini .step{margin-bottom:14px;position:relative}
+.tl-mini .step::before{content:'';position:absolute;left:-21px;top:6px;width:10px;height:10px;border-radius:50%;border:2px solid var(--brd);background:var(--paper)}
+.tl-mini .step.warn::before{background:var(--red);border-color:var(--red)}
+.tl-mini .step.ok::before{background:var(--green);border-color:var(--green)}
+.tl-mini .sd{font-size:10px;font-weight:700;color:var(--mut);letter-spacing:1px}
+.tl-mini .st{font-size:13px;font-weight:600}
+.tl-mini .sp{font-size:12px;color:var(--mut)}
+
+.parallel{background:var(--blue-l);border-left:3px solid var(--blue);padding:14px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:13px}
+.parallel strong{color:var(--blue)}
+
+.src{font-size:10px;color:var(--mut);display:block;margin-top:16px;border-top:1px solid var(--brd);padding-top:8px}
+
+.reset-btn{display:block;margin:24px auto;background:none;border:1px solid var(--brd);padding:8px 20px;border-radius:20px;font-family:var(--sn);font-size:12px;color:var(--mut);cursor:pointer}
+.reset-btn:hover{background:var(--cream)}
+
+@media(min-width:700px){.params{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<div style="position:fixed;top:0;left:0;right:0;z-index:250;background:rgba(28,26,23,.95);padding:6px 16px;display:flex;align-items:center;gap:12px;font-size:12px">
+  <a href="../index.html" style="color:#e8c47a;text-decoration:none;font-weight:700">← Hub</a>
+  <a href="radiografia.html" style="color:rgba(245,242,237,.5);text-decoration:none">Informe completo</a>
+</div>
+
+<header class="hero" style="padding-top:68px">
+  <h1>Argentina 2026-2028<br><em>Simulador de escenarios</em></h1>
+  <p>Elegí una combinación de 5 parámetros y obtené el escenario más probable con sus consecuencias. Basado en datos del informe "Radiografía económica" (marzo 2026).</p>
+</header>
+
+<div class="w">
+
+<p style="font-size:14px;color:var(--mut);margin-bottom:8px;text-align:center">Seleccioná una opción en cada parámetro. El escenario se actualiza automáticamente.</p>
+
+<div class="params" id="params">
+
+  <!-- P1: BRENT -->
+  <div class="pm">
+    <div class="pm-head">
+      <div class="pm-icon" style="background:var(--blue-l)">🛢️</div>
+      <div><div class="pm-title">Precio del petróleo (Brent)</div><span class="pm-tag" style="background:var(--blue)">EXTERNO</span></div>
+    </div>
+    <div class="pm-desc">Determinado por el conflicto en Irán, la OPEP+ y la demanda global. Impacta directamente el superávit energético de Vaca Muerta y la balanza comercial.</div>
+    <div class="pm-opts" data-param="brent">
+      <div class="pm-opt" data-val="0" onclick="sel(this)"><span class="val">$55-65</span>Irán resuelto rápido, exceso de oferta</div>
+      <div class="pm-opt" data-val="1" onclick="sel(this)"><span class="val">$75-90</span>Tensión moderada, equilibrio</div>
+      <div class="pm-opt" data-val="2" onclick="sel(this)"><span class="val">$100+</span>Conflicto extendido, Ormuz restringido</div>
+    </div>
+  </div>
+
+  <!-- P2: FED -->
+  <div class="pm">
+    <div class="pm-head">
+      <div class="pm-icon" style="background:var(--blue-l)">🏦</div>
+      <div><div class="pm-title">Tasa de la Reserva Federal (EE.UU.)</div><span class="pm-tag" style="background:var(--blue)">EXTERNO</span></div>
+    </div>
+    <div class="pm-desc">Si la Fed baja tasas, el carry trade argentino es más atractivo (más capitales entran). Si las sube, los capitales se van a EE.UU. donde es más seguro.</div>
+    <div class="pm-opts" data-param="fed">
+      <div class="pm-opt" data-val="0" onclick="sel(this)"><span class="val">Baja a 2,5-3%</span>Dovish, recortes agresivos</div>
+      <div class="pm-opt" data-val="1" onclick="sel(this)"><span class="val">Estable 3,5-4%</span>Pausa cautelosa</div>
+      <div class="pm-opt" data-val="2" onclick="sel(this)"><span class="val">Sube >4%</span>Hawkish, inflación EE.UU.</div>
+    </div>
+  </div>
+
+  <!-- P3: COSECHA -->
+  <div class="pm">
+    <div class="pm-head">
+      <div class="pm-icon" style="background:var(--green-l)">🌾</div>
+      <div><div class="pm-title">Cosecha (soja, maíz, trigo)</div><span class="pm-tag" style="background:var(--green)">MIXTO</span></div>
+    </div>
+    <div class="pm-desc">La soja es el 25% de las exportaciones. Una buena cosecha trae dólares; una sequía los quita. Depende del clima (La Niña/El Niño) y de los precios internacionales.</div>
+    <div class="pm-opts" data-param="cosecha">
+      <div class="pm-opt" data-val="0" onclick="sel(this)"><span class="val">Mala</span>Sequía o precios en baja</div>
+      <div class="pm-opt" data-val="1" onclick="sel(this)"><span class="val">Normal</span>Cosecha promedio</div>
+      <div class="pm-opt" data-val="2" onclick="sel(this)"><span class="val">Récord</span>Clima ideal + precios altos</div>
+    </div>
+  </div>
+
+  <!-- P4: FISCAL -->
+  <div class="pm">
+    <div class="pm-head">
+      <div class="pm-icon" style="background:var(--gold-l)">📊</div>
+      <div><div class="pm-title">Superávit fiscal</div><span class="pm-tag" style="background:var(--gold)">INTERNO</span></div>
+    </div>
+    <div class="pm-desc">El ancla del programa Milei. Se mantiene recortando subsidios, obra pública y empleo estatal. Si se pierde (por presión social o electoral), el programa entero pierde credibilidad.</div>
+    <div class="pm-opts" data-param="fiscal">
+      <div class="pm-opt" data-val="2" onclick="sel(this)"><span class="val">>1% PBI</span>Mantenido con firmeza</div>
+      <div class="pm-opt" data-val="1" onclick="sel(this)"><span class="val">0-1% PBI</span>Se erosiona (presión social)</div>
+      <div class="pm-opt" data-val="0" onclick="sel(this)"><span class="val">Déficit</span>Se pierde (año electoral)</div>
+    </div>
+  </div>
+
+  <!-- P5: CAPITALES -->
+  <div class="pm">
+    <div class="pm-head">
+      <div class="pm-icon" style="background:var(--red-l)">💸</div>
+      <div><div class="pm-title">Flujos de capital (carry trade)</div><span class="pm-tag" style="background:var(--red)">INTERNO</span></div>
+    </div>
+    <div class="pm-desc">Los inversores ponen dólares en pesos para ganar tasas altas. Si se van todos juntos, el peso se devalúa bruscamente. Depende de la confianza, de la Fed y del tipo de cambio.</div>
+    <div class="pm-opts" data-param="carry">
+      <div class="pm-opt" data-val="2" onclick="sel(this)"><span class="val">Entrada fuerte</span>Confianza alta, tasas atractivas</div>
+      <div class="pm-opt" data-val="1" onclick="sel(this)"><span class="val">Moderado</span>Flujos estables, sin boom</div>
+      <div class="pm-opt" data-val="0" onclick="sel(this)"><span class="val">Salida</span>Desarme, fuga de capitales</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- RESULT -->
+<div class="result" id="result">
+  <div class="res-header" id="resHead">
+    <h2 id="resTitle">...</h2>
+    <div class="prob" id="resProb">...</div>
+  </div>
+  <div class="res-body">
+    <div style="font-size:11px;font-weight:700;color:var(--mut);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Indicadores proyectados 2026-2027</div>
+    <div class="gauges" id="gauges"></div>
+    <div style="font-size:11px;font-weight:700;color:var(--mut);letter-spacing:1px;text-transform:uppercase;margin:18px 0 6px">Nivel de riesgo</div>
+    <div class="risk-bar"><div class="risk-dot" id="riskDot"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--mut)"><span>Bajo</span><span>Moderado</span><span>Elevado</span><span>Crítico</span></div>
+    <div style="font-size:11px;font-weight:700;color:var(--mut);letter-spacing:1px;text-transform:uppercase;margin:22px 0 6px">Lo que pasa en este escenario</div>
+    <div class="narr" id="narr"></div>
+    <div style="font-size:11px;font-weight:700;color:var(--mut);letter-spacing:1px;text-transform:uppercase;margin:18px 0 6px">Cronología probable</div>
+    <div class="tl-mini" id="timeline"></div>
+    <div id="parallelBox"></div>
+  </div>
+</div>
+
+<button class="reset-btn" onclick="reset()">↺ Reiniciar parámetros</button>
+
+<p class="src">Simulador basado en datos oficiales (INDEC, BCRA, FMI, EIA) y análisis del informe "Radiografía económica de Argentina" (marzo 2026). Las proyecciones son indicativas y reflejan la interacción estimada de las variables seleccionadas. No constituyen asesoramiento financiero. Elaboración propia.</p>
+
+</div>
+
+<script>
+var state={brent:null,fed:null,cosecha:null,fiscal:null,carry:null};
+
+function sel(el){
+  var p=el.parentElement.dataset.param;
+  var v=parseInt(el.dataset.val);
+  state[p]=v;
+  el.parentElement.querySelectorAll('.pm-opt').forEach(function(o){o.classList.remove('sel')});
+  el.classList.add('sel');
+  if(state.brent!==null&&state.fed!==null&&state.cosecha!==null&&state.fiscal!==null&&state.carry!==null){
+    compute();
+  }
+}
+
+function reset(){
+  state={brent:null,fed:null,cosecha:null,fiscal:null,carry:null};
+  document.querySelectorAll('.pm-opt').forEach(function(o){o.classList.remove('sel')});
+  document.getElementById('result').classList.remove('show');
+}
+
+function compute(){
+  var s=state;
+  // Score: 0=worst, 10=best
+  var score=s.brent+s.fed+s.cosecha+s.fiscal+s.carry; // 0-10
+  // External stress: low brent + high fed = bad
+  var extStress=(2-s.brent)+(s.fed===2?2:s.fed===1?1:0)+(2-s.cosecha);
+  // Internal fragility: no fiscal + carry outflow = bad
+  var intFrag=(2-s.fiscal)+(2-s.carry);
+
+  var sc={};
+  if(score>=8){
+    sc=scenario_boom(s,score);
+  } else if(score>=5){
+    if(intFrag>=3) sc=scenario_stress(s,score);
+    else sc=scenario_central(s,score);
+  } else if(score>=3){
+    if(extStress>=5) sc=scenario_storm(s,score);
+    else sc=scenario_stress(s,score);
+  } else {
+    sc=scenario_storm(s,score);
+  }
+
+  render(sc);
+}
+
+function scenario_boom(s,score){
+  var brentHigh=s.brent===2;
+  var energyBonus=brentHigh?' El Brent alto (>$100) lleva el superávit energético a USD 10.000-12.000 M — récord absoluto. Vaca Muerta se convierte en el motor indiscutido de la economía.':' El precio del petróleo favorable sostiene un superávit energético de USD 8.000-9.000 M.';
+  return {
+    title:'El viento de cola',emoji:'🌿',
+    color:'var(--green)',
+    prob:'Escenario favorable — requiere que la mayoría de los factores se alineen positivamente',
+    risk:15,
+    gdp:'+4 a 5%',infl:'18-22%',desemp:'6,5-7%',reservas:'Suben a USD 50-55.000 M',mora:'8-10%',deuda:'Estable, refinanciable',
+    narr:'<strong>Lo mejor que puede pasar.</strong> La combinación de factores externos favorables y disciplina interna permite a Argentina consolidar su estabilización.'+energyBonus+' Las reservas del BCRA crecen rápidamente. El riesgo país baja a 500-600 puntos, lo que abre el acceso al mercado voluntario de deuda. El crédito se expande sin generar burbujas. La inflación converge a niveles de un dígito alto mensual (~1,5-2%). <strong>La contracara:</strong> la industria no se recupera — se estabiliza en un nivel bajo. El empleo formal crece poco. El modelo funciona macro pero es excluyente: energía, agro y finanzas prosperan mientras que el empleo industrial sigue cayendo. Argentina se consolida como exportador de materias primas con servicios financieros sofisticados, pero con un tejido productivo debilitado. Es el escenario que vende el gobierno y que proyecta el FMI.',
+    timeline:[
+      {d:'T2 2026',t:'Cosecha gruesa récord',p:'Entrada fuerte de dólares agro. Reservas suben.',c:'ok'},
+      {d:'S2 2026',t:'Reformas en el Congreso',p:'Tributaria, laboral. Mejora clima inversor.',c:'ok'},
+      {d:'2027',t:'Elecciones legislativas',p:'Oficialismo consolida bloque. Continuidad del programa.',c:'ok'},
+      {d:'2028',t:'Inicio rembolsos FMI',p:'Perfil manejable si riesgo país <600. Refinanciamiento posible.',c:'ok'}
+    ],
+    parallel:'<strong>Paralelo histórico:</strong> Chile 1985-1990 post-crisis de deuda. Estabilización macro exitosa con modelo exportador de commodities, pero alto costo social y desigualdad persistente. El crecimiento no benefició a todos por igual.'
+  };
+}
+
+function scenario_central(s,score){
+  var brentMid=s.brent===1;
+  var energyNote=s.brent===2?'El Brent alto es un bonus inesperado que compensa parcialmente las fragilidades internas.':s.brent===0?'El Brent bajo comprime el superávit energético a USD 5.000-6.000 M — menos colchón.':'El superávit energético se mantiene en ~USD 7.000-8.000 M, pilar del modelo.';
+  return {
+    title:'El equilibrista avanza, pero cojeando',emoji:'📊',
+    color:'var(--gold)',
+    prob:'Escenario central — prolongación de la trayectoria actual con ajustes',
+    risk:40,
+    gdp:'+2,5 a 3,5%',infl:'22-28%',desemp:'7-8%',reservas:'Suben gradualmente',mora:'10-13%',deuda:'Crece moderadamente',
+    narr:'<strong>Lo más probable.</strong> El programa funciona en lo macro pero genera tensiones sociales crecientes. '+energyNote+' La inflación sigue bajando pero más lento de lo esperado (el IPC de febrero 2026 ya mostró 2,9%, empujado por tarifas). El desempleo no baja del 7% porque el crecimiento viene de sectores que emplean poca gente (energía, minería, finanzas). La industria sigue perdiendo empleo (estimación: 15.000-25.000 puestos más en 2026). La morosidad de las familias se estabiliza en zona alta (10-13%) sin explotar pero sin mejorar. El carry trade se modera: los rendimientos en dólares bajan de los niveles extremos de 2025 pero siguen atractivos. <strong>El punto de quiebre potencial:</strong> en 2028 comienzan los rembolsos al FMI (>USD 15.000 M/año). Si el riesgo país no baja lo suficiente para refinanciar, el estrés financiero reaparece. Argentina funciona, pero genera pocos empleos de calidad y sigue dependiente del clima (cosecha) y de la geopolítica (Brent).',
+    timeline:[
+      {d:'T2 2026',t:'Segunda revisión FMI',p:'Condiciones cumplidas parcialmente. Desembolso con matices.',c:'ok'},
+      {d:'S2 2026',t:'Inflación se estanca en 2-3%/mes',p:'Las tarifas y alquileres frenan la desinflación.',c:'warn'},
+      {d:'2027',t:'Elecciones legislativas',p:'Resultado incierto. Presión social por empleo y poder adquisitivo.',c:'warn'},
+      {d:'2028',t:'Muro de rembolsos FMI',p:'USD 15.000+ M/año entre FMI, bonos, organismos. Hay que refinanciar.',c:'warn'}
+    ],
+    parallel:'<strong>Paralelo histórico:</strong> Argentina 1996-1997 (Convertibilidad media). Indicadores macro sólidos, crecimiento visible, pero industrialización en retroceso y dependencia creciente del financiamiento externo. El modelo duró... hasta que el contexto externo cambió.'
+  };
+}
+
+function scenario_stress(s,score){
+  var trigger=s.carry===0?'La salida de capitales del carry trade es el detonante principal.':s.fiscal===0?'La pérdida del superávit fiscal destruye la credibilidad del programa.':'La combinación de presiones externas e internas erosiona la confianza.';
+  var fedNote=s.fed===2?' La suba de tasas de la Fed acelera la salida de capitales: invertir en bonos del Tesoro de EE.UU. al 5%+ es más seguro que el carry argentino.':'';
+  return {
+    title:'El carry se desarma',emoji:'⚠️',
+    color:'var(--red)',
+    prob:'Escenario de estrés — detonado por pérdida de confianza o shock externo',
+    risk:72,
+    gdp:'0 a +1%',infl:'35-50%',desemp:'8,5-10%',reservas:'Caen rápidamente',mora:'15-20%',deuda:'Insostenible sin refinanciamiento',
+    narr:'<strong>La crisis de confianza.</strong> '+trigger+fedNote+' El tipo de cambio se acerca a la banda superior y la presión no cede. El BCRA interviene quemando reservas (USD 500-1.000 M/semana). En pocas semanas, el peso se devalúa 20-35%. La inflación repunta a 4-5% mensual. La morosidad de las familias salta a 15-20%: los créditos en pesos se vuelven impagables en términos reales. El FMI condiciona el próximo desembolso a un ajuste adicional (fiscal o cambiario). Los depósitos en dólares empiezan a salir del sistema bancario. <strong>No es un default</strong>, pero es una crisis de confianza que obliga a un cambio de régimen: devaluación administrada, posible retorno de controles cambiarios (cepo light), y negociación tensa con el FMI. El superávit fiscal, si se mantiene, es el único amortiguador — pero si se pierde en la tormenta, el escenario pasa a ser la tormenta perfecta.',
+    timeline:[
+      {d:'Detonante',t:'Pérdida de confianza en el carry',p:'Los flujos se invierten en 2-3 semanas.',c:'warn'},
+      {d:'Semanas 1-4',t:'Devaluación 20-35%',p:'El BCRA quema USD 3.000-5.000 M de reservas.',c:'warn'},
+      {d:'Mes 2-3',t:'La inflación repunta',p:'4-5% mensual. Poder adquisitivo en caída.',c:'warn'},
+      {d:'Mes 4-6',t:'El FMI condiciona',p:'Renegociación de condiciones. Ajuste impuesto.',c:'warn'}
+    ],
+    parallel:'<strong>Paralelo histórico:</strong> Argentina abril-septiembre 2018. Mismo equipo económico (Caputo), mismo mecanismo (carry + peso apreciado). Resultado: devaluación de 100% en meses, préstamo FMI de USD 57.000 M, crisis social, derrota electoral. La diferencia esta vez: el superávit fiscal (+1,4% PBI vs -3,8% en 2017).'
+  };
+}
+
+function scenario_storm(s,score){
+  return {
+    title:'Tormenta perfecta',emoji:'🌑',
+    color:'var(--ink)',
+    prob:'Escenario extrême — conjonction de chocs externes et internes',
+    risk:92,
+    gdp:'-2 a -5%',infl:'60-100%+',desemp:'10-14%',reservas:'Se evaporan',mora:'>20%',deuda:'Reestructuración probable',
+    narr:'<strong>Todo sale mal al mismo tiempo.</strong> El Brent se desploma (resolución rápida de Irán) o explota y destruye la demanda mundial. La Fed endurece. La cosecha es mala. El superávit fiscal se quiebra. Los capitales huyen. Argentina pierde acceso al mercado de deuda. El FMI endurece sus condiciones hasta hacerlas políticamente inaceptables. Las reservas se evaporan en 2-3 meses. El peso se devalúa 50-80%. La inflación vuelve a superar el 5% mensual. La morosidad bancaria supera el 20%. Los depósitos en dólares se van del sistema. <strong>No es exactamente 2001</strong> — no hay convertibilidad rígida, y Vaca Muerta produce dólares reales — pero la estructura de la deuda (56% en divisas, rembolsos FMI concentrados 2030-2035) crea una vulnerabilidad comparable. El costo humano sería mayor: pobreza >45%, desempleo >10%, crisis bancaria posible.',
+    timeline:[
+      {d:'Detonante',t:'Shock externo + pérdida de confianza',p:'Combinación simultánea de factores adversos.',c:'warn'},
+      {d:'Mes 1-2',t:'Colapso del peso',p:'Devaluación 50-80%. Corrida bancaria parcial.',c:'warn'},
+      {d:'Mes 3-6',t:'Crisis social',p:'Inflación >60% anualizada. Pobreza en alza brutal.',c:'warn'},
+      {d:'S2 2026',t:'Reestructuración',p:'Negociación con el FMI. Posible cambio político.',c:'warn'}
+    ],
+    parallel:'<strong>Paralelo histórico:</strong> Argentina 2001-2002. Default soberano, corralito, 5 presidentes en 2 semanas, 25% de desempleo, 57% de pobreza. Pero también: la salida de la convertibilidad permitió un rebote espectacular (2003-2007). Cada crisis argentina produjo su propia reconstrucción.'
+  };
+}
+
+function render(sc){
+  var r=document.getElementById('result');
+  document.getElementById('resHead').style.background=sc.color;
+  document.getElementById('resTitle').textContent=sc.emoji+' '+sc.title;
+  document.getElementById('resProb').textContent=sc.prob;
+
+  var g=document.getElementById('gauges');
+  g.innerHTML='';
+  var metrics=[
+    {l:'PBI 2026',v:sc.gdp},{l:'Inflación anual',v:sc.infl},{l:'Desempleo',v:sc.desemp},
+    {l:'Reservas BCRA',v:sc.reservas},{l:'Morosidad familias',v:sc.mora},{l:'Deuda',v:sc.deuda}
+  ];
+  metrics.forEach(function(m){
+    var d=document.createElement('div');d.className='gauge';
+    d.innerHTML='<div class="gv">'+m.v+'</div><div class="gl">'+m.l+'</div>';
+    g.appendChild(d);
+  });
+
+  document.getElementById('riskDot').style.left='calc('+sc.risk+'% - 8px)';
+  document.getElementById('narr').innerHTML=sc.narr;
+
+  var tl=document.getElementById('timeline');tl.innerHTML='';
+  sc.timeline.forEach(function(s){
+    tl.innerHTML+='<div class="step '+s.c+'"><div class="sd">'+s.d+'</div><div class="st">'+s.t+'</div><div class="sp">'+s.p+'</div></div>';
+  });
+
+  document.getElementById('parallelBox').innerHTML='<div class="parallel">'+sc.parallel+'</div>';
+
+  r.classList.add('show');
+  r.scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>

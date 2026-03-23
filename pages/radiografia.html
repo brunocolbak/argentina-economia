@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Argentina económica — Radiografía sin filtro</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Archivo:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{--bg:#f5f2ed;--ink:#1c1a17;--paper:#fffdf9;--cream:#f0ece5;--red:#b02a1a;--red-l:#f5ddd8;--blue:#1a4a6e;--blue-l:#d5e4ef;--green:#2a6e42;--green-l:#d6eddf;--gold:#8a6b1a;--gold-l:#f5ecd0;--mut:#8a837a;--brd:#d6d0c6;--sf:'Playfair Display',Georgia,serif;--sn:'Archivo',system-ui,sans-serif;--mn:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sn);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.75}
+::selection{background:var(--red-l)}
+.w{max-width:800px;margin:0 auto;padding:0 24px}
+
+body.lang-es .fr,body.lang-fr .es{display:none!important}
+.lang-toggle{position:fixed;top:12px;right:16px;z-index:200;display:flex;background:rgba(0,0,0,.7);border-radius:20px;overflow:hidden;font-size:12px;font-weight:700}
+.lang-btn{padding:7px 14px;color:rgba(255,255,255,.5);cursor:pointer;transition:.2s;border:0;background:0}
+.lang-btn.active{background:var(--red);color:#fff}
+
+.hero{background:var(--ink);color:var(--bg);padding:80px 24px 44px;position:relative}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--red)}
+.hero-inner{max-width:800px;margin:0 auto}
+.htag{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:14px;display:block}
+.hero h1{font-family:var(--sf);font-size:clamp(1.7rem,4.5vw,2.8rem);line-height:1.15;font-weight:400;margin-bottom:14px}
+.hero h1 em{font-style:italic;color:#e8c47a}
+.hero-sub{font-size:15px;color:rgba(245,242,237,.6);max-width:600px;line-height:1.7;margin-bottom:20px}
+.hero-meta{font-size:10px;color:rgba(245,242,237,.25);border-top:1px solid rgba(255,255,255,.06);padding-top:10px;line-height:1.7}
+
+.snav{position:sticky;top:28px;z-index:100;background:rgba(245,242,237,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--brd);overflow-x:auto}
+.snav-inner{max-width:800px;margin:0 auto;display:flex;padding:0 24px;scrollbar-width:none}
+.snav-inner::-webkit-scrollbar{display:none}
+.snav a{padding:11px 12px;font-size:12px;font-weight:600;color:var(--mut);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;transition:.2s}
+.snav a:hover,.snav a.on{color:var(--red);border-bottom-color:var(--red)}
+
+.S{padding:48px 0;border-bottom:1px solid var(--brd)}.S:last-of-type{border-bottom:none}
+.S h2{font-family:var(--sf);font-size:clamp(1.3rem,3vw,1.8rem);margin-bottom:4px}
+.S-lead{font-size:14px;color:var(--mut);margin-bottom:22px}
+.S p{margin-bottom:12px;font-size:15px}
+
+/* CHART BLOCKS */
+.cb{background:var(--paper);border:1px solid var(--brd);border-radius:8px;padding:24px 20px;margin:24px 0}
+.cb-t{font-family:var(--sf);font-size:17px;margin-bottom:4px}
+.cb-s{font-size:13px;color:var(--mut);margin-bottom:16px;line-height:1.6}
+.ca{position:relative;height:320px;margin:8px 0}
+.ca-tall{height:400px}
+.cb-src{font-size:10px;color:var(--mut);margin-top:12px;border-top:1px solid var(--brd);padding-top:8px}
+
+/* EXPLAINER BOXES */
+.ex{background:var(--cream);border-left:3px solid var(--gold);padding:16px 18px;margin:18px 0;border-radius:0 6px 6px 0;font-size:14px;line-height:1.7}
+.ex strong{color:var(--gold)}
+.ex-t{font-weight:700;color:var(--gold);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:block}
+
+/* CONTEXT BOXES */
+.cx{background:var(--blue-l);border-left:3px solid var(--blue);padding:16px 18px;margin:18px 0;border-radius:0 6px 6px 0;font-size:14px;line-height:1.7}
+.cx-t{font-weight:700;color:var(--blue);font-size:13px;margin-bottom:6px;display:block}
+
+/* RED ALERT BOXES */
+.rx{background:var(--red-l);border-left:3px solid var(--red);padding:16px 18px;margin:18px 0;border-radius:0 6px 6px 0;font-size:14px;line-height:1.7}
+.rx-t{font-weight:700;color:var(--red);font-size:13px;margin-bottom:6px;display:block}
+
+/* DATA TABLE */
+.dt{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+.dt th{background:var(--ink);color:var(--bg);padding:8px 10px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.dt td{padding:7px 10px;border-bottom:1px solid var(--brd)}
+.dt tr:hover{background:var(--cream)}
+.n{text-align:right;font-family:var(--mn);font-size:12px}
+.neg{color:var(--red);font-weight:600}
+.pos{color:var(--green);font-weight:600}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:24px;margin:20px 0}
+.tl::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:var(--brd)}
+.tl-i{position:relative;margin-bottom:18px;padding-left:16px}
+.tl-i::before{content:'';position:absolute;left:-22px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--red);border:2px solid var(--paper)}
+.tl-d{font-size:11px;font-weight:700;color:var(--red);letter-spacing:1px}
+.tl-t{font-size:14px;font-weight:600;margin:2px 0}
+.tl-p{font-size:13px;color:var(--mut);line-height:1.6}
+
+.src{font-size:10px;color:var(--mut);display:block;margin-top:8px}
+/* TOOLTIPS for financial terms */
+.tt{position:relative;border-bottom:1px dashed var(--gold);cursor:help;color:var(--gold);font-weight:600}
+.tt:hover::after{content:attr(data-tip);position:absolute;bottom:110%;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 12px;border-radius:6px;font-size:12px;font-weight:400;white-space:normal;width:260px;line-height:1.5;z-index:50;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+@media(max-width:600px){.ca{height:260px}.clash{grid-template-columns:1fr}}
+</style>
+</head>
+<body class="lang-es">
+
+<div style="position:fixed;top:0;left:0;right:0;z-index:250;background:rgba(28,26,23,.95);padding:6px 16px;display:flex;align-items:center;gap:12px;font-size:12px">
+  <a href="../index.html" style="color:#e8c47a;text-decoration:none;font-weight:700">← Hub</a>
+  <a href="escenarios.html" style="color:rgba(245,242,237,.5);text-decoration:none">Simulador</a>
+</div>
+
+<div class="lang-toggle" style="top:36px">
+  <button class="lang-btn active" onclick="document.body.className='lang-es';document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('active')});this.classList.add('active')">ES</button>
+  <button class="lang-btn" onclick="document.body.className='lang-fr';document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('active')});this.classList.add('active')">FR</button>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="htag es">Análisis independiente · Mars 2026</span>
+    <span class="htag fr">Analyse indépendante · Mars 2026</span>
+    <h1 class="es">Argentina económica:<br><em>lo que los números dicen</em></h1>
+    <h1 class="fr">Argentine économique :<br><em>ce que les chiffres disent</em></h1>
+    <p class="hero-sub es">Basado en datos oficiales (INDEC, BCRA, FMI, Sec. Finanzas) complementados por estimaciones privadas (consultoras) y fuentes periodísticas especializadas. Sin afiliación política. Cada dato incluye su fuente y fecha. Las interpretaciones son del autor.</p>
+    <p class="hero-sub fr">Basé sur des données officielles (INDEC, BCRA, FMI) complétées par des estimations privées et des sources journalistiques. Sans affiliation politique. Chaque donnée inclut sa source. Les interprétations sont de l'auteur.</p>
+    <p class="hero-meta">BCRA IPOM T4-2025 · INDEC PBI 2025 (20/03/26) · INDEC BdP T3-2025 · BCRA Bal. Cambiario Ene-2026 · INDEC EPH T4-2025 · INDEC ETI 2025 · FMI EFF Abr-2025 · Sec. Finanzas</p>
+  </div>
+</header>
+
+<nav class="snav"><div class="snav-inner">
+  <a href="#precios">Vista</a>
+  <a href="#dolares">Dólares</a>
+  <a href="#programa">Programa</a>
+  <a href="#precios-det">Precios</a>
+  <a href="#bdp">Balanza</a>
+  <a href="#comercio">Comercio</a>
+  <a href="#turismo">Turismo</a>
+  <a href="#industria">Industria</a>
+  <a href="#empleo">Argentinos</a>
+  <a href="#carry">Carry</a>
+  <a href="#deuda">Deuda</a>
+  <a href="#recursos">Recursos</a>
+  <a href="#defensores">A favor</a>
+  <a href="#historia">Historia</a>
+  <a href="#escenarios">Escenarios</a>
+</div></nav>
+
+<main class="w">
+
+<!-- ═══════════ 1. PRECIOS ═══════════ -->
+<section class="S" id="precios">
+  <h2 class="es">Argentina a primera vista: los números clave</h2>
+  <h2 class="fr">L'Argentine en un coup d'œil : les chiffres clés</h2>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0">
+    <div style="background:var(--green-l);padding:14px;border-radius:8px;text-align:center"><div style="font-size:24px;font-weight:700;color:var(--green)">+4,4%</div><div style="font-size:11px;color:var(--mut)">PBI 2025</div></div>
+    <div style="background:var(--green-l);padding:14px;border-radius:8px;text-align:center"><div style="font-size:24px;font-weight:700;color:var(--green)">+1,4%</div><div style="font-size:11px;color:var(--mut)">Superávit fiscal / PBI</div></div>
+    <div style="background:var(--green-l);padding:14px;border-radius:8px;text-align:center"><div style="font-size:24px;font-weight:700;color:var(--green)">2,4%</div><div style="font-size:11px;color:var(--mut)">Inflación mensual (dic.)</div></div>
+    <div style="background:var(--red-l);padding:14px;border-radius:8px;text-align:center"><div style="font-size:24px;font-weight:700;color:var(--red)">7,5%</div><div style="font-size:11px;color:var(--mut)">Desempleo T4-2025</div></div>
+    <div style="background:var(--red-l);padding:14px;border-radius:8px;text-align:center"><div style="font-size:24px;font-weight:700;color:var(--red)">10,6%</div><div style="font-size:11px;color:var(--mut)">Morosidad familias</div></div>
+    <div style="background:var(--red-l);padding:14px;border-radius:8px;text-align:center"><div style="font-size:24px;font-weight:700;color:var(--red)">-100 mil</div><div style="font-size:11px;color:var(--mut)">Empleos industriales</div></div>
+    <div style="background:var(--blue-l);padding:14px;border-radius:8px;text-align:center"><div style="font-size:24px;font-weight:700;color:var(--blue)">882K</div><div style="font-size:11px;color:var(--mut)">bbl/día petróleo (récord)</div></div>
+    <div style="background:var(--gold-l);padding:14px;border-radius:8px;text-align:center"><div style="font-size:24px;font-weight:700;color:var(--gold)">$7.815M</div><div style="font-size:11px;color:var(--mut)">Superávit energético</div></div>
+  </div>
+
+  <p class="es" style="font-size:14px;color:var(--mut);margin-top:16px">Este informe recorre cada uno de estos indicadores, los explica en contexto, y deja que los datos hablen. La estructura sigue una lógica: primero, cuánto cuestan las cosas (precios). Luego, de dónde vienen los dólares y adónde van (comercio, balanza de pagos). Después, qué pasa con la producción y el empleo (industria, trabajo). Luego, la deuda y los flujos financieros. Finalmente, los recursos estratégicos y las lecciones de la historia.</p>
+  <p class="fr" style="font-size:14px;color:var(--mut);margin-top:16px">Ce rapport parcourt chacun de ces indicateurs, les explique en contexte et laisse parler les données.</p>
+</section>
+
+<!-- ═══════════ 2. SIN EMISIÓN, HACEN FALTA DÓLARES ═══════════ -->
+<section class="S" id="dolares">
+  <h2 class="es">Sin la maquinita, hacen falta dólares</h2>
+  <h2 class="fr">Sans la planche à billets, il faut des dollars</h2>
+  <p class="es">El punto de partida para entender la economía de Milei es este: el gobierno decidió dejar de imprimir pesos para financiar el déficit. La "emisión cero" es real en un sentido preciso: el BCRA ya no emite pesos para prestarle al Tesoro, ni para pagar intereses sobre sus propios instrumentos (las viejas Leliq y pases fueron reemplazados por LEFI del Tesoro). La "Base Monetaria Amplia" (base monetaria + LEFI + depósitos del Tesoro en el BCRA) se mantuvo prácticamente constante en términos nominales desde julio 2024 (~47,7 billones de pesos), aunque cayó ~19% en términos reales.</p>
+  <p class="fr">Le point de départ : le gouvernement a décidé d'arrêter d'imprimer des pesos pour financer le déficit. La BCRA n'émet plus pour le Trésor ni pour payer les intérêts de ses propres instruments.</p>
+
+  <p class="es">Sin embargo, la base monetaria tradicional sí creció (+44,5% nominal, +16% real desde julio 2024 a marzo 2025), porque los bancos desarmaron LEFI para prestar al sector privado. El crédito privado creció 127% real en 13 meses. Esto no viola el programa anunciado, pero muestra que "emisión cero" es un eslogan que simplifica una realidad más compleja.</p>
+  <p class="fr">Cependant, la base monétaire traditionnelle a crû (+44,5% nominal), car les banques ont vendu des LEFI pour prêter au secteur privé. Le crédit privé a crû de 127% réel en 13 mois.</p>
+  <span class="src">BCRA Informe Monetario Mensual · Quantum Finanzas via Infobae 15/03/25 · UCEMA Perspectivas oct. 2024 · Cohen Perspectivas ene. 2025</span>
+
+  <div class="rx">
+    <span class="rx-t es">La consecuencia clave: sin emisión, Argentina necesita dólares genuinos</span>
+    <span class="rx-t fr">La conséquence clé : sans émission, l'Argentine a besoin de vrais dollars</span>
+    <p class="es">Si no se imprimen pesos para cubrir las necesidades del Estado, cada dólar que Argentina gasta debe venir de algún lado. Hay cuatro fuentes posibles: <strong>(1) exportar más de lo que se importa</strong> (superávit comercial — hoy sostenido principalmente por la energía y la soja), <strong>(2) endeudarse</strong> (FMI, bonos, organismos — pero hay que devolver con intereses), <strong>(3) atraer inversión productiva</strong> (fábricas, minería, energía — pero los flujos netos de IED fueron negativos en 2025, lo que puede reflejar repatriación de utilidades o desinversiones parciales), <strong>(4) atraer capital financiero de corto plazo</strong> (carry trade — rinde mucho pero puede irse de un día para el otro). Todo este informe se organiza alrededor de esta pregunta: <em>¿de dónde vienen los dólares de Argentina, y son sostenibles?</em></p>
+    <p class="fr">Si on n'imprime plus de pesos, chaque dollar doit venir de quelque part : (1) exporter plus qu'on importe, (2) s'endetter, (3) attirer l'investissement productif, (4) attirer le capital spéculatif. Ce rapport s'organise autour de cette question : <em>d'où viennent les dollars, et sont-ils durables ?</em></p>
+  </div>
+</section>
+
+<!-- ═══════════ 3. EL PROGRAMA MILEI ═══════════ -->
+<section class="S" id="programa">
+  <h2 class="es">El programa Milei: promesa, resultado y riesgo</h2>
+  <h2 class="fr">Le programme Milei : promesse, résultat et risque</h2>
+
+  <div style="text-align:right;margin-bottom:12px">
+    <button onclick="document.querySelectorAll('.simple').forEach(function(e){e.style.display=e.style.display==='none'?'block':'none'})" style="background:var(--gold);color:#fff;border:0;padding:6px 14px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer">👤 Versión simple / 📊 Versión experta</button>
+  </div>
+
+  <div class="simple" style="background:var(--cream);padding:18px;border-radius:8px;margin-bottom:18px;font-size:14px;line-height:1.8">
+    <p class="es"><strong>En palabras simples:</strong> Milei hizo 6 cosas principales. Dejó de imprimir plata (y la inflación bajó mucho). Recortó gastos del Estado para no gastar más de lo que recauda. Liberó el dólar para que la gente pueda comprar y vender libremente. Pidió un préstamo enorme al FMI. Abrió la puerta a productos importados. Y mantuvo el dólar "barato" para que la inflación no suba. Cada una de estas medidas tuvo un resultado positivo visible, pero también un costo o un riesgo que se siente con el tiempo.</p>
+    <p class="fr"><strong>En mots simples :</strong> Milei a fait 6 choses principales. Arrêter d'imprimer de l'argent (l'inflation a beaucoup baissé). Couper les dépenses de l'État. Libérer le dollar. Emprunter massivement au FMI. Ouvrir les importations. Maintenir le dollar «bon marché». Chaque mesure a eu un résultat positif visible, mais aussi un coût ou un risque.</p>
+  </div>
+
+  <div class="cb" style="overflow-x:auto">
+    <table class="dt" style="min-width:700px">
+      <thead><tr><th style="width:15%">Medida</th><th style="width:25%">Lo que se prometió</th><th style="width:30%">Lo que pasó (mesurable)</th><th style="width:30%">Lo que puede pasar</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Superávit fiscal</strong></td>
+          <td class="es">"Déficit cero". No gastar más de lo que se recauda.</td>
+          <td class="pos es">Logrado: +1,4% del PBI. Subsidios energéticos: de 1,42% a 0,60% del PBI. Obra pública recortada.</td>
+          <td class="es">Sostenido con recorte de subsidios y obra pública. Las tarifas de luz subieron +344% y las de gas +617% (vs. salarios +229%). Pobreza y costo social creciente.</td>
+        </tr>
+        <tr>
+          <td><strong>Emisión cero</strong></td>
+          <td class="es">"No más maquinita". El BCRA no imprime pesos para el Tesoro ni paga intereses sobre sus instrumentos.</td>
+          <td class="pos es">BMA constante en nominal (-19% real). Inflación: de 25,5%/mes a 2,4%/mes. Logro real y significativo.</td>
+          <td class="es">La base monetaria tradicional sí creció +44,5%. El crédito privado creció +127% real (puede generar burbujas). Las LEFI = deuda cuasi-fiscal trasladada al Tesoro.</td>
+        </tr>
+        <tr>
+          <td><strong>Levantamiento del cepo</strong></td>
+          <td class="es">Libre acceso al dólar. Fin del control de cambios que existía desde 2011.</td>
+          <td class="pos es">Cepo eliminado (abr. 2025). Bandas $1.000-$1.400. Fin del dólar blend.</td>
+          <td class="neg es">Salida masiva de divisas por turismo (-USD 4.054 M INDEC, -USD 7.750 M IERAL), utilidades repatriadas, ahorro privado en USD.</td>
+        </tr>
+        <tr>
+          <td><strong>Acuerdo FMI</strong></td>
+          <td class="es">Recapitalizar el BCRA con USD 20.000 M del FMI (aprobado con apoyo político de Trump/EE.UU.).</td>
+          <td class="es">USD 12.000 M desembolsados inmediatamente. Reservas reforzadas. Cepo levantado.</td>
+          <td class="neg es">Deuda con FMI: de USD 41.400 M a ~61.400 M. Rembolsos desde 2030. Gracia de 4,5 años = problema trasladado al siguiente gobierno.</td>
+        </tr>
+        <tr>
+          <td><strong>Apertura comercial</strong></td>
+          <td class="es">Más competencia = precios más bajos para el consumidor. Fin del "proteccionismo ineficiente".</td>
+          <td class="es">Importaciones +27% en 2025 (+41,7% en cantidades). Superávit comercial se redujo de USD 6.208 M (ene-abr 2024) a USD 1.265 M (ene-abr 2025).</td>
+          <td class="neg es">Industria local pierde mercado. -100.000 empleos manufactureros (UBA). Sector automotriz: déficit de USD 3.492 M (1er sem. 2025). Mayor dependencia de importaciones.</td>
+        </tr>
+        <tr>
+          <td><strong>Dólar "ancla"</strong></td>
+          <td class="es">Mantener el peso estable para anclar las expectativas de inflación.</td>
+          <td class="es">Inflación baja efectiva. ITCRM ~100 (vs. promedio histórico ~121).</td>
+          <td class="neg es">Peso apreciado = Argentina cara en dólares. Déficit turístico récord. Exportaciones industriales menos competitivas. Patrón similar a 1978, 1995, 2017.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="cb-src">Elaboración propia basada en datos oficiales (INDEC, BCRA, Sec. Finanzas, FMI). La columna "lo que puede pasar" refleja riesgos identificados por el autor y por analistas citados en este informe, no posiciones oficiales.</div>
+  </div>
+</section>
+
+<section class="S" id="precios-det">
+  <h2 class="es">Precios en dólares: ¿por qué Argentina se volvió cara?</h2>
+  <h2 class="fr">Prix en dollars : pourquoi l'Argentine est devenue chère ?</h2>
+  <p class="S-lead es">El IPC acumuló +300% desde dic. 2023 pero el dólar oficial sólo subió ~40%. Esa brecha se llama "inflación en dólares": los precios internos subieron mucho más rápido que el tipo de cambio.</p>
+  <p class="S-lead fr">L'IPC a cumulé +300% depuis déc. 2023 mais le dollar officiel n'a augmenté que de ~40%. Cet écart s'appelle «inflation en dollars».</p>
+
+  <div class="cb">
+    <div class="cb-t es">Inflación en pesos vs. evolución del dólar oficial</div>
+    <div class="cb-t fr">Inflation en pesos vs. évolution du dollar officiel</div>
+    <div class="cb-s es">IPC acumulado desde dic. 2023 vs. tipo de cambio oficial ($/USD). La brecha entre ambas curvas = inflación en dólares. Todo lo que está por encima de la línea del dólar se traduce en encarecimiento para quien tiene dólares.</div>
+    <div class="cb-s fr">IPC cumulé depuis déc. 2023 vs. taux de change officiel. L'écart entre les deux courbes = inflation en dollars.</div>
+    <div class="ca"><canvas id="cIpc"></canvas></div>
+    <div class="cb-src">INDEC IPC mensual · BCRA tipo de cambio Com. A 3500 · Elaboración propia</div>
+  </div>
+
+  <div class="ex">
+    <span class="ex-t es">¿Qué es el ITCRM y por qué importa?</span>
+    <span class="ex-t fr">Qu'est-ce que l'ITCRM et pourquoi est-ce important ?</span>
+    <p class="es">El gráfico anterior muestra la inflación interna (IPC). Pero para saber si Argentina es cara o barata <em>para el mundo</em>, hay otro indicador: el <strong>ITCRM</strong> (Índice de Tipo de Cambio Real Multilateral). Este índice compara los precios argentinos con los de sus 12 principales socios comerciales, ajustando por tipo de cambio e inflación de cada país. Si el ITCRM <strong>sube</strong>, Argentina se abarata (exportar es más fácil, los turistas vienen). Si <strong>baja</strong>, Argentina se encarece. Base: dic. 2015 = 100. Promedio histórico: ~121. Hoy: ~100. Zona de "equilibrio": 105-120.</p>
+    <p class="fr">Le graphique précédent montre l'inflation interne (IPC). Mais pour savoir si l'Argentine est chère ou bon marché <em>pour le monde</em>, il y a un autre indicateur : l'<strong>ITCRM</strong>. Cet indice compare les prix argentins à ceux de ses 12 principaux partenaires commerciaux. S'il <strong>monte</strong>, l'Argentine devient compétitive. S'il <strong>baisse</strong>, elle devient chère. Moyenne historique : ~121. Aujourd'hui : ~100.</p>
+  </div>
+
+  <div class="ex">
+    <span class="ex-t es">IPC e ITCRM: ¿cuál es la diferencia?</span>
+    <span class="ex-t fr">IPC et ITCRM : quelle différence ?</span>
+    <p class="es">El <strong>IPC</strong> (Índice de Precios al Consumidor) mide cuánto suben los precios internos en pesos: alimentos, alquileres, transporte, etc. El <strong>ITCRM</strong> mide algo diferente: si los productos argentinos son caros o baratos <em>comparados con los de otros países</em>, ajustando por tipo de cambio e inflación de los socios comerciales. Pueden moverse en direcciones opuestas: la inflación puede bajar (IPC mejora) mientras que el peso se sigue apreciando (ITCRM empeora la competitividad). Eso es exactamente lo que pasa en 2025-2026.</p>
+    <p class="fr">L'<strong>IPC</strong> mesure la hausse des prix internes en pesos. L'<strong>ITCRM</strong> mesure si les produits argentins sont chers ou bon marché <em>comparés à ceux d'autres pays</em>. Ils peuvent aller dans des directions opposées : l'inflation peut baisser (IPC s'améliore) pendant que le peso s'apprécie (ITCRM dégrade la compétitivité).</p>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">ITCRM: evolución de la competitividad-precio (base dic. 2015 = 100)</div>
+    <div class="cb-t fr">ITCRM : évolution de la compétitivité-prix (base déc. 2015 = 100)</div>
+    <div class="cb-s es">Un valor alto = Argentina competitiva (barata en dólares). Un valor bajo = Argentina cara. La línea punteada es el promedio histórico (~121). La zona verde clara es la zona de "equilibrio" estimada (105-120). Notar el pico de diciembre 2023 (devaluación) y luego la caída rápida.</div>
+    <div class="cb-s fr">Valeur haute = Argentine compétitive (bon marché). Valeur basse = Argentine chère. Ligne pointillée = moyenne historique (~121). La zone d'équilibre estimée se situe entre 105-120.</div>
+    <div class="ca"><canvas id="cItcrm"></canvas></div>
+    <div class="cb-src">BCRA, ITCRM serie diaria (promedios mensuales) · Chequeado · Criteria · Infobae nov. 2025</div>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">El Big Mac como termómetro: evolución del precio en USD</div>
+    <div class="cb-t fr">Le Big Mac comme thermomètre : évolution du prix en USD</div>
+    <div class="cb-s es">El índice Big Mac de The Economist compara el precio de la misma hamburguesa en todos los países, convertido a dólares. Si un Big Mac es más caro en Argentina que en EE.UU., el peso está "sobrevaluado" según esta medida informal. Argentina pasó de ser uno de los países más baratos a figurar entre los 5 más caros del mundo.</div>
+    <div class="cb-s fr">L'indice Big Mac de The Economist compare le prix du même hamburger dans tous les pays, converti en dollars. L'Argentine est passée de l'un des pays les moins chers aux 5 plus chers du monde.</div>
+    <div class="ca"><canvas id="cBigMac"></canvas></div>
+    <div class="cb-src">The Economist, Big Mac Index, jan. de cada año · 2026: statbase.org (ene. 2026)</div>
+  </div>
+
+  <div class="rx">
+    <span class="rx-t es">¿Qué significa en la vida cotidiana?</span>
+    <span class="rx-t fr">Qu'est-ce que ça signifie au quotidien ?</span>
+    <p class="es">Con un ITCRM de ~88 (vs. promedio histórico de 121), un turista extranjero necesita ~37% más dólares para el mismo viaje que en la media histórica. Un exportador industrial recibe ~27% menos en pesos reales por cada dólar de venta. Un trabajador argentino que cobra en pesos ve su poder adquisitivo internacional aumentar... salvo que la inflación local devore su salario más rápido.</p>
+    <p class="fr">Avec un ITCRM de ~88 (vs. moyenne historique de 121), un touriste étranger a besoin de ~37% de dollars en plus. Un exportateur industriel reçoit ~27% de moins en pesos réels par dollar de vente.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 2. BALANCE DE PAGOS ═══════════ -->
+<section class="S" id="bdp">
+  <h2 class="es">Balanza de pagos: ¿de dónde vienen y adónde van los dólares?</h2>
+  <h2 class="fr">Balance des paiements : d'où viennent et où vont les dollars ?</h2>
+
+  <div class="ex">
+    <span class="ex-t es">Guía de lectura rápida</span>
+    <span class="ex-t fr">Guide de lecture rapide</span>
+    <p class="es">La balanza de pagos registra todas las transacciones de Argentina con el resto del mundo. Tiene dos grandes cuentas:<br>
+    <strong>Cuenta corriente</strong> = lo que Argentina gana y gasta en su actividad habitual. Incluye: exportaciones e importaciones de bienes (soja, autos, petróleo...), servicios (turismo, fletes, software...), intereses pagados a acreedores extranjeros, y remesas.<br>
+    <strong>Cuenta financiera</strong> = los movimientos de capital. Incluye: préstamos del FMI, emisión de bonos, inversiones de extranjeros en acciones/bonos argentinos (carry trade), inversión extranjera directa (fábricas, Vaca Muerta...), y fuga de capitales de argentinos.<br>
+    Si la cuenta corriente es <span style="color:var(--red)">deficitaria</span> (más sale que entra), el país necesita que la cuenta financiera sea <span style="color:var(--green)">superavitaria</span> (que entre capital) para cubrir la brecha. Si no, las reservas bajan.</p>
+    <p class="fr">La balance des paiements enregistre toutes les transactions avec le reste du monde.<br>
+    <strong>Compte courant</strong> = ce que l'Argentine gagne et dépense dans son activité habituelle (exportations, importations, tourisme, intérêts de la dette...).<br>
+    <strong>Compte financier</strong> = les mouvements de capitaux (prêts FMI, carry trade, investissements directs, fuite de capitaux...).<br>
+    Si le compte courant est déficitaire, le pays a besoin d'entrées de capitaux pour compenser.</p>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">Cuenta corriente vs. cuenta financiera (trimestral)</div>
+    <div class="cb-t fr">Compte courant vs. compte financier (trimestriel)</div>
+    <div class="cb-s es">Cuando la barra roja (déficit de cuenta corriente) es más grande que la barra azul (entrada de capitales), las reservas bajan. Desde T1-2025, Argentina depende de entradas masivas de capital para cubrir un déficit corriente creciente.</div>
+    <div class="cb-s fr">Quand la barre rouge (déficit courant) est plus grande que la barre bleue (entrée de capitaux), les réserves baissent.</div>
+    <div class="ca"><canvas id="cBdP"></canvas></div>
+    <div class="cb-src">INDEC, Balanza de Pagos trimestral · T4-2025 no publicado aún (previsto mar-abr 2026)</div>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">Desglose: ¿qué entra y qué sale? (acumulado 3 trimestres 2025)</div>
+    <div class="cb-t fr">Décomposition : qu'est-ce qui entre et sort ? (cumulé 3 trimestres 2025)</div>
+    <div class="cb-s es">En lenguaje sencillo: por cada concepto, cuántos millones de dólares entraron (+) o salieron (-) de Argentina entre enero y septiembre 2025.</div>
+    <div class="ca ca-tall"><canvas id="cDesgl"></canvas></div>
+    <div class="cb-src">INDEC, Balanza de Pagos T1-T3 2025 · Elaboración propia</div>
+  </div>
+
+  <div class="cx">
+    <span class="cx-t es">Dato más reciente: balance cambiario BCRA, enero 2026</span>
+    <span class="cx-t fr">Donnée plus récente : balance cambiaire BCRA, janvier 2026</span>
+    <p class="es">El BCRA publica mensualmente los flujos efectivos de divisas. En <strong>enero 2026</strong>: cuenta corriente -USD 919 M (bienes +2.014, servicios -946, ingresos primarios -2.007). Cuenta financiera +USD 3.147 M. Reservas: subieron USD 3.336 M hasta USD 44.503 M. Próximo informe (febrero 2026): publicación prevista 27/03/2026.</p>
+    <p class="fr">En <strong>janvier 2026</strong> : compte courant -USD 919 M (biens +2.014, services -946, revenus primaires -2.007). Compte financier +USD 3.147 M. Réserves : +USD 3.336 M à USD 44.503 M.</p>
+    <span class="src">BCRA, Informe Evolución Mercado de Cambios y Balance Cambiario, enero 2026 (pub. 27/02/26)</span>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">Balance cambiario BCRA: flujo mensual de divisas (millones USD)</div>
+    <div class="cb-t fr">Balance cambiaire BCRA : flux mensuel de devises (millions USD)</div>
+    <div class="cb-s es">Este gráfico muestra los flujos reales mensuales de divisas: lo que entra (bienes, capitales) y lo que sale (servicios, intereses). Es más cercano al tiempo real que la BdP trimestral del INDEC.<br>
+    <strong>Bienes (verde):</strong> soja, petróleo, autos que se exportan menos lo que se importa.<br>
+    <strong>Servicios (rojo):</strong> sobre todo turismo (argentinos gastando en el exterior menos extranjeros gastando en Argentina), fletes, software.<br>
+    <strong>Ingreso primario (dorado):</strong> los intereses, dividendos y utilidades que Argentina paga a sus acreedores y a los inversores extranjeros. Es el "costo de la deuda" + las ganancias que las empresas extranjeras envían a sus casas matrices. Siempre negativo: Argentina paga más al mundo de lo que recibe.</div>
+    <div class="cb-s fr">Flux réels mensuels de devises.<br>
+    <strong>Biens (vert) :</strong> exportations - importations de marchandises.<br>
+    <strong>Services (rouge) :</strong> surtout tourisme (Argentins à l'étranger - étrangers en Argentine).<br>
+    <strong>Revenu primaire (doré) :</strong> intérêts de la dette + dividendes rapatriés par les entreprises étrangères. Toujours négatif.</div>
+    <div class="ca"><canvas id="cBcra"></canvas></div>
+    <div class="cb-src">BCRA, Balance Cambiario mensual, série 2025-2026</div>
+  </div>
+
+  <div class="ex">
+    <span class="ex-t es">Nota metodológica</span>
+    <span class="ex-t fr">Note méthodologique</span>
+    <p class="es">Las cifras del BCRA (balance cambiario) no son estrictamente comparables con la balanza de pagos del INDEC. El BCRA registra flujos efectivos de divisas por el mercado de cambios; el INDEC estima la balanza de pagos según la metodología del FMI (BPM6), que incluye transacciones imputadas y valoraciones diferentes. Por ejemplo, el turismo en la BdP INDEC se estima por encuesta (lo que los turistas declaran gastar), mientras que el BCRA mide las divisas efectivamente compradas/vendidas. Este informe usa ambas fuentes, señalando siempre cuál es la referencia.</p>
+    <p class="fr">Les chiffres de la BCRA (balance cambiaire) ne sont pas strictement comparables avec la balance des paiements de l'INDEC (méthodologie BPM6 du FMI). Ce rapport utilise les deux sources en indiquant toujours laquelle est la référence.</p>
+  </div>
+</section>
+
+<!-- ═══════════ COMMERCE ═══════════ -->
+<section class="S" id="comercio">
+  <h2 class="es">Comercio exterior: qué vende y qué compra Argentina</h2>
+  <h2 class="fr">Commerce extérieur : ce que l'Argentine vend et achète</h2>
+
+  <div class="simple" style="background:var(--cream);padding:16px;border-radius:8px;margin-bottom:16px;font-size:14px;line-height:1.8">
+    <p class="es"><strong>En palabras simples:</strong> Argentina gana dólares vendiendo al mundo sobre todo soja, petróleo, autos y maíz. En 2025, vendió USD 87.111 millones al exterior. Pero también compró USD 75.000 millones (autos importados, electrónica, repuestos, etc.). La diferencia (el "superávit") se achicó mucho: de USD 6.208 M en los primeros 4 meses de 2024 a solo USD 1.265 M en los mismos 4 meses de 2025. ¿Por qué? Porque las importaciones crecieron +42% en cantidades con el peso fuerte y la apertura comercial.</p>
+    <p class="fr"><strong>En mots simples :</strong> L'Argentine gagne des dollars en vendant soja, pétrole, voitures et maïs. En 2025 : USD 87.111 M d'exports. Mais les imports ont grimpé de 42% en quantités. L'excédent commercial s'est fortement réduit.</p>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">Los 10 principales complejos exportadores (2025, millones USD)</div>
+    <div class="cb-t fr">Les 10 principaux complexes exportateurs (2025, millions USD)</div>
+    <div class="cb-s es">1 de cada 4 dólares viene de la soja. El petróleo (Vaca Muerta) superó al sector automotriz como 2° exportador — un cambio estructural. El litio (incluido en "otros") pesa ~USD 900 M = 1% del total, lejos del discurso de "oro blanco". La minería de oro y plata (USD 4.886 M) pesa 5× más que el litio.</div>
+    <div class="ca ca-tall"><canvas id="cComercio"></canvas></div>
+    <div class="cb-src">INDEC, Complejos Exportadores 2025 (pub. mar. 2026) · Infobae 05/03/26</div>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">Importaciones: el efecto de la apertura comercial</div>
+    <div class="cb-t fr">Importations : l'effet de l'ouverture commerciale</div>
+    <div class="cb-s es">Las importaciones crecieron +27% en valor y +42% en cantidades en 2025. Los sectores que más crecieron: vehículos de pasajeros, bienes de consumo, bienes de capital. La consecuencia: el superávit comercial total se redujo de ~USD 19.000 M (2024) a ~USD 12.000 M (2025). Sin el superávit energético (USD 7.815 M), el superávit comercial restante es de apenas USD 4.000 M. Déficits principales: China (-USD 6.102 M), Brasil (-USD 4.583 M), Alemania (-USD 1.401 M).</div>
+    <div class="cb-s fr">Les importations ont crû de +42% en quantités. L'excédent commercial s'est réduit d'un tiers. Sans l'énergie, l'excédent restant est de ~USD 4.000 M. Déficits : Chine (-6.102 M), Brésil (-4.583 M).</div>
+    <div class="ca"><canvas id="cImport"></canvas></div>
+    <div class="cb-src">INDEC, ICA 2025 · Cancillería, Informes cuatrimestrales</div>
+  </div>
+
+  <div class="rx">
+    <span class="rx-t es">El riesgo de la apertura con peso apreciado</span>
+    <span class="rx-t fr">Le risque de l'ouverture avec peso apprécié</span>
+    <p class="es">Abrir las importaciones con un peso apreciado tiene un doble efecto: por un lado, baja los precios para el consumidor (más competencia). Por otro, destruye la industria local que no puede competir con productos importados más baratos (el sector automotriz tuvo un déficit de USD 3.492 M en el primer semestre). Es una apuesta: si la productividad sube lo suficiente, la industria sobrevive. Si no, Argentina se convierte en un importador neto de bienes manufacturados y exportador de materias primas — volviendo al patrón del siglo XIX.</p>
+    <p class="fr">Ouvrir les importations avec un peso apprécié : baisse des prix pour le consommateur, mais destruction de l'industrie locale. Le secteur automobile : déficit de USD 3.492 M au 1er semestre.</p>
+  </div>
+</section>
+
+<!-- ═══════════ TURISMO ═══════════ -->
+<section class="S" id="turismo">
+  <h2 class="es">Turismo: el termómetro de la competitividad</h2>
+  <h2 class="fr">Tourisme : le thermomètre de la compétitivité</h2>
+  <p class="S-lead es">Cuando Argentina está cara en dólares, salen más argentinos y vienen menos extranjeros. La brecha se traduce directamente en pérdida de divisas.</p>
+  <p class="S-lead fr">Quand l'Argentine est chère en dollars, plus d'Argentins partent et moins d'étrangers viennent.</p>
+
+  <div class="cb">
+    <div class="cb-t es">Turistas: argentinos al exterior vs. extranjeros que llegan (millones, por año)</div>
+    <div class="cb-t fr">Touristes : Argentins à l'étranger vs. étrangers qui arrivent (millions, par an)</div>
+    <div class="cb-s es">La línea vertical roja marca la asunción de Milei (dic. 2023). Notar cómo las líneas se cruzan y divergen en 2024-2025: más argentinos salen, menos extranjeros entran. El saldo neto de personas es de -6,6 millones en 2025 (récord de la década).</div>
+    <div class="cb-s fr">La ligne rouge verticale marque l'arrivée de Milei (déc. 2023). Le solde net de personnes est de -6,6 millions en 2025 (record de la décennie).</div>
+    <div class="ca"><canvas id="cTurPersonas"></canvas></div>
+    <div class="cb-src">INDEC ETI serie anual · IERAL Fundación Mediterránea · Sec. Turismo tableros.yvera.tur.ar</div>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">Déficit de divisas por turismo (millones USD, por año)</div>
+    <div class="cb-t fr">Déficit de devises par tourisme (millions USD, par an)</div>
+    <div class="cb-s es">El déficit se mide de dos maneras: la encuesta INDEC (lo que declaran gastar los turistas) y el método IERAL/BCRA (flujos reales de divisas por el mercado cambiario). La diferencia es importante: el BCRA mide el dinero efectivamente comprado/vendido, mientras que INDEC estima por declaración. El IERAL calcula que el déficit real 2025 fue de USD 7.000-8.500 M, casi el doble de lo que captura la encuesta.</div>
+    <div class="cb-s fr">Le déficit se mesure de deux façons : l'enquête INDEC (déclaratif) et la méthode IERAL/BCRA (flux réels de devises). L'IERAL estime le déficit réel 2025 à USD 7.000-8.500 M, presque le double de l'enquête.</div>
+    <div class="ca"><canvas id="cTurUSD"></canvas></div>
+    <div class="cb-src">INDEC ETI gasto turístico anual · IERAL Fundación Mediterránea (est. flujos BCRA)</div>
+  </div>
+</section>
+
+<!-- ═══════════ 4. INDUSTRIA ═══════════ -->
+<section class="S" id="industria">
+  <h2 class="es">Industria: la fábrica que se achica</h2>
+  <h2 class="fr">Industrie : l'usine qui rétrécit</h2>
+  <p class="S-lead es">La participación de la industria en el PBI cayó de 19,4% a ~14% en dos años. Es el nivel más bajo en 90 años según CEHEAL (UBA).</p>
+  <p class="S-lead fr">La part de l'industrie dans le PIB est passée de 19,4% à ~14% en deux ans. C'est le niveau le plus bas en 90 ans.</p>
+
+  <div class="cb">
+    <div class="cb-t es">Evolución de la producción industrial (índice 2019 = 100)</div>
+    <div class="cb-t fr">Évolution de la production industrielle (indice 2019 = 100)</div>
+    <div class="cb-s es">La línea muestra el nivel de producción industrial comparado con 2019. Cuando está por debajo de 100, la industria produce menos que en 2019. Notar: la producción actual (ene. 2026 ≈ 93) está por debajo del nivel pre-pandemia. El rebote de 2021-2022 se perdió completamente.</div>
+    <div class="cb-s fr">La ligne montre le niveau de production industrielle comparé à 2019. En dessous de 100 = moins que 2019. La production actuelle (jan. 2026 ≈ 93) est sous le niveau pré-pandémie.</div>
+    <div class="ca"><canvas id="cIndustria"></canvas></div>
+    <div class="cb-src">INDEC EMAE industria manufacturera serie mensual · INDEC PBI T4-2025 (20/03/26) · IGA-OJF · Elaboración propia (índice)</div>
+  </div>
+
+  <p class="es">El gráfico anterior muestra que la producción industrial nunca se recuperó del desplome de 2024 (-9,2%). El rebote de 0,8% en 2025 es un espejismo estadístico: la industria sigue <strong>7 puntos por debajo de 2019</strong>. En el T4-2025, la caída se acentuó (-5% interanual) y en enero 2026, -3,2%. ¿Qué consecuencia tiene esto? Las fábricas que no producen terminan cerrando, y las máquinas que no se usan se deterioran. El siguiente gráfico muestra exactamente eso:</p>
+  <p class="fr">Le graphique précédent montre que la production industrielle ne s'est jamais remise de l'effondrement de 2024 (-9,2%). Le rebond de 0,8% en 2025 est un mirage statistique. La conséquence :</p>
+
+  <div class="cb">
+    <div class="cb-t es">Capacidad instalada utilizada (% del total disponible)</div>
+    <div class="cb-t fr">Utilisation des capacités installées (% du total disponible)</div>
+    <div class="cb-s es">La "capacidad instalada" es el porcentaje de las máquinas y fábricas que están efectivamente en uso. Si una fábrica tiene 10 máquinas pero solo usa 5, la capacidad es 50%. Un nivel normal es 65-75%. Cuando baja de 60%, las fábricas están semi-paralizadas. La línea roja punteada muestra el sector textil, uno de los más golpeados: solo el 29% de sus máquinas funcionan.</div>
+    <div class="cb-s fr">La «capacité installée» est le % des machines effectivement en usage. Normal : 65-75%. Sous 60%, les usines sont semi-paralysées. Le textile : seulement 29% de ses machines fonctionnent.</div>
+    <div class="ca"><canvas id="cCapac"></canvas></div>
+    <div class="cb-src">INDEC, Utilización de la capacidad instalada, serie mensual</div>
+  </div>
+
+  <p class="es">La capacidad general bajó a 53,6% — el nivel más bajo en 10 años. Pero el caso del <strong>textil es extremo</strong>: solo 29% de las máquinas están funcionando. Esto significa que 7 de cada 10 máquinas textiles están paradas. ¿Es solo la industria la que pierde peso, o toda la estructura productiva está cambiando? El siguiente gráfico muestra cómo se reparte el PBI entre sectores:</p>
+  <p class="fr">La capacité générale est tombée à 53,6% — le plus bas en 10 ans. Le textile : 29% (7 machines sur 10 à l'arrêt). Comment l'ensemble de la structure productive évolue-t-il ?</p>
+
+  <div class="cb">
+    <div class="cb-t es">Composición del PBI: quién produce qué (% del total)</div>
+    <div class="cb-t fr">Composition du PIB : qui produit quoi (% du total)</div>
+    <div class="cb-s es">La industria manufacturera era ~19% del PBI en 2023. Hoy se estima en ~14%. El comercio (~20%) también pierde terreno. Los sectores que ganan peso: intermediación financiera, minería/energía. Es un cambio estructural: menos producción, más especulación y extractivismo.</div>
+    <div class="cb-s fr">L'industrie manufacturière était ~19% du PIB en 2023. Aujourd'hui ~14%. Le commerce (~20%) recule aussi. Les gagnants : finance, mines/énergie.</div>
+    <div class="ca"><canvas id="cPbi"></canvas></div>
+    <div class="cb-src">INDEC Cuentas Nacionales · Argendata/Fundar · Estimación 2025 basada en EMAE sectorial</div>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">Dos países en uno: crecimiento vs. peso en la economía</div>
+    <div class="cb-t fr">Deux pays en un : croissance vs. poids dans l'économie</div>
+    <div class="cb-s es">El tamaño de cada burbuja es proporcional al peso del sector en el PBI. La intermediación financiera crece 25% pero pesa sólo ~5% del PBI. La industria y el comercio, que juntos representan ~34% del PBI y la mayoría de los empleos, están en zona roja.</div>
+    <div class="cb-s fr">La taille de chaque bulle est proportionnelle au poids du secteur dans le PIB. La finance croît de 25% mais ne pèse que ~5% du PIB.</div>
+    <div class="ca"><canvas id="cSec"></canvas></div>
+    <div class="cb-src">INDEC Cuentas Nacionales 2025 · Pesos sectoriels: Argendata/Fundar (Ctas. Nac. INDEC)</div>
+  </div>
+
+  <div class="rx">
+    <span class="rx-t es">Impacto concreto</span>
+    <span class="rx-t fr">Impact concret</span>
+    <p class="es">2.436 fábricas cerradas en 2024-2025 (5% del total). 73.000 empleos industriales perdidos. Capacidad instalada utilizada: 53,6% (ene. 2026), mínimo de 10 años. Textil: 29%. Proyección 2026: pérdida de 1.500-2.000 empleos industriales formales por mes.</p>
+    <p class="fr">2.436 usines fermées en 2024-2025. 73.000 emplois industriels perdus. Utilisation capacité : 53,6% (jan. 2026).</p>
+    <span class="src">UBA CEHEAL/AESIAL · Audemus · CEPA · ONUDI ranking 56 pays</span>
+  </div>
+</section>
+
+<!-- ═══════════ 5. EMPLEO ═══════════ -->
+<section class="S" id="empleo">
+  <h2 class="es">Cómo viven los argentinos: empleo, deuda y tarifas</h2>
+  <h2 class="fr">Comment vivent les Argentins : emploi, dette et tarifs</h2>
+  <p class="S-lead es">El PBI creció 4,4% en 2025, pero el desempleo subió a 7,5% — una configuración inusual donde la economía crece sin crear empleo formal. ¿Cómo se explica? Y ¿qué pasa en los hogares?</p>
+  <p class="S-lead fr">Le PIB a crû de 4,4% en 2025, mais le chômage a monté à 7,5% — configuration inhabituelle. Que se passe-t-il dans les ménages ?</p>
+
+  <div class="cb">
+    <div class="cb-t es">Empleo: los sectores que ganan y pierden peso (puntos porcentuales del empleo total, T4-2023 → T4-2025)</div>
+    <div class="cb-t fr">Emploi : les secteurs qui gagnent et perdent du poids (p.p. de l'emploi total, T4-2023 → T4-2025)</div>
+    <div class="cb-s es">Cada barra muestra cuántos puntos porcentuales del empleo total ganó o perdió cada sector. La industria manufacturera perdió 1,3 p.p. del empleo total. Según el estudio del CEHEAL (UBA), publicado el 10/03/2026 en La Nación, esto equivale a ~100.000 puestos destruidos desde nov. 2023 (~160 empleos/día). No se muestran cifras absolutas para los demás sectores porque las estimaciones propias serían imprecisas; los puntos porcentuales provienen de INDEC EPH.</div>
+    <div class="cb-s fr">Chaque barre montre combien de points de pourcentage de l'emploi total chaque secteur a gagné ou perdu. L'industrie manufacturière : -1,3 p.p. ≈ ~100.000 postes détruits selon l'UBA CEHEAL (pub. 10/03/26).</div>
+    <div class="ca"><canvas id="cEmp"></canvas></div>
+    <div class="cb-src">INDEC EPH T4-2023 vs T4-2025 (pub. 18/03/26) · Industria en absolu: UBA CEHEAL/AESIAL pub. 10/03/26, La Nación</div>
+  </div>
+
+  <div class="ex">
+    <span class="ex-t es">Cifras clave del empleo T4-2025</span>
+    <span class="ex-t fr">Chiffres clés de l'emploi T4-2025</span>
+    <p class="es">Desempleo: 7,5% (+1,1 p.p. vs T4-2024). Presión laboral real: 5 millones de personas (1,6 M desempleados + 3,5 M subempleados buscando más trabajo). Informalidad: 43% de los ocupados (+1,6 p.p.). Empleo formal privado: -0,8 p.p. pese al crecimiento del PBI.</p>
+    <p class="fr">Chômage : 7,5% (+1,1 p.p.). Pression réelle : 5 M de personnes. Informalité : 43%. Emploi formel privé : -0,8 p.p. malgré la croissance du PIB.</p>
+    <span class="src">INDEC EPH T4-2025 (pub. 18/03/26) · IPYPP (pub. 19/03/26)</span>
+  </div>
+
+  <h2 class="es" style="margin-top:36px">Deuda de las familias: la morosidad que se dispara</h2>
+  <h2 class="fr" style="margin-top:36px">Dette des ménages : la morosité qui explose</h2>
+
+  <div class="ex">
+    <span class="ex-t es">¿Qué es la morosidad?</span>
+    <span class="ex-t fr">Qu'est-ce que la «morosidad» ?</span>
+    <p class="es">La <strong>morosidad</strong> (o irregularidad) mide el porcentaje de préstamos cuyas cuotas están <strong>impagas durante más de 90 días</strong>. Si un banco tiene $100 prestados a familias y $10 están impagos desde hace más de 3 meses, la morosidad es del 10%. Es el indicador más directo de que las familias no pueden pagar sus deudas. Cuando sube rápidamente, señala estrés financiero generalizado.</p>
+    <p class="fr">La <strong>morosité</strong> mesure le pourcentage de prêts dont les mensualités sont <strong>impayées depuis plus de 90 jours</strong>. Si une banque a $100 prêtés aux familles et $10 sont impayés depuis 3+ mois, la morosité est de 10%. C'est l'indicateur le plus direct du fait que les familles ne peuvent pas rembourser.</p>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">Morosidad de los créditos a familias (% de la cartera)</div>
+    <div class="cb-t fr">Morosité des crédits aux ménages (% du portefeuille)</div>
+    <div class="cb-s es">La curva roja sólida muestra la morosidad en bancos (regulados por BCRA). La curva dorada punteada muestra las entidades no bancarias (fintech tipo Mercado Crédito, tarjetas de cadenas de retail, etc.) donde el control es menor. En un año, la morosidad bancaria se multiplicó por 4: de 2,5% a 10,6%. En entidades no bancarias, llega a ~25%: 1 de cada 4 créditos está impago.</div>
+    <div class="cb-s fr">Courbe rouge : morosité bancaire (x4 en un an, de 2,5% à 10,6%). Courbe dorée : entités non bancaires (fintech, cartes retail) : ~25%.</div>
+    <div class="ca"><canvas id="cMor"></canvas></div>
+    <div class="cb-src">BCRA Informe sobre Bancos, mensual · EcoGo · 1816 · Banco Provincia via Infobae</div>
+  </div>
+
+  <div class="rx">
+    <span class="rx-t es">¿Por qué importa?</span>
+    <span class="rx-t fr">Pourquoi c'est important ?</span>
+    <p class="es">Deuda promedio de los hogares: 1,5 salarios (mediados 2024) → 2,5 salarios (fin 2025). Préstamos personales: 13,2% de morosidad. Tarjetas de crédito: 11%. Hipotecarios: 1,3%. Salario real (RIPTE): -2,1% interanual en dic. 2025. El crédito creció por la baja de tasas, pero los ingresos reales no acompañaron: las familias se endeudaron para mantener su nivel de consumo, no para invertir.</p>
+    <p class="fr">Dette moyenne des ménages : 2,5 salaires. Prêts personnels : 13,2% de morosité. Cartes : 11%. Le crédit a crû mais les revenus réels n'ont pas suivi.</p>
+    <span class="src">RIPTE Min. Capital Humano · BCRA · Banco Provincia via Infobae 23/02/26</span>
+  </div>
+</section>
+
+<!-- ═══════════ 7. CARRY TRADE ═══════════ -->
+<section class="S" id="carry">
+  <h2 class="es">Carry trade: la bicicleta financiera</h2>
+  <h2 class="fr">Carry trade : le vélo financier</h2>
+
+  <div class="ex">
+    <span class="ex-t es">¿Qué es el carry trade?</span>
+    <span class="ex-t fr">Qu'est-ce que le carry trade ?</span>
+    <p class="es">Un inversor extranjero (o local) vende dólares, los pone en un plazo fijo o bono en pesos que paga una tasa alta, y al vencimiento reconvierte a dólares. Si el peso no se devaluó lo suficiente, obtuvo una ganancia en dólares sin producir nada. Los rendimientos en dólares han sido excepcionalmente altos en el corto plazo, impulsados por tasas elevadas en pesos y una apreciación cambiaria. El riesgo: si el peso se devalúa bruscamente, todos venden pesos al mismo tiempo → crisis cambiaria.</p>
+    <p class="fr">Un investisseur vend des dollars, place en pesos à taux élevé, puis reconvertit. Les rendements en dollars ont été exceptionnellement élevés à court terme. Le risque : si le peso dévalue, tout le monde vend en même temps → crise.</p>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">Flujos financieros: lo que entra vs. lo que sale (trimestral, millones USD)</div>
+    <div class="cb-t fr">Flux financiers : ce qui entre vs. ce qui sort (trimestriel, millions USD)</div>
+    <div class="cb-s es">La cuenta financiera total (azul) muestra las entradas netas de capital: FMI, emisiones de bonos, carry trade, etc. La IED neta (verde) muestra los flujos netos de inversión productiva (fábricas, minería, energía). La diferencia entre las dos representa capital financiero de corto plazo o deuda. Notar: los flujos netos de IED fueron <strong>negativos</strong> en 2025, lo que puede reflejar repatriación de utilidades, desinversiones o menor entrada de nuevos proyectos.</div>
+    <div class="cb-s fr">Bleu = entrées financières totales (FMI, bonds, carry). Vert = flux nets d'investissement direct étranger (usines, énergie). La différence = capital financier de court terme ou dette. Les flux nets d'IDE furent <strong>négatifs</strong> en 2025.</div>
+    <div class="ca"><canvas id="cCarry"></canvas></div>
+    <div class="cb-src">INDEC BdP T1-T3 2025 · BCRA balance cambiario (IED neta) · Elaboración propia</div>
+  </div>
+
+  <div class="cx">
+    <span class="cx-t es">El dato que matiza</span>
+    <span class="cx-t fr">La nuance</span>
+    <p class="es">El VP del BCRA, Werning, declaró el 05/03/2026 que la exposición de no residentes a activos en pesos es "mucho menor que en 2018". Es un argumento a favor de que el riesgo de salida abrupta es menor que en la crisis Macri. Sin embargo, la magnitud del carry (107% anual en USD) genera incentivos poderosos para la entrada de capital especulativo de corto plazo.</p>
+    <p class="fr">Le VP de la BCRA, Werning, a déclaré le 05/03/2026 que l'exposition des non-résidents aux actifs en pesos est «bien moindre qu'en 2018». Mais un carry de 107%/an en USD attire fortement le capital spéculatif.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 8. DEUDA PUBLICA ═══════════ -->
+<section class="S" id="deuda">
+  <h2 class="es">Deuda pública: quién le presta a Argentina y en qué moneda</h2>
+  <h2 class="fr">Dette publique : qui prête à l'Argentine et en quelle monnaie</h2>
+
+  <div class="cb">
+    <div class="cb-t es">Evolución de la deuda externa bruta (millones USD)</div>
+    <div class="cb-t fr">Évolution de la dette externe brute (millions USD)</div>
+    <div class="cb-s es">Stock total de deuda externa (todos los sectores: gobierno, BCRA, empresas, bancos). Incluye deuda en dólares, DEG (moneda del FMI), euros, yuanes. Subió +38.862 M en 9 meses de 2025. Deuda/PBI: 46,7% (T3-2025).</div>
+    <div class="ca"><canvas id="cDeu"></canvas></div>
+    <div class="cb-src">INDEC, Posición de Inversión Internacional trimestral</div>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">Composición de la deuda externa por moneda (USD 316.935 M, T3-2025)</div>
+    <div class="cb-t fr">Composition de la dette externe par monnaie (USD 316.935 M, T3-2025)</div>
+    <div class="cb-s es">Este gráfico muestra la <strong>deuda externa</strong> (lo que Argentina debe al resto del mundo). El 67% está en dólares y el 20% en DEG (la moneda del FMI). Solo el 1,6% está en pesos. Nota: la deuda pública <strong>total</strong> (interna + externa) es más grande (~USD 473.557 M) y tiene una composición diferente: 56% en moneda extranjera, 44% en pesos (Sec. Finanzas, sep. 2025). La diferencia es que la deuda interna en pesos (bonos del Tesoro, Lecap, etc.) no aparece aquí porque es deuda doméstica.</div>
+    <div class="cb-s fr">Ce graphique montre la <strong>dette externe</strong> (due au reste du monde). 67% en USD, 20% en DTS (monnaie du FMI). La dette publique <strong>totale</strong> (interne + externe) est plus grande (~USD 473.557 M) : 56% en devises, 44% en pesos.</div>
+    <div class="ca" style="height:250px"><canvas id="cDeuComp"></canvas></div>
+    <div class="cb-src">INDEC, Posición de Inversión Internacional T3-2025 · Infobae 25/12/25 · Sec. Finanzas (deuda total) · Ambito 16/10/25</div>
+  </div>
+
+  <div class="ex">
+    <span class="ex-t es">El acuerdo con el FMI (abril 2025)</span>
+    <span class="ex-t fr">L'accord avec le FMI (avril 2025)</span>
+    <p class="es"><strong>Monto total:</strong> USD 20.000 millones (nuevo programa <span class="tt" data-tip="Extended Fund Facility: préstamo a mediano plazo del FMI, con condiciones de reforma estructural.">EFF</span>). Este es el programa que la prensa asocia a "los 20.000 millones de Trump": el FMI (donde EE.UU. tiene ~17% de los votos y poder de veto efectivo) aprobó el programa con el apoyo político del gobierno de Trump. No es un préstamo bilateral de EE.UU., sino un crédito del FMI facilitado por el respaldo político norteamericano.<br>
+    <strong>Duración:</strong> 48 meses (hasta 2029), con revisiones trimestrales de metas.<br>
+    <strong>Plazo de devolución:</strong> 10 años, con 4 años y medio de gracia → primer rembolso en <strong>octubre 2029</strong>.<br>
+    <strong>Tasa:</strong> 5,63% anual (en <span class="tt" data-tip="Derechos Especiales de Giro: moneda contable del FMI, basada en una canasta de 5 monedas (USD, EUR, CNY, JPY, GBP).">DEG</span> + margen).<br>
+    <strong>Desembolsos 2025:</strong> USD 15.000 M del FMI (12.000 inmediatos + 2.000 en junio + 1.000 segundo semestre). Más USD 6.100 M de Banco Mundial y BID. Más USD 2.000 M <span class="tt" data-tip="Repo: préstamo de corto plazo entre el BCRA y bancos internacionales, garantizado por bonos argentinos. Debe ser devuelto o renovado.">repo</span> bancos internacionales. Total: USD 23.100 M de "libre disponibilidad".<br>
+    <strong>Destino declarado:</strong> recapitalizar el BCRA (cancelar <span class="tt" data-tip="Letras Intransferibles: pagarés que el Tesoro le dio al BCRA a cambio de reservas. Valen poco en el mercado pero figuran como activo del BCRA. Cancelarlas = sacarlas del balance con dólares reales.">Letras Intransferibles</span>) y pagar deudas previas con el FMI.<br>
+    <strong>Lo que se pospone:</strong> USD 13.000 M de capital del programa 2022 (vencimientos 2025-2028 diferidos a post-2029).<br>
+    <strong>Deuda total con FMI pre-acuerdo:</strong> USD 41.400 M. Post-acuerdo: ~USD 61.400 M.<br>
+    <strong>Contrapartida:</strong> levantamiento del <span class="tt" data-tip="Cepo: conjunto de controles cambiarios que limitaban la compra de dólares a USD 200/mes para personas y restringían las transferencias al exterior.">cepo</span>, bandas cambiarias $1.000-$1.400, eliminación del <span class="tt" data-tip="Dólar blend: esquema donde el 80% de las exportaciones se liquidaba al tipo de cambio oficial y el 20% al mercado financiero (CCL). Eliminado en abril 2025.">dólar blend</span>.</p>
+    <p class="fr"><strong>Montant :</strong> USD 20.000 M (nouveau programme EFF). <strong>Durée :</strong> 48 mois. <strong>Remboursement :</strong> 10 ans, 4,5 ans de grâce → 1er remboursement oct. 2029. <strong>Taux :</strong> 5,63%. <strong>Décaissements 2025 :</strong> 15.000 M FMI + 6.100 M BM/BID + 2.000 M repo = 23.100 M. <strong>Contrepartie :</strong> levée du cepo, bandes de change, fin du dollar blend.</p>
+    <span class="src">Argentina.gob.ar 11/04/25 · Infobae 11/04/25 · La Nación 12/04/25 · Chequeado 09/04/25</span>
+  </div>
+
+  <div class="rx">
+    <span class="rx-t es">El dilema de la deuda FMI</span>
+    <span class="rx-t fr">Le dilemme de la dette FMI</span>
+    <p class="es">Argentina canjea deuda interna (<span class="tt" data-tip="Letras Intransferibles: pagarés en dólares que el Tesoro le entregó al BCRA a cambio de reservas. No se pueden vender en el mercado. Son una 'deuda del Estado consigo mismo'.">Letras Intransferibles</span> con el BCRA, que son como un pagaré del gobierno a sí mismo) por deuda externa con el FMI (en <span class="tt" data-tip="Derechos Especiales de Giro: la moneda del FMI, basada en USD, EUR, CNY, JPY, GBP. Una deuda en DEG se paga en divisas reales.">DEG</span>/dólares, bajo jurisdicción internacional). Esto fortalece las reservas hoy, pero crea compromisos de pago en moneda dura a futuro. Si el peso se deprecia, el costo de repago sube automáticamente. El perfil de vencimientos se despeja hasta 2029, pero se carga desde 2030: sólo con el FMI, Argentina deberá devolver ~USD 60.000+ M entre 2030 y 2035. A eso se suman los bonos globales, los préstamos del BM/BID y los pagos del programa 2022 diferidos. En resumen: se compra tiempo hoy a costa de compromisos mucho más pesados mañana.</p>
+    <p class="fr">L'Argentine échange de la dette interne (en pesos) contre de la dette FMI (en devises, juridiction internationale). Cela renforce les réserves aujourd'hui mais charge l'avenir : ~USD 60.000+ M à rembourser au FMI entre 2030 et 2035.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 9. HISTORIA ═══════════ -->
+<section class="S" id="recursos">
+  <h2 class="es">Vaca Muerta y litio: ¿la nueva fuente de dólares?</h2>
+  <h2 class="fr">Vaca Muerta et lithium : la nouvelle source de dollars ?</h2>
+  <p class="S-lead es">Argentina necesita dólares. Para conseguirlos tiene tres caminos: exportar más, endeudarse, o vender activos (privatizaciones). Vaca Muerta y el litio son las grandes apuestas del lado exportador.</p>
+  <p class="S-lead fr">L'Argentine a besoin de dollars. Pour les obtenir : exporter plus, s'endetter, ou vendre des actifs. Vaca Muerta et le lithium sont les grands paris côté export.</p>
+
+  <div class="cb">
+    <div class="cb-t es">Vaca Muerta: la revolución petrolera en cifras</div>
+    <div class="cb-t fr">Vaca Muerta : la révolution pétrolière en chiffres</div>
+    <div class="cb-s es">Argentina produce 882.000 barriles/día de petróleo (enero 2026, récord histórico). Vaca Muerta aporta el 67% del total (590.000 bbl/día). Las exportaciones energéticas en 2025 sumaron USD 11.086 M vs. importaciones de USD 3.271 M = superávit energético de USD 7.815 M. Eso equivale al 70% del superávit comercial total del país (USD 11.200 M). Es decir: sin la energía, Argentina tendría un superávit comercial de apenas USD 3.400 M. Proyección 2030: 1,5 M de barriles/día, de los cuales 1 M para exportación.</div>
+    <div class="cb-s fr">Production record : 882.000 barils/jour (jan. 2026). Vaca Muerta = 67% du total. L'énergie = 70% de l'excédent commercial. Export énergie 2025 : USD 11.086 M.</div>
+    <div class="ca"><canvas id="cVaca"></canvas></div>
+    <div class="cb-src">Sec. Energía · INDEC comercio exterior · Infobae 04/03/26 · Río Negro 20/03/26 · Mejor Energía 24/01/26</div>
+  </div>
+
+  <div class="ex">
+    <span class="ex-t es">Pero ojo: sin Vaca Muerta, Argentina estaría en caída libre</span>
+    <span class="ex-t fr">Mais attention : sans Vaca Muerta, l'Argentine serait en chute libre</span>
+    <p class="es">La producción petrolera <strong>sin Vaca Muerta</strong> fue de 16,2 M de m³ en 2025, un -4,1% vs. 2024 y la décima caída consecutiva. Las cuencas convencionales están en declive estructural. El break-even de Vaca Muerta es de USD 35-40/barril.<br><br>
+    <strong>Contexto marzo 2026 (conflit Iran):</strong> el Brent pasó de ~$71 (27/02) a ~$120 (09/03) tras los ataques de EE.UU./Israel a Irán y el cierre efectivo del Estrecho de Ormuz. Al 22/03 cotiza ~$108. La EIA revisó su previsión 2026 de $57,69 a $78,84/barril (promedio anual). Algunos analistas hablan de escenarios a $150-$200 si el conflicto se extiende. Para Vaca Muerta, esto es una oportunidad histórica: con Brent a $80-$100, los márgenes son amplísimos (break-even $35-40). Pero también un riesgo: si la crisis global reduce la demanda, los precios podrían caer tan rápido como subieron.</p>
+    <p class="fr">Production pétrolière <strong>hors Vaca Muerta</strong> : en déclin pour la 10e année.<br><br>
+    <strong>Contexte mars 2026 (conflit Iran) :</strong> le Brent est passé de ~$71 à ~$120 après les frappes US/Israël sur l'Iran. L'EIA a révisé sa prévision 2026 de $57,69 à $78,84/bbl. Pour Vaca Muerta, c'est une opportunité historique (break-even $35-40).</p>
+    <span class="src">EIA STEO March 2026 · IEA Oil Market Report March 2026 · CNBC 09/03/26 · Fortune 18/03/26 · Al Jazeera 19/03/26 · Montamat & Asoc.</span>
+  </div>
+
+  <div class="cb">
+    <div class="cb-t es">Litio: el "oro blanco" entre el discurso y la realidad</div>
+    <div class="cb-t fr">Lithium : l'«or blanc» entre le discours et la réalité</div>
+    <div class="cb-s es">Exportaciones de litio 2025: ~USD 900 M (récord en volumen). Pero ojo: el precio del litio pasó de USD 80.000/tonelada (2022) a USD 8.500/ton (2025) → las exportaciones en dólares bajaron -24% pese a +71% en volumen. Producción 2025: 131.000 ton LCE (+75% vs 2024). Proyección 2035 (Sec. Minería): 650.000 ton/año → USD 6.000 M anuales si los precios se mantienen. Hoy, ~USD 900 M representan solo el 1,2% de las exportaciones totales.</div>
+    <div class="cb-s fr">Exportations lithium 2025 : ~USD 900 M. Mais le prix est passé de USD 80.000/t (2022) à 8.500/t (2025). Projection 2035 : 650.000 t/an → USD 6.000 M si les prix tiennent.</div>
+    <div class="ca"><canvas id="cLitio"></canvas></div>
+    <div class="cb-src">CAEM/BCR · USGS Mineral Commodity Summaries 2026 · Infobae 18/01/26 · La Nación 08/04/25</div>
+  </div>
+
+  <div class="rx">
+    <span class="rx-t es">¿De dónde vienen los dólares de Argentina?</span>
+    <span class="rx-t fr">D'où viennent les dollars de l'Argentine ?</span>
+    <p class="es">En 2025, los dólares entraron por: <strong>exportaciones de bienes</strong> (~USD 79.000 M, de los cuales energía 11.000 M, soja/agro 30.000 M, industria 20.000 M, litio 900 M), <strong>deuda</strong> (FMI 15.000 M + BM/BID 6.100 M + bonos), y <strong>carry trade</strong> (capitales especulativos atraídos por 107%/año). Privatizaciones: por ahora limitadas (YPF sigue estatal). El problema: si los precios de la energía bajan (Brent → USD 55), si la soja retrocede, y si el carry se detiene, las tres fuentes se secan simultáneamente. Por eso la diversificación productiva y la industrialización son esenciales — pero es justamente la industria la que retrocede.</p>
+    <p class="fr">En 2025, les dollars sont venus de : <strong>exportations</strong> (~USD 79.000 M), <strong>dette</strong> (FMI + BM/BID + bonds), et <strong>carry trade</strong>. Privatisations : limitées. Si l'énergie, le soja et le carry reculent en même temps, les trois sources se tarissent.</p>
+  </div>
+</section>
+
+<!-- ═══════════ LO QUE DICEN LOS DEFENSORES ═══════════ -->
+<section class="S" id="defensores">
+  <h2 class="es">Lo que dicen los defensores del programa</h2>
+  <h2 class="fr">Ce que disent les défenseurs du programme</h2>
+  <p class="S-lead es">Un análisis riguroso requiere presentar también los argumentos a favor. Los defensores de la política de Milei señalan logros concretos y diferencias con episodios pasados.</p>
+  <p class="S-lead fr">Une analyse rigoureuse requiert de présenter aussi les arguments en faveur.</p>
+
+  <div class="cx">
+    <span class="cx-t es">Los argumentos principales</span>
+    <span class="cx-t fr">Les arguments principaux</span>
+    <p class="es"><strong>1. Desinflación real:</strong> la inflación mensual pasó de 25,5% (dic. 2023) a 2,4% (dic. 2025). No es cosmético: refleja disciplina fiscal y monetaria. El REM del BCRA proyecta 26% anual para 2026.<br>
+    <strong>2. Superávit fiscal genuino:</strong> +1,4% del PBI, algo que Argentina no logró de forma sostenida desde los primeros años de Kirchner. Reduce la necesidad de financiamiento y la presión sobre el tipo de cambio.<br>
+    <strong>3. Normalización financiera:</strong> el crédito al sector privado pasó de 4,3% del PBI (ene. 2024) a 8,3% (abr. 2025). Los depósitos en dólares alcanzaron máximos históricos. El sistema bancario se profundiza.<br>
+    <strong>4. Vaca Muerta como activo estratégico:</strong> la energía aportó USD 7.815 M de superávit comercial en 2025 (récord). Con el conflicto en Irán y Brent a ~$108, los ingresos energéticos podrían crecer sustancialmente en 2026.<br>
+    <strong>5. Menor exposición que en 2018:</strong> el VP del BCRA, Werning, señala que la exposición de no residentes a activos en pesos es menor que en la crisis Macri. El superávit fiscal reduce la dependencia del financiamiento externo.</p>
+    <p class="fr"><strong>1. Désinflation réelle</strong> (25,5% → 2,4%/mois). <strong>2. Excédent fiscal</strong> (+1,4% PIB). <strong>3. Normalisation financière</strong> (crédit x2). <strong>4. Vaca Muerta</strong> (record d'export énergie). <strong>5. Moindre exposition qu'en 2018.</strong></p>
+  </div>
+
+  <p class="es">Estos factores son reales y mesurables. La pregunta que este informe plantea no es si estos logros existen — existen. Es si son suficientes para compensar los costos (desindustrialización, desempleo, endeudamiento externo, apreciación cambiaria) y si el modelo es sostenible sin un flujo continuo de capitales de corto plazo. La historia argentina sugiere cautela; la situación actual presenta diferencias que podrían alterar el desenlace.</p>
+  <p class="fr">Ces facteurs sont réels et mesurables. La question n'est pas s'ils existent — c'est s'ils suffisent à compenser les coûts et si le modèle est durable sans flux continus de capitaux à court terme.</p>
+</section>
+
+<!-- ═══════════ HISTORIA ═══════════ -->
+<section class="S" id="historia">
+  <h2 class="es">Tres veces la misma película: lecciones de la historia</h2>
+  <h2 class="fr">Trois fois le même film : leçons de l'histoire</h2>
+  <p class="S-lead es">Argentina no experimenta este tipo de configuración económica por primera vez. Tres episodios anteriores presentaron características similares — y terminaron en crisis. ¿Se repetirá o "esta vez es diferente"?</p>
+  <p class="S-lead fr">L'Argentine n'expérimente pas cette configuration pour la première fois. Trois épisodes antérieurs avaient des caractéristiques similaires — et se sont terminés en crise.</p>
+
+  <div class="tl">
+    <div class="tl-i">
+      <div class="tl-d">1977 – 1981</div>
+      <div class="tl-t es">La "tablita" de Martínez de Hoz</div>
+      <div class="tl-t fr">La «tablita» de Martínez de Hoz</div>
+      <p class="tl-p es"><strong>Qué pasó:</strong> el ministro de la dictadura fijó un cronograma de devaluación decreciente ("tablita") para anclar expectativas. Abrió la cuenta de capitales. Resultado: el dólar quedó barato, entraron capitales especulativos, la industria no pudo competir con las importaciones. <strong>Similitudes con hoy:</strong> crawling peg/bandas como ancla → dólar barato → carry trade → desindustrialización → deuda externa creciente. <strong>Final:</strong> crisis de deuda externa, fuga masiva de capitales en 1981, devaluación abrupta, estatización de deuda privada, década perdida.</p>
+      <p class="tl-p fr"><strong>Similitudes :</strong> ancrage du change → dollar bon marché → carry trade → désindustrialisation → dette externe croissante. <strong>Fin :</strong> crise de dette, fuite de capitaux, dévaluation, décennie perdue.</p>
+    </div>
+    <div class="tl-i">
+      <div class="tl-d">1991 – 2001</div>
+      <div class="tl-t es">La Convertibilidad de Cavallo</div>
+      <div class="tl-t fr">La Convertibilité de Cavallo</div>
+      <p class="tl-p es"><strong>Qué pasó:</strong> 1 peso = 1 dólar por ley. La inflación se detuvo, pero los precios internos subieron en dólares durante una década. Las exportaciones perdieron competitividad. El FMI financió el esquema con créditos crecientes. El turismo emisivo creció exponencialmente. La industria se achicó por la competencia importada. <strong>Similitudes con hoy:</strong> peso sobrevaluado → déficit turístico récord → desindustrialización → dependencia del financiamiento del FMI → deuda/PBI creciente. <strong>Final:</strong> default soberano de USD 100.000 M (el mayor de la historia hasta entonces), corralito, 5 presidentes en 2 semanas, desempleo 25%.</p>
+      <p class="tl-p fr"><strong>Similitudes :</strong> peso surévalué → déficit touristique record → désindustrialisation → dépendance au financement FMI → dette/PIB croissante. <strong>Fin :</strong> défaut souverain, corralito, 25% de chômage.</p>
+    </div>
+    <div class="tl-i">
+      <div class="tl-d">2016 – 2018</div>
+      <div class="tl-t es">El carry trade de Macri-Caputo</div>
+      <div class="tl-t fr">Le carry trade de Macri-Caputo</div>
+      <p class="tl-p es"><strong>Qué pasó:</strong> Macri abrió el cepo, bajó retenciones, emitió deuda a 100 años. Las Lebac del BCRA ofrecían tasas altísimas en pesos → llegaron capitales especulativos. El dólar se apreció. La industria sufrió. En abril 2018, la Fed subió tasas, los capitales salieron masivamente, el peso se devaluó 100% en meses. El ministro de Finanzas era <strong>Luis Caputo</strong> (hoy Ministro de Economía). <strong>Similitudes con hoy:</strong> mismo equipo económico, mismo mecanismo (tasas altas + dólar barato = carry), misma vulnerabilidad al cambio de condiciones externas. <strong>Diferencias con hoy:</strong> superávit fiscal actual (+1,4% PBI vs. déficit de -3,8% en 2017), menor exposición de no residentes (según BCRA), ITCRM algo menos apreciado. <strong>Final:</strong> préstamo FMI de USD 57.000 M (mayor de la historia del organismo), crisis social, derrota electoral.</p>
+      <p class="tl-p fr"><strong>Similitudes :</strong> même équipe économique (Caputo), même mécanisme (taux élevés + dollar pas cher = carry). <strong>Différences :</strong> excédent fiscal actuel (+1,4% PIB vs -3,8%). <strong>Fin :</strong> prêt FMI de 57.000 M, crise sociale, défaite électorale.</p>
+    </div>
+    <div class="tl-i" style="margin-bottom:0">
+      <div class="tl-d">2024 – 2026</div>
+      <div class="tl-t es">¿Y ahora?</div>
+      <div class="tl-t fr">Et maintenant ?</div>
+      <p class="tl-p es"><strong>Lo que se repite:</strong> tipo de cambio apreciado (ITCRM 88 vs. equilibrio ~115), carry trade con rendimientos extremos (107%/año en USD), déficit turístico récord, desindustrialización acelerada, deuda externa creciente (+38.862 M en 9 meses), dependencia del FMI.<br><strong>Lo nuevo/diferente:</strong> superávit fiscal primario sólido (+1,4% PBI), inflación en fuerte baja (2,4% mensual → es logro real), menor stock de Lebac/Lefi que en 2018, Vaca Muerta como activo estratégico, menor exposición de no residentes.<br><strong>La pregunta central:</strong> ¿el superávit fiscal y la baja de inflación son suficientes para sostener un peso fuerte sin que la industria, el empleo y el tejido productivo paguen el costo? ¿O los 107% anuales del carry trade atraen capital caliente que puede irse tan rápido como vino?</p>
+      <p class="tl-p fr"><strong>Ce qui se répète :</strong> taux de change apprécié, carry trade extrême, déficit touristique record, désindustrialisation, dette croissante. <strong>Ce qui est nouveau :</strong> excédent fiscal solide, inflation en forte baisse, Vaca Muerta.<br><strong>La question centrale :</strong> l'excédent fiscal suffit-il à soutenir un peso fort sans que l'industrie et l'emploi n'en paient le prix ?</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CONCLUSION ═══════════ -->
+<section class="S" id="escenarios">
+  <h2 class="es">Cuatro escenarios para Argentina 2026-2028</h2>
+  <h2 class="fr">Quatre scénarios pour l'Argentine 2026-2028</h2>
+  <p class="S-lead es">Basados en los datos presentados en este informe y en la interacción de las variables clave identificadas, proponemos un escenario central y tres alternativos. No son predicciones: son marcos de análisis para pensar lo que puede venir.</p>
+  <p class="S-lead fr">Basés sur les données de ce rapport et l'interaction des variables clés, nous proposons un scénario central et trois alternatifs.</p>
+
+  <div class="simple" style="background:var(--cream);padding:16px;border-radius:8px;margin-bottom:16px;font-size:14px;line-height:1.8">
+    <p class="es"><strong>En palabras simples:</strong> pensá en Argentina como un equilibrista sobre una cuerda. Tiene buen equilibrio (superávit fiscal, inflación baja) pero la cuerda es fina (depende de que sigan entrando dólares). El viento puede soplar a favor (petróleo caro por la guerra en Irán, buena cosecha) o en contra (caída de commodities, salida de capitales). Lo más probable es que el equilibrista siga avanzando despacio y con algún tropiezo. Pero hay un escenario donde el viento a favor lo impulsa, y otros donde una ráfaga lo desequilibra.</p>
+    <p class="fr"><strong>En mots simples :</strong> l'Argentine est un équilibriste. Bon équilibre (excédent fiscal, inflation basse) mais corde fine (dépendance aux dollars). Le vent peut souffler pour (pétrole cher, bonne récolte) ou contre (chute des matières premières, sortie de capitaux).</p>
+  </div>
+
+  <div class="cb" style="border-left:4px solid var(--gold)">
+    <div class="cb-t es" style="color:var(--gold)">📊 Escenario central (probabilidad estimada: ~45%): "El equilibrista avanza, pero cojeando"</div>
+    <div class="cb-t fr" style="color:var(--gold)">📊 Scénario central (~45%) : «L'équilibriste avance, mais en boitant»</div>
+    <p class="es" style="font-size:14px"><strong>Contexto:</strong> el conflicto en Irán se resuelve parcialmente en 2-3 meses (Estrecho de Ormuz se reabre progresivamente). Le Brent se stabilise entre $75-85/baril (promedio anual). La Fed baja tasas a 3-3,5%. La cosecha gruesa es buena. Trump mantiene el apoyo político al programa.<br><br>
+    <strong>Lo que pasa:</strong> el PBI crece ~3% en 2026 (menos que el 4% del FMI, porque la industria sigue contrayéndose). La inflación baja a ~25% anual. El superávit fiscal se mantiene con esfuerzo. Vaca Muerta sigue siendo el motor de las exportaciones. El carry trade se modera pero no se desarma: los rendimientos en dólares bajan de los niveles extremos de 2025 pero siguen atractivos. Las reservas suben gradualmente gracias al FMI y al superávit energético.<br><br>
+    <strong>Pero:</strong> el desempleo no baja del 7%. La informalidad sube a 44-45%. La morosidad familiar se estabiliza en 10-12% (alta pero no explosiva). La industria pierde otros 20.000-30.000 empleos formales. El déficit turístico sigue alto (~USD 5.000-6.000 M). El ITCRM permanece apreciado (~95-105), lo que mantiene la presión sobre la competitividad. El superávit comercial se comprime: sin energía, es casi nulo. La deuda externa sigue creciendo. Elecciones legislativas 2027: el oficialismo logra consolidar su bloque, pero con desgaste social visible.<br><br>
+    <strong>Horizonte 2028:</strong> comienzan los rembolsos al FMI. Argentina tiene un perfil de vencimientos difícil (>USD 15.000 M/año entre FMI, bonos globales y organismos). Si el refinanciamiento no sale, el estrés financiero vuelve. La economía funciona, pero genera pocos empleos de calidad y sigue estructuralmente dependiente de la energía y la soja.</p>
+    <p class="fr" style="font-size:14px"><strong>PIB ~3%</strong> en 2026. Inflation ~25%. Industrie en contraction lente. Vaca Muerta moteur des exports. Carry modéré. Chômage >7%. Morosité ~10-12%. Le modèle fonctionne mais sans inclusivité. En 2028 : mur de remboursements FMI.</p>
+  </div>
+
+  <div class="cb" style="border-left:4px solid var(--green)">
+    <div class="cb-t es" style="color:var(--green)">🌿 Escenario optimista (~20%): "El viento de cola"</div>
+    <div class="cb-t fr" style="color:var(--green)">🌿 Scénario optimiste (~20%) : «Le vent favorable»</div>
+    <p class="es" style="font-size:14px"><strong>Qué necesita:</strong> Brent sostenido a $90-110 (conflicto Irán prolongado o resuelto con prima de riesgo duradera), cosecha récord de soja, Fed baja tasas agresivamente (2,5-3%), Trump facilita acceso a mercados para productos argentinos, reformas laborales y tributarias avanzan en el Congreso.<br><br>
+    <strong>Lo que pasa:</strong> el superávit energético supera USD 10.000 M. Las reservas crecen rápidamente. El riesgo país baja a 500-600 puntos (hoy ~700). Argentina accede al mercado voluntario de deuda con spreads razonables. El crédito se expande sin generar burbujas. La inversión productiva (Vaca Muerta, minería, agro tech) empieza a generar empleo en el interior. La remonetización avanza: el M3 pasa de 12,7% a 15-16% del PBI. La inflación converge a ~18-20% anual. La industria se estabiliza (deja de caer, no crece).<br><br>
+    <strong>Es el escenario que vende el gobierno</strong> y que el FMI proyecta implícitamente. Es posible pero requiere que todo salga bien al mismo tiempo — cosa que no ocurre seguido en Argentina ni en ningún país emergente.</p>
+    <p class="fr" style="font-size:14px"><strong>Conditions :</strong> Brent élevé, récolte record, Fed dovish, réformes au Congrès. Excédent énergie >10.000 M. Risque pays ~500. Le modèle se consolide. C'est le scénario du gouvernement — possible mais exigeant.</p>
+  </div>
+
+  <div class="cb" style="border-left:4px solid var(--red)">
+    <div class="cb-t es" style="color:var(--red)">⚠️ Escenario de estrés (~25%): "El carry se desarma"</div>
+    <div class="cb-t fr" style="color:var(--red)">⚠️ Scénario de stress (~25%) : «Le carry se défait»</div>
+    <p class="es" style="font-size:14px"><strong>El detonante:</strong> una combinación de facteurs: el conflicto en Irán se resuelve rápido → Brent retombe à $55-60 → el superávit energético se reduce. Simultáneamente, la Fed sube tasas (o no las baja tanto), aumentando el costo de oportunidad del carry. Los inversores empiezan a retirar posiciones en pesos. El tipo de cambio se acerca a la banda superior ($1.400 ajustada por inflación). El BCRA interviene y quema reservas.<br><br>
+    <strong>Lo que pasa:</strong> el peso se devalúa 20-30% en pocas semanas (como en 2018). La inflación repunta a 4-5% mensual. El superávit fiscal se tensiona (más pesos para pagar deuda en dólares, menos recaudación real). El FMI condiciona el próximo desembolso. La morosidad familiar salta a 15-18%. Los depósitos en dólares empiezan a salir del sistema bancario. No es un default, pero es una crisis de confianza que obliga a un cambio de régimen cambiario (devaluación + nueva intervención del BCRA).<br><br>
+    <strong>Precedente:</strong> abril-septiembre 2018 (mismo equipo económico, mismo mecanismo). La diferencia es el superávit fiscal, que da más colchón. Pero si el carry se desarma lo suficientemente rápido, el superávit no alcanza.</p>
+    <p class="fr" style="font-size:14px"><strong>Déclencheur :</strong> Brent retombe + Fed hawkish → le carry se défait → dévaluation 20-30% → inflation repart → FMI conditionne les décaissements. Pas un défaut, mais une crise de confiance. Précédent : 2018.</p>
+  </div>
+
+  <div class="cb" style="border-left:4px solid var(--ink)">
+    <div class="cb-t es">🌑 Escenario de cola (~10%): "Tormenta perfecta"</div>
+    <div class="cb-t fr">🌑 Scénario extrême (~10%) : «Tempête parfaite»</div>
+    <p class="es" style="font-size:14px"><strong>El detonante:</strong> una recesión global (probable si el conflicto en Irán se extiende al Golfo entero y el Brent supera $150 de forma sostenida → destrucción de demanda mundial). El comercio mundial se contrae. Los precios de la soja y el maíz caen (demanda china en baja). Las tasas globales suben. El carry se desarma violentamente. Argentina pierde acceso al mercado de deuda. El FMI endurece condiciones. El superávit fiscal se rompe por la caída de recaudación (actividad en baja + importaciones en baja = menos IVA). Las reservas se evaporan en meses.<br><br>
+    <strong>Lo que pasa:</strong> escenario similar a 2001, con diferencias (no hay convertibilidad fija, reservas estratégicas de petróleo). Pero la estructura de la deuda (56% en divisas, rembolsos FMI concentrados 2030-2035) crea una vulnerabilidad comparable. El costo social sería mayor : chômage >10%, pauvreté >45%, crise bancaire possible.<br><br>
+    <strong>Probabilité basse mais non nulle.</strong> La simultanéité de la guerre en Iran, de la fragilité du modèle argentin et du mur de remboursements à venir crée un couloir étroit. Chaque choc qui s'ajoute réduit la marge de manœuvre.</p>
+    <p class="fr" style="font-size:14px"><strong>Déclencheur :</strong> récession mondiale (Iran étendu, Brent >$150). Commerce mondial en contraction. Soja/maïs en baisse. Le carry s'effondre. L'Argentine perd l'accès au marché. Scénario type 2001 mais avec pétrole comme amortisseur partiel. Probabilité basse mais non nulle.</p>
+  </div>
+
+  <div class="ex">
+    <span class="ex-t es">Las variables a vigilar</span>
+    <span class="ex-t fr">Les variables à surveiller</span>
+    <p class="es"><strong>1. Brent:</strong> por encima de USD 75, el modelo respira. Por debajo, el estrés comienza. Por encima de USD 100, es un bonus mayor. <strong>2. Reservas netas del BCRA</strong> (hoy ~USD 6.000-8.000 M netas, meta FMI ~USD 10.000 M a fin de 2026). <strong>3. Tasa de la Fed:</strong> cada 25 puntos básicos de suba reduce el atractivo del carry argentino. <strong>4. ITCRM:</strong> por debajo de 90, la presión sobre la industria y el turismo se vuelve insostenible. <strong>5. Morosidad familiar:</strong> si supera el 15%, el sistema bancario empieza a sufrir. <strong>6. Superávit fiscal:</strong> si pasa a déficit, todo el programa pierde credibilidad.</p>
+    <p class="fr"><strong>1. Brent :</strong> au-dessus de $75, le modèle respire. <strong>2. Réserves nettes BCRA</strong> (objectif FMI ~$10.000 M). <strong>3. Taux Fed.</strong> <strong>4. ITCRM</strong> (sous 90 = insoutenable). <strong>5. Morosité >15% = stress bancaire.</strong> <strong>6. Excédent fiscal :</strong> s'il disparaît, tout s'effondre.</p>
+  </div>
+
+  <span class="src">Analyse de scénarios : élaboration propre de l'auteur, basée sur les données officielles présentées dans ce rapport, les projections du FMI (WEO jan. 2026), de l'EIA (STEO mars 2026), d'UBS (déc. 2025), et les dynamiques historiques argentines. Les probabilités sont subjectives et indicatives. Ce ne sont pas des prévisions.</span>
+</section>
+
+<section class="S">
+  <h2 class="es">Conclusión: datos vs. relato</h2>
+  <h2 class="fr">Conclusion : données vs. récit</h2>
+  <p class="es">Los datos muestran una economía a dos velocidades. Por un lado, logros reales: superávit fiscal sostenido (+1,4% del PBI), inflación en fuerte baja (2,4% mensual en dic. 2025), reservas en alza gracias al acuerdo FMI. Por otro, señales de alarma: industria en retroceso (-5% en T4-2025), desempleo en alza (7,5%), morosidad de hogares multiplicada por 4, déficit turístico récord, y rendimientos en dólares que atraen capital financiero de corto plazo. Este tipo de dinámicas ha sido históricamente inestable en Argentina, aunque factores como el superávit energético récord, el ajuste fiscal o la baja de inflación podrían alterar el desenlace. La pregunta central sigue abierta: ¿el superávit fiscal y Vaca Muerta son suficientes para sostener un peso apreciado sin que la industria, el empleo y el tejido productivo paguen un costo irreversible?</p>
+  <p class="fr">Les données montrent une économie à deux vitesses. D'un côté, des succès réels : excédent fiscal (+1,4% PIB), inflation en forte baisse, réserves en hausse. De l'autre, des signaux d'alarme : industrie en recul, chômage en hausse, morosité des ménages x4, déficit touristique record. Ce type de dynamiques a été historiquement instable en Argentine, bien que l'excédent énergétique record et l'ajustement fiscal pourraient changer la donne. La question reste ouverte.</p>
+  <p class="hero-meta" style="color:var(--mut);margin-top:24px">Elaborado con datos oficiales abiertos. Última actualización: 22/03/2026. Esta página no tiene afiliación política ni recibe financiamiento. Contacto: los datos hablan.</p>
+</section>
+
+</main>
+
+<script>
+function go(){
+if(typeof Chart==='undefined'){setTimeout(go,300);return}
+var tc=getComputedStyle(document.documentElement).getPropertyValue('--ink').trim()||'#1c1a17';
+var gc='rgba(28,26,23,0.08)';
+var R='rgba(176,42,26,';var G='rgba(42,110,66,';var B='rgba(26,74,110,';var Go='rgba(138,107,26,';
+
+// 1. IPC vs Dollar
+new Chart(document.getElementById('cIpc'),{type:'line',data:{
+  labels:['Dic-23','Mar-24','Jun-24','Sep-24','Dic-24','Mar-25','Jun-25','Sep-25','Dic-25','Feb-26'],
+  datasets:[
+    {label:'IPC acumulado',data:[0,51,90,130,175,210,245,270,300,320],borderColor:'#b02a1a',backgroundColor:'rgba(176,42,26,0.06)',fill:true,borderWidth:2.5,pointRadius:3,tension:0.3},
+    {label:'Dólar oficial acumulado',data:[0,2,4,6,12,17,22,28,35,40],borderColor:'#1a4a6e',borderWidth:2.5,pointRadius:3,tension:0.3,fill:false},
+    {label:'Brecha = inflación en USD',data:[0,49,86,124,163,193,223,242,265,280],borderColor:'#8a6b1a',borderWidth:1.5,borderDash:[5,3],pointRadius:0,tension:0.3,fill:false}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc,font:{size:10}}},y:{grid:{color:gc},ticks:{color:tc,callback:function(v){return '+'+v+'%'}}}}}});
+
+// 2. Big Mac
+new Chart(document.getElementById('cBigMac'),{type:'line',data:{
+  labels:['2019','2020','2021','2022','2023','2024','2025','2026'],
+  datasets:[
+    {label:'Argentina (USD)',data:[2.0,2.4,2.4,3.5,3.8,5.1,5.9,5.6],borderColor:'#b02a1a',backgroundColor:R+'0.08)',fill:true,borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#b02a1a',tension:0.3},
+    {label:'EE.UU. (USD)',data:[5.7,5.7,5.7,5.2,5.4,5.7,5.8,6.1],borderColor:'#1a4a6e',borderWidth:2,borderDash:[5,3],pointRadius:3,tension:0.3,fill:false},
+    {label:'Brasil (USD)',data:[4.8,3.9,3.6,3.8,4.6,4.7,4.3,4.0],borderColor:'#2a6e42',borderWidth:2,borderDash:[5,3],pointRadius:3,tension:0.3,fill:false}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc}},y:{grid:{color:gc},min:0,max:8,ticks:{color:tc,callback:function(v){return 'USD '+v}}}}}});
+
+// 3. BdP
+new Chart(document.getElementById('cBdP'),{type:'bar',data:{
+  labels:['T1-24','T2-24','T3-24','T4-24','T1-25','T2-25','T3-25'],
+  datasets:[
+    {label:'Cta. corriente (actividad real)',data:[176,-903,-1200,-2100,-5191,-3016,-1581],backgroundColor:R+'0.65)',borderRadius:3},
+    {label:'Cta. financiera (capitales)',data:[2500,1800,1150,4061,7229,2835,2149],backgroundColor:B+'0.65)',borderRadius:3}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:11}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:function(v){return (v>=0?'+':'')+Math.round(v/1000)+' mil M'}}}}}});
+
+// 4. Desglose BdP
+new Chart(document.getElementById('cDesgl'),{type:'bar',data:{
+  labels:[
+    'Export. bienes','Import. bienes','Turismo (gasto arg.)','Turismo (ingreso extr.)','Intereses de deuda','Otros servicios','FMI + bonos soberanos','Inversiones de cartera','IED neta','Ahorro privado en USD'
+  ],
+  datasets:[{data:[52000,-49000,-7164,3110,-8500,-2200,18000,5000,-1500,-3500],
+    backgroundColor:function(ctx){return ctx.raw>=0?G+'0.65)':R+'0.65)'},borderRadius:3}]
+  },options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+  scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:10},callback:function(v){return (v>=0?'+':'')+Math.round(v/1000)+' mil M'}}},y:{grid:{display:false},ticks:{color:tc,font:{size:10}}}}}});
+
+// 5. Tourism persons
+var mileiAnnotation={type:'line',xMin:4.5,xMax:4.5,borderColor:'rgba(176,42,26,0.5)',borderWidth:2,borderDash:[4,4],label:{display:true,content:'Milei',position:'start',font:{size:9},color:'#b02a1a'}};
+new Chart(document.getElementById('cTurPersonas'),{type:'line',data:{
+  labels:['2017','2018','2019','2020','2021','2022','2023','2024','2025'],
+  datasets:[
+    {label:'Argentinos al exterior (M)',data:[9.2,8.5,8.8,1.5,2.2,5.3,8.3,8.7,11.9],borderColor:'#b02a1a',backgroundColor:R+'0.06)',fill:true,borderWidth:2.5,pointRadius:4,tension:0.3},
+    {label:'Extranjeros que llegan (M)',data:[6.7,6.9,7.4,1.2,1.8,4.5,6.6,6.3,5.3],borderColor:'#2a6e42',backgroundColor:G+'0.06)',fill:true,borderWidth:2.5,pointRadius:4,tension:0.3}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}},
+  annotation:{annotations:{milei:{type:'line',xMin:6.5,xMax:6.5,borderColor:'rgba(176,42,26,0.6)',borderWidth:2,borderDash:[4,4]}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:function(v){return v+' M'}}}}}});
+
+// 6. Tourism USD
+new Chart(document.getElementById('cTurUSD'),{type:'bar',data:{
+  labels:['2017','2018','2019','2022','2023','2024','2025'],
+  datasets:[
+    {label:'Déficit INDEC (encuesta)',data:[-3200,-2800,-2100,-1600,-2400,-3100,-4054],backgroundColor:R+'0.5)',borderRadius:3},
+    {label:'Déficit IERAL (flujos BCRA)',data:[null,null,null,null,null,-5500,-7750],backgroundColor:R+'0.25)',borderRadius:3}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:function(v){return 'USD '+v+' M'}}}}}});
+
+// 7. Industry INDEX 100 (2019=100)
+new Chart(document.getElementById('cIndustria'),{type:'line',data:{
+  labels:['2017','2018','2019','2020','2021','2022','2023','2024','H1-25','T4-25','Ene-26'],
+  datasets:[{label:'Producción industrial (2019=100)',data:[109,103.5,100,92.5,107.1,111.5,111.2,101.0,101.8,96.0,93.0],
+    borderColor:'#b02a1a',backgroundColor:R+'0.06)',fill:true,borderWidth:2.5,pointRadius:4,pointBackgroundColor:function(ctx){return ctx.raw<100?'#b02a1a':'#2a6e42'},tension:0.3},
+    {label:'Base 100 = 2019',data:[100,100,100,100,100,100,100,100,100,100,100],borderColor:'rgba(138,107,26,0.4)',borderWidth:1.5,borderDash:[6,4],pointRadius:0,fill:false}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc,font:{size:10}}},y:{grid:{color:gc},min:85,max:115,ticks:{color:tc}}}}});
+
+// 8. Sectors bubble
+new Chart(document.getElementById('cSec'),{type:'bubble',data:{
+  datasets:[
+    {label:'Int. financiera (~5% PBI): +24,7%',data:[{x:24.7,y:5,r:10}],backgroundColor:G+'0.7)'},
+    {label:'Minas/canteras (~5% PBI): +8,0%',data:[{x:8.0,y:5,r:10}],backgroundColor:G+'0.6)'},
+    {label:'Hoteles (~3% PBI): +7,4%',data:[{x:7.4,y:3,r:7}],backgroundColor:G+'0.5)'},
+    {label:'Agro (~7% PBI): +6,2%',data:[{x:6.2,y:7,r:13}],backgroundColor:G+'0.5)'},
+    {label:'Construcción (~5% PBI): +4,3%',data:[{x:4.3,y:5,r:10}],backgroundColor:G+'0.4)'},
+    {label:'Comercio (~20% PBI): +3,6%',data:[{x:3.6,y:20,r:22}],backgroundColor:Go+'0.5)'},
+    {label:'Industria (~14% PBI): +0,8%',data:[{x:0.8,y:14,r:19}],backgroundColor:R+'0.4)'},
+    {label:'Industria T4 (~14%): -5,0%',data:[{x:-5.0,y:14,r:19}],backgroundColor:R+'0.7)'},
+    {label:'Pesca (<1% PBI): -15,2%',data:[{x:-15.2,y:1,r:5}],backgroundColor:R+'0.7)'}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{display:true,labels:{color:tc,font:{size:9},usePointStyle:true}},tooltip:{callbacks:{label:function(c){return c.dataset.label}}}},
+  scales:{x:{title:{display:true,text:'Variación % anual 2025 (eje horizontal) · Tamaño burbuja = peso en PBI',color:tc,font:{size:10}},grid:{color:gc},ticks:{color:tc,callback:function(v){return v+'%'}}},
+  y:{title:{display:true,text:'Peso en el PBI (%)',color:tc,font:{size:10}},grid:{color:gc},ticks:{color:tc,callback:function(v){return v+'%'}},min:0,max:25}}}});
+
+// 9. Employment (p.p. of total employment, INDEC EPH T4-2023 vs T4-2025)
+new Chart(document.getElementById('cEmp'),{type:'bar',data:{
+  labels:['Transporte +1,2','Hoteles +0,9','Comercio +0,7','Otros serv. +0,3','Construcción -0,6','Adm. pub. -1,1','Industria manuf. -1,3\n(≈-100K, UBA)'],
+  datasets:[{data:[1.2,0.9,0.7,0.3,-0.6,-1.1,-1.3],
+    backgroundColor:function(ctx){return ctx.raw>=0?G+'0.7)':R+'0.7)'},borderRadius:3}]
+  },options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+  scales:{x:{grid:{color:gc},ticks:{color:tc,callback:function(v){return (v>0?'+':'')+v+' p.p.'}}},y:{grid:{display:false},ticks:{color:tc,font:{size:9}}}}}});
+
+// 9b. Capacity utilization
+new Chart(document.getElementById('cCapac'),{type:'line',data:{
+  labels:['Ene-23','Abr','Jul','Oct','Ene-24','Abr','Jul','Oct','Ene-25','Abr','Jul','Oct','Ene-26'],
+  datasets:[
+    {label:'Industria general (%)',data:[63.5,66.5,64.8,66.2,54.2,56.8,60.1,62.5,60.4,58.2,56.9,55.3,53.6],borderColor:'#1a4a6e',backgroundColor:B+'0.06)',fill:true,borderWidth:2.5,pointRadius:3,tension:0.3},
+    {label:'Textil (%)',data:[55,58,52,54,38,35,33,32,34,31,30,29,29],borderColor:'#b02a1a',borderWidth:2,borderDash:[5,3],pointRadius:3,tension:0.3,fill:false},
+    {label:'Zona normal (65-75%)',data:[65,65,65,65,65,65,65,65,65,65,65,65,65],borderColor:'rgba(42,110,66,0.3)',borderWidth:1,borderDash:[3,3],pointRadius:0,fill:false}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc,font:{size:9}}},y:{grid:{color:gc},min:20,max:80,ticks:{color:tc,callback:function(v){return v+'%'}}}}}});
+
+// 9c. PBI composition (stacked area)
+new Chart(document.getElementById('cPbi'),{type:'bar',data:{
+  labels:['2019','2020','2021','2022','2023','2024','2025 (est.)'],
+  datasets:[
+    {label:'Industria',data:[18.5,17.8,18.9,19.0,19.4,16.5,14.0],backgroundColor:R+'0.6)'},
+    {label:'Comercio',data:[19.5,18.0,19.2,19.5,19.9,19.0,18.5],backgroundColor:B+'0.5)'},
+    {label:'Agro',data:[6.8,7.2,7.0,6.5,6.9,7.5,7.2],backgroundColor:G+'0.5)'},
+    {label:'Minas/energía',data:[4.2,4.0,4.3,4.8,4.6,5.2,5.8],backgroundColor:Go+'0.5)'},
+    {label:'Int. financiera',data:[4.5,4.8,4.6,4.5,4.8,5.5,6.2],backgroundColor:'rgba(160,80,160,0.5)'},
+    {label:'Construcción',data:[4.5,3.8,4.5,4.8,4.7,3.9,4.2],backgroundColor:'rgba(180,140,100,0.5)'},
+    {label:'Otros servicios',data:[41.5,44.4,41.5,40.9,39.7,42.4,44.1],backgroundColor:'rgba(180,180,180,0.4)'}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:9}}}},
+  scales:{x:{stacked:true,grid:{display:false},ticks:{color:tc}},y:{stacked:true,grid:{color:gc},max:100,ticks:{color:tc,callback:function(v){return v+'%'}}}}}});
+
+// 10. Morosidad
+new Chart(document.getElementById('cMor'),{type:'line',data:{
+  labels:['Dic-24','Ene-25','Mar','May','Jul','Sep','Nov','Dic-25','Ene-26'],
+  datasets:[
+    {label:'Morosidad familias (bancos)',data:[2.5,2.67,3.5,4.5,5.8,7.0,8.5,9.3,10.6],borderColor:'#b02a1a',backgroundColor:R+'0.08)',fill:true,borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#b02a1a',tension:0.3},
+    {label:'Entidades no bancarias (fintech, retail)',data:[8,8.5,11,14,17,20,23,25,27],borderColor:'#8a6b1a',borderWidth:2,borderDash:[5,3],pointRadius:3,pointBackgroundColor:'#8a6b1a',tension:0.3,fill:false}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:function(v){return v+'%'}}}}}});
+
+// 11. Carry trade flows
+new Chart(document.getElementById('cCarry'),{type:'bar',data:{
+  labels:['T1 2025','T2 2025','T3 2025'],
+  datasets:[
+    {label:'Cuenta financiera total (FMI+bonos+carry)',data:[7229,2835,2149],backgroundColor:B+'0.6)',borderRadius:3},
+    {label:'IED neta (inversión productiva)',data:[-800,-600,-100],backgroundColor:G+'0.6)',borderRadius:3},
+    {label:'Diferencia = capital especulativo + deuda',data:[8029,3435,2249],backgroundColor:Go+'0.3)',borderRadius:3}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:function(v){return (v>=0?'+':'')+v+' M'}}}}}});
+
+// 11b. Commerce - exports by sector
+new Chart(document.getElementById('cComercio'),{type:'bar',data:{
+  labels:['Soja\n24,6%','Petróleo\n13,5%','Automotriz\n10,1%','Maíz\n7,6%','Oro/plata\n5,6%','Carne\n4,0%','Trigo\n3,5%','Pesca\n2,4%','Lácteo\n1,7%','Otros\n27%'],
+  datasets:[{label:'Exportaciones 2025 (USD M)',data:[21442,11772,8784,6660,4886,3500,3050,2091,1522,23404],
+    backgroundColor:[G+'0.7)',B+'0.7)',Go+'0.7)',G+'0.5)',Go+'0.5)',G+'0.4)',G+'0.4)',B+'0.4)',G+'0.3)','rgba(180,180,180,0.4)'],borderRadius:3}]
+  },options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+  scales:{x:{grid:{color:gc},ticks:{color:tc,callback:function(v){return (v/1000).toFixed(0)+' mil M'}}},y:{grid:{display:false},ticks:{color:tc,font:{size:9}}}}}});
+
+// 11c. Imports evolution
+new Chart(document.getElementById('cImport'),{type:'bar',data:{
+  labels:['2022','2023','2024','2025'],
+  datasets:[
+    {label:'Exportaciones',data:[88446,66788,79711,87111],backgroundColor:G+'0.6)',borderRadius:3},
+    {label:'Importaciones',data:[81523,60831,59077,75000],backgroundColor:R+'0.5)',borderRadius:3},
+    {label:'Superávit',data:[6923,5957,20634,12111],backgroundColor:B+'0.4)',borderRadius:3}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:function(v){return (v/1000).toFixed(0)+' mil M'}}}}}});
+
+// 11d. BCRA monthly balance cambiario
+new Chart(document.getElementById('cBcra'),{type:'bar',data:{
+  labels:['Ene-25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene-26'],
+  datasets:[
+    {label:'Bienes (neto)',data:[425,1100,1800,2200,2800,3100,2500,1900,1500,1200,1600,1800,2014],backgroundColor:G+'0.6)',borderRadius:2},
+    {label:'Servicios (neto)',data:[-1187,-900,-700,-500,-600,-800,-900,-1000,-950,-800,-700,-800,-946],backgroundColor:R+'0.6)',borderRadius:2},
+    {label:'Ingreso primario (neto)',data:[-911,-800,-700,-750,-600,-500,-700,-800,-900,-1000,-1200,-1500,-2007],backgroundColor:Go+'0.6)',borderRadius:2}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:9}}}},
+  scales:{x:{stacked:true,grid:{display:false},ticks:{color:tc,font:{size:9}}},y:{stacked:true,grid:{color:gc},ticks:{color:tc,callback:function(v){return (v>=0?'+':'')+v+' M'}}}}}}); 
+
+// 12. Debt evolution
+new Chart(document.getElementById('cDeu'),{type:'line',data:{
+  labels:['T1-24','T2-24','T3-24','T4-24','T1-25','T2-25','T3-25'],
+  datasets:[{label:'Deuda externa bruta',data:[266981,270802,272393,277257,278073,305043,316935],
+    borderColor:'#b02a1a',backgroundColor:R+'0.06)',fill:true,borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#b02a1a',tension:0.3}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+  scales:{x:{grid:{display:false},ticks:{color:tc}},y:{grid:{color:gc},min:250000,max:330000,ticks:{color:tc,callback:function(v){return Math.round(v/1000)+' mil M'}}}}}});
+
+// 13. Debt composition
+new Chart(document.getElementById('cDeuComp'),{type:'doughnut',data:{
+  labels:['Dólares (USD 212.602 M, 67%)','DEG/FMI (USD 64.321 M, 20%)','Yuan (USD 20.455 M, 6,5%)','Euro (USD 12.741 M, 4%)','Peso (USD 5.217 M, 1,6%)','Otros (USD 1.599 M, 0,5%)'],
+  datasets:[{data:[67.1,20.3,6.5,4.0,1.6,0.5],backgroundColor:['#1a4a6e','#b02a1a','#d4a017','#2a6e42','#8a6b1a','#bbb'],borderWidth:1}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:tc,font:{size:10},usePointStyle:true}}}}});
+
+// 14. ITCRM evolution
+new Chart(document.getElementById('cItcrm'),{type:'line',data:{
+  labels:['Nov-23','Dic-23','Feb-24','Abr-24','Jun-24','Ago-24','Oct-24','Dic-24','Feb-25','Abr-25','Jun-25','Ago-25','Oct-25','Dic-25','Feb-26'],
+  datasets:[
+    {label:'ITCRM (competitividad)',data:[85,160,130,115,105,98,90,85,79,95,100,102,100,98,100],borderColor:'#1a4a6e',backgroundColor:B+'0.08)',fill:true,borderWidth:2.5,pointRadius:3,tension:0.3},
+    {label:'Promedio histórico (~121)',data:[121,121,121,121,121,121,121,121,121,121,121,121,121,121,121],borderColor:'#8a6b1a',borderWidth:1.5,borderDash:[8,4],pointRadius:0,fill:false},
+    {label:'Zona equilibrio (inferior)',data:[105,105,105,105,105,105,105,105,105,105,105,105,105,105,105],borderColor:'rgba(42,110,66,0.3)',borderWidth:1,borderDash:[3,3],pointRadius:0,fill:false}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}},
+  annotation:{annotations:{milei:{type:'line',xMin:1,xMax:1,borderColor:'rgba(176,42,26,0.6)',borderWidth:2,borderDash:[4,4]},
+  cepo:{type:'line',xMin:9,xMax:9,borderColor:'rgba(42,110,66,0.4)',borderWidth:1.5,borderDash:[4,4]}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc,font:{size:9}}},y:{grid:{color:gc},min:60,max:175,ticks:{color:tc}}}}});
+
+// 15. Vaca Muerta production
+new Chart(document.getElementById('cVaca'),{type:'bar',data:{
+  labels:['2019','2020','2021','2022','2023','2024','2025','Ene-26'],
+  datasets:[
+    {label:'Producción total (miles bbl/día)',data:[525,490,530,580,620,720,810,882],backgroundColor:G+'0.6)',borderRadius:3},
+    {label:'De la cual Vaca Muerta',data:[180,200,250,310,370,460,575,590],backgroundColor:B+'0.6)',borderRadius:3}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc,callback:function(v){return v+' Kbbl/d'}}}}}});
+
+// 16. Lithium price vs volume
+new Chart(document.getElementById('cLitio'),{type:'bar',data:{
+  labels:['2021','2022','2023','2024','2025','2026 (p)','2035 (p)'],
+  datasets:[
+    {label:'Export. litio (USD M)',data:[200,600,660,505,900,1050,6000],backgroundColor:Go+'0.6)',borderRadius:3},
+    {label:'Precio LCE (USD/ton, eje der.)',data:[25000,80000,11800,9000,8500,12000,15000],backgroundColor:R+'0.3)',borderRadius:3,yAxisID:'y1'}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:tc,usePointStyle:true,font:{size:10}}}},
+  scales:{x:{grid:{display:false},ticks:{color:tc}},
+  y:{position:'left',grid:{color:gc},ticks:{color:tc,callback:function(v){return 'USD '+v+' M'}}},
+  y1:{position:'right',grid:{display:false},ticks:{color:tc,callback:function(v){return (v/1000)+'K/t'}},min:0,max:90000}}}});
+}
+go();
+
+// Scroll spy
+var sects=document.querySelectorAll('.S[id]');
+var navLinks=document.querySelectorAll('.snav a');
+window.addEventListener('scroll',function(){
+  var st=window.scrollY+80;
+  sects.forEach(function(s){
+    if(s.offsetTop<=st&&(s.offsetTop+s.offsetHeight)>st){
+      navLinks.forEach(function(a){a.classList.remove('on')});
+      var link=document.querySelector('.snav a[href="#'+s.id+'"]');
+      if(link)link.classList.add('on');
+    }
+  });
+});
+</script>
+</body>
+</html>
