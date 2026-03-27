@@ -66,13 +66,78 @@
 .loops-bar{display:flex;flex-wrap:wrap;gap:3px;margin:8px 0}
 .lp{font-size:8px;padding:2px 7px;border-radius:3px;background:var(--cream);color:var(--mut);opacity:.35}
 .lp.on{opacity:1;font-weight:700}.lp.pos{background:var(--green-l);color:var(--green)}.lp.neg{background:var(--red-l);color:var(--red)}.lp.geo{background:var(--blue-l);color:var(--blue)}
+/* === SCREEN 2 REDESIGN === */
+#screen2{display:none;max-width:860px;margin:0 auto;padding:16px}
+.recap-bar{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;align-items:center}
+.recap-pill{font-size:9px;padding:3px 8px;border-radius:16px;background:var(--cream);font-family:var(--mn)}
+.rp-ext{border-left:3px solid var(--blue)}.rp-pol{border-left:3px solid var(--gold)}.rp-init{border-left:3px solid var(--mut)}
+.back-btn{font-size:10px;padding:4px 12px;border-radius:16px;background:var(--ink);color:var(--bg);border:0;cursor:pointer;font-weight:600}
+
+/* Verdict banner */
+.verdict-banner{padding:20px;border-radius:12px;margin-bottom:16px;text-align:center}
+.vb-title{font-family:var(--sf);font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:600;margin-bottom:6px}
+.vb-phrase{font-size:13px;line-height:1.7;max-width:700px;margin:0 auto}
+.vb-boom{background:var(--green-l);border:2px solid var(--green)}.vb-boom .vb-title{color:var(--green)}
+.vb-central{background:var(--gold-l);border:2px solid var(--gold)}.vb-central .vb-title{color:var(--gold)}
+.vb-stress{background:var(--red-l);border:2px solid var(--red)}.vb-stress .vb-title{color:var(--red)}
+.vb-crisis{background:rgba(24,24,27,.06);border:2px solid var(--ink)}.vb-crisis .vb-title{color:var(--ink)}
+
+/* Level toggle */
+.level-toggle{display:flex;justify-content:center;gap:0;margin-bottom:16px}
+.lt-btn{padding:6px 16px;font-size:11px;border:1px solid var(--brd);cursor:pointer;background:var(--paper);color:var(--mut);font-weight:600;transition:all .15s}
+.lt-btn:first-child{border-radius:6px 0 0 6px}.lt-btn:last-child{border-radius:0 6px 6px 0}
+.lt-btn.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* Key metrics bar */
+.metrics-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:6px;margin-bottom:16px}
+.metric{padding:10px 8px;border-radius:8px;text-align:center}
+.metric .mv{font-family:var(--mn);font-size:18px;font-weight:700}.metric .ml{font-size:8px;color:var(--mut)}.metric .mt{font-size:9px;font-weight:600;margin-top:2px}
+
+/* Timeline frise */
+.frise{position:relative;padding:16px 0;margin-bottom:20px}
+.frise-line{position:relative;height:4px;background:var(--cream);border-radius:2px;margin:0 20px}
+.frise-q{position:absolute;top:-18px;font-size:8px;font-family:var(--mn);font-weight:700;color:var(--mut);transform:translateX(-50%)}
+.frise-dot{position:absolute;top:-6px;width:16px;height:16px;border-radius:50%;transform:translateX(-50%);cursor:pointer;transition:transform .15s;z-index:2}
+.frise-dot:hover{transform:translateX(-50%) scale(1.4)}
+.frise-evt{position:absolute;top:14px;font-size:8px;max-width:100px;text-align:center;transform:translateX(-50%);line-height:1.3;font-weight:600}
+.frise-evt-alt{top:auto;bottom:calc(100% + 14px)}
+
+/* Story blocks */
+.story{margin-bottom:20px}
+.story-q{background:var(--paper);border:1px solid var(--brd);border-radius:10px;padding:14px 16px;margin-bottom:8px;transition:border-color .2s;animation:fadeIn .3s}
+.story-q.sq-green{border-left:4px solid var(--green)}.story-q.sq-gold{border-left:4px solid var(--gold)}.story-q.sq-red{border-left:4px solid var(--red)}.story-q.sq-purple{border-left:4px solid var(--purple)}
+.sq-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.sq-qname{font-family:var(--mn);font-size:12px;font-weight:700}.sq-status{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px}
+.sq-status-g{background:var(--green-l);color:var(--green)}.sq-status-y{background:var(--gold-l);color:var(--gold)}.sq-status-r{background:var(--red-l);color:var(--red)}
+.sq-body{font-size:12px;line-height:1.7}.sq-body p{margin-bottom:6px}
+.sq-data{display:flex;flex-wrap:wrap;gap:8px;font-size:10px;font-family:var(--mn);color:var(--mut);margin-top:6px;padding-top:6px;border-top:1px solid var(--cream)}
+.sq-data span strong{color:var(--ink)}
+.sq-expert{font-size:10px;color:var(--mut);margin-top:6px;padding:8px;background:var(--cream);border-radius:6px;display:none}
+.sq-expert.show{display:block}
+
+/* Big charts */
+.big-chart{background:var(--paper);border:1px solid var(--brd);border-radius:10px;padding:16px;margin-bottom:12px}
+.big-chart h4{font-family:var(--sf);font-size:13px;margin-bottom:4px}
+.big-chart .bc-sub{font-size:9px;color:var(--mut);margin-bottom:8px}
+.big-chart .bc-wrap{position:relative;height:300px}
+
+/* Loops explained */
+.loops-section{background:var(--cream);border-radius:10px;padding:14px;margin-top:12px}
+.loops-section h4{font-family:var(--sf);font-size:13px;margin-bottom:8px}
+.loop-explain{font-size:10px;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.05);line-height:1.5}
+.loop-explain:last-child{border-bottom:0}
+.loop-explain .le-name{font-weight:700;margin-right:4px}
+.loop-explain.le-active{color:var(--red)}.loop-explain.le-positive{color:var(--green)}.loop-explain.le-geo{color:var(--blue)}
+.loop-explain.le-off{color:var(--mut);opacity:.4}
+
+.src-note{font-size:9px;color:var(--mut);margin-top:16px;padding-top:8px;border-top:1px solid var(--cream);line-height:1.5}
 </style>
 </head>
 <body>
 <div class="topbar"><a href="../index.html">&larr; Hub</a><a href="radiografia.html">Informe completo</a></div>
 <header class="hero" style="padding-top:48px">
   <h1>Argentina 2026-2028: <em>Construi tu escenario</em></h1>
-  <p>5 factores externos que Argentina no controla. 4 decisiones politicas. 2 condiciones de depart. 12 bucles de retroalimentacion. El motor calcula salarios, consumo, empleo, morosidad — con efectos retardados y umbrales de ruptura.</p>
+  <p>5 factores externos. 4 decisiones politicas. 2 condiciones de partida. 12 bucles. El motor calcula lo que le pasa a la gente.</p>
 </header>
 
 <!-- ══════ SCREEN 1 ══════ -->
@@ -116,22 +181,51 @@
 </div>
 
 <!-- ══════ SCREEN 2 ══════ -->
+
+<!-- ══════ SCREEN 2: RESULTS ══════ -->
 <div id="screen2">
   <div class="recap-bar" id="recapBar"><button class="back-btn" onclick="goBack()">&larr; Modificar</button></div>
-  <div class="verdict-bar" id="verdictBar"></div>
-  <div class="loops-bar" id="loopsBar"></div>
-  <div class="alerts" id="alerts"></div>
-  <div class="tblock">
-    <div class="qh"><div class="ql">TRIMESTRE</div><div class="qc"><span>T2-26</span><span>T3-26</span><span style="background:rgba(107,33,168,.12)">T4-26</span><span>T1-27</span><span>T2-27</span><span>T3-27</span><span style="background:rgba(194,58,34,.08)">T4-27</span><span>T1-28</span></div></div>
-    <div class="sw sw-ev"><div class="sl"><span class="st">Eventos</span></div><div class="sc" style="height:60px"><canvas id="cT"></canvas></div></div>
-    <div class="sw sw-rs"><div class="sl"><span class="st">Reservas</span><span class="sv" id="lr">—</span><span class="ss">USD B · T1-28</span></div><div class="sc" style="height:110px"><canvas id="cR"></canvas></div></div>
-    <div class="sw sw-px"><div class="sl"><span class="st">Precios</span><span class="sv" id="li">—</span><span class="ss">Infl %/m · T1-28</span></div><div class="sc" style="height:110px"><canvas id="cI"></canvas></div></div>
-    <div class="sw sw-so"><div class="sl"><span class="st">Social</span><span class="sv" id="ls">—</span><span class="ss">Salario real · T1-28</span></div><div class="sc" style="height:120px"><canvas id="cS"></canvas></div></div>
-    <div class="sw sw-dm"><div class="sl"><span class="st">Demanda</span><span class="sv" id="ld">—</span><span class="ss">Consumo idx · T1-28</span></div><div class="sc" style="height:100px"><canvas id="cD"></canvas></div></div>
-    <div class="sw sw-rp"><div class="sl"><span class="st">Riesgo</span><span class="sv" id="lrp">—</span><span class="ss">bps · T1-28</span></div><div class="sc" style="height:110px"><canvas id="cG"></canvas></div></div>
-    <div class="sw sw-fi"><div class="sl"><span class="st">Fiscal</span><span class="sv" id="lf">—</span><span class="ss">% PBI · T1-28</span></div><div class="sc" style="height:80px"><canvas id="cF"></canvas></div></div>
+
+  <!-- Verdict banner -->
+  <div class="verdict-banner" id="verdictBanner"></div>
+
+  <!-- Level toggle -->
+  <div class="level-toggle">
+    <div class="lt-btn active" onclick="setLevel(0)">🟢 Simple</div>
+    <div class="lt-btn" onclick="setLevel(1)">🔵 Interesado</div>
+    <div class="lt-btn" onclick="setLevel(2)">🔴 Experto</div>
   </div>
-  <div class="narrative" id="narrative"></div>
+
+  <!-- Key metrics -->
+  <div class="metrics-bar" id="metricsBar"></div>
+
+  <!-- Timeline frise -->
+  <div class="frise" id="frise"><div class="frise-line" id="friseLine"></div></div>
+
+  <!-- Story: quarter by quarter -->
+  <div class="story" id="storyBox"></div>
+
+  <!-- Big charts (2-3) -->
+  <div class="big-chart">
+    <h4>💰 Reservas, carry y riesgo pais</h4>
+    <div class="bc-sub">El termometro financiero: ¿cuantos dolares tiene Argentina y cuanto le cuesta endeudarse?</div>
+    <div class="bc-wrap"><canvas id="chartFinance"></canvas></div>
+  </div>
+  <div class="big-chart">
+    <h4>🏠 La vida de la gente: salarios, consumo y deuda</h4>
+    <div class="bc-sub">Lo que el modelo ortodoxo no mide: ¿como viven las familias argentinas?</div>
+    <div class="bc-wrap"><canvas id="chartSocial"></canvas></div>
+  </div>
+  <div class="big-chart">
+    <h4>🏭 Competitividad: precios, industria y empleo</h4>
+    <div class="bc-sub">¿Argentina es cara o barata para el mundo? ¿Las fabricas sobreviven?</div>
+    <div class="bc-wrap"><canvas id="chartCompet"></canvas></div>
+  </div>
+
+  <!-- Loops explained -->
+  <div class="loops-section" id="loopsSection"></div>
+
+  <div class="src-note">Fuentes: CRS R48780, BCRA IEF, INDEC, Scentia, CEPA, UBS, OCDE, CIFRA. 12 bucles de retroalimentacion, effets retardes (pass-through 1 trimestre), seuils non-lineaires. Simulateur indicatif — pas un pronostic.</div>
 </div>
 
 <script>
@@ -463,95 +557,280 @@ function runSim(){
     se.riesgo_pais.push(Math.round(st.riesgo_pais));se.riesgo_sin_usa.push(Math.round(st.riesgo_sin_usa));se.superavit.push(Math.round(st.superavit*10)/10);
     se.salario_real.push(Math.round(st.salario_real*10)/10);se.demanda.push(Math.round(st.demanda*10)/10);
   }
-  // Update labels
-  var lc=function(v,g,y){return v>g?'var(--green)':v>y?'var(--gold)':'var(--red)'};
-  function setL(id,txt,col){var e=document.getElementById(id);e.textContent=txt;e.style.color=col;}
-  setL('lr',se.reservas[7]+'B',lc(se.reservas[7],10,3));
-  setL('li',se.inflacion[7]+'%',lc(-se.inflacion[7],-2,-4));
-  setL('ls',se.salario_real[7],lc(se.salario_real[7],100,90));
-  setL('ld',se.demanda[7],lc(se.demanda[7],90,75));
-  setL('lrp',se.riesgo_pais[7],lc(-se.riesgo_pais[7],-600,-1000));
-  setL('lf',se.superavit[7]+'%',lc(se.superavit[7],.5,0));
   renderAll(se,alerts,la,{usa:usa,fed:fed,bra:bra,comm:comm,vol:vol,fis:fis,cam:cam,ind:ind,tar:tar});
 }
-function sO(sx,yP,yCb,ex){var o={responsive:true,maintainAspectRatio:false,animation:{duration:250},plugins:{legend:{display:true,position:'top',align:'end',labels:{boxWidth:6,boxHeight:6,padding:3,color:'#8c877d',font:{size:7},usePointStyle:true,filter:function(i){return i.text&&i.text.length>0}}},tooltip:{mode:'index',intersect:false,bodyFont:{size:9},titleFont:{size:9}}},scales:{x:{display:sx,grid:{display:true,color:'rgba(24,24,27,.04)',drawTicks:false},ticks:{color:'#8c877d',font:{size:7,weight:'bold'}}},y:{position:yP||'left',grid:{color:'rgba(24,24,27,.04)'},ticks:{color:'#8c877d',font:{size:7},callback:yCb||function(v){return v},maxTicksLimit:4}}}};if(ex)for(var k in ex)o.scales[k]=ex[k];return o;}
-function renderAll(s,al,la,p){
-  // Timeline
-  var rc=[];for(var i=0;i<8;i++){var r=0;r+=(s.reservas[i]<5)?3:(s.reservas[i]<10)?1:0;r+=(s.inflacion[i]>5)?3:(s.inflacion[i]>3)?1:0;r+=(s.morosidad[i]>15)?3:(s.morosidad[i]>12)?1:0;r+=(s.riesgo_pais[i]>1000)?3:(s.riesgo_pais[i]>700)?1:0;r+=(s.superavit[i]<0)?3:(s.superavit[i]<.5)?1:0;r+=(s.carry_flow[i]<-1)?2:0;r+=(s.salario_real[i]<85)?2:0;rc.push(r);}
-  var pC=Q.map(function(_,i){var e=al.filter(function(a){return a.q===i});if(e.some(function(a){return a.type==='red'}))return'#c23a22';if(e.some(function(a){return a.type==='purple'}))return'#6b21a8';if(e.some(function(a){return a.type==='gold'}))return'#a07d1c';if(e.some(function(a){return a.type==='green'}))return'#2d7a4f';if(e.some(function(a){return a.type==='blue'}))return'#1e5f8a';return'rgba(24,24,27,.1)';});
-  var pS=Q.map(function(_,i){return al.some(function(a){return a.q===i})?6:2;});
-  if(cT)cT.destroy();var oT=sO(false);oT.scales.y={display:false,min:0,max:20};oT.plugins.legend.display=false;
-  oT.plugins.tooltip={enabled:true,callbacks:{afterLabel:function(c){var e=al.filter(function(a){return a.q===c.dataIndex});return e.length?e.map(function(a){return a.text}).join('\n'):'';}}};
-  cT=new Chart(document.getElementById('cT'),{type:'line',data:{labels:Q,datasets:[{data:rc,borderColor:'rgba(194,58,34,.4)',backgroundColor:'rgba(194,58,34,.06)',fill:true,borderWidth:1.5,tension:.4,pointRadius:pS,pointBackgroundColor:pC,pointBorderColor:pC}]},options:oT});
-  // Reservas
-  if(cR)cR.destroy();cR=new Chart(document.getElementById('cR'),{type:'line',data:{labels:Q,datasets:[{label:'Reservas',data:s.reservas,borderColor:'#1e5f8a',backgroundColor:'rgba(30,95,138,.1)',fill:true,borderWidth:2,pointRadius:3,tension:.3},{label:'Carry',data:s.carry_flow,borderColor:'#a07d1c',borderWidth:1.5,borderDash:[4,3],pointRadius:2,tension:.3,fill:false},{label:'',data:[3,3,3,3,3,3,3,3],borderColor:'rgba(194,58,34,.2)',borderWidth:1,borderDash:[2,2],pointRadius:0,fill:false}]},options:sO(false,'left',function(v){return v+'B'})});
-  // Inflation + ITCRM
-  if(cI)cI.destroy();cI=new Chart(document.getElementById('cI'),{type:'line',data:{labels:Q,datasets:[{label:'Inflacion',data:s.inflacion,borderColor:'#c23a22',backgroundColor:'rgba(194,58,34,.08)',fill:true,borderWidth:2,pointRadius:3,tension:.3,yAxisID:'y'},{label:'ITCRM',data:s.itcrm,borderColor:'#1e5f8a',borderWidth:1.5,pointRadius:2,tension:.3,fill:false,yAxisID:'y1'},{label:'',data:[85,85,85,85,85,85,85,85],borderColor:'rgba(194,58,34,.15)',borderWidth:1,borderDash:[2,2],pointRadius:0,fill:false,yAxisID:'y1'}]},options:sO(false,'left',function(v){return v+'%'},{y1:{position:'right',grid:{display:false},ticks:{color:'#1e5f8a',font:{size:7},maxTicksLimit:3},min:60,max:160}})});
-  // Social: salario real + empleo + morosidad
-  if(cS)cS.destroy();cS=new Chart(document.getElementById('cS'),{type:'line',data:{labels:Q,datasets:[{label:'Salario real',data:s.salario_real,borderColor:'#2d7a4f',backgroundColor:'rgba(45,122,79,.08)',fill:true,borderWidth:2,pointRadius:3,tension:.3,yAxisID:'y'},{label:'Empleo ind.',data:s.empleo_ind,borderColor:'#1e5f8a',borderWidth:1.5,pointRadius:2,tension:.3,fill:false,yAxisID:'y'},{label:'Morosidad',data:s.morosidad,borderColor:'#c23a22',borderWidth:1.5,borderDash:[4,3],pointRadius:2,tension:.3,fill:false,yAxisID:'y1'}]},options:sO(false,'left',null,{y1:{position:'right',grid:{display:false},ticks:{color:'#c23a22',font:{size:7},callback:function(v){return v+'%'},maxTicksLimit:3}}})});
-  // Demanda
-  if(cD)cD.destroy();cD=new Chart(document.getElementById('cD'),{type:'line',data:{labels:Q,datasets:[{label:'Consumo (idx 100=2023)',data:s.demanda,borderColor:'#c2651c',backgroundColor:'rgba(194,101,28,.08)',fill:true,borderWidth:2,pointRadius:3,tension:.3},{label:'',data:[84,84,84,84,84,84,84,84],borderColor:'rgba(194,101,28,.15)',borderWidth:1,borderDash:[2,2],pointRadius:0,fill:false}]},options:sO(false,'left')});
-  // Riesgo
-  if(cG)cG.destroy();var oG=sO(false);oG.plugins.tooltip={mode:'index',intersect:false,callbacks:{afterLabel:function(c){if(c.datasetIndex===0){var d=s.riesgo_sin_usa[c.dataIndex]-s.riesgo_pais[c.dataIndex];return d>0?'Premium geo: -'+d+' bps':'';}return'';}}};
-  cG=new Chart(document.getElementById('cG'),{type:'line',data:{labels:Q,datasets:[{label:'Riesgo pais',data:s.riesgo_pais,borderColor:'#6b21a8',backgroundColor:'rgba(107,33,168,.06)',fill:true,borderWidth:2,pointRadius:3,tension:.3},{label:'Sin EE.UU.',data:s.riesgo_sin_usa,borderColor:'rgba(24,24,27,.2)',borderWidth:1.5,borderDash:[5,3],pointRadius:1,tension:.3,fill:false},{label:'',data:[900,900,900,900,900,900,900,900],borderColor:'rgba(160,125,28,.2)',borderWidth:1,borderDash:[2,2],pointRadius:0,fill:false}]},options:oG});
-  // Fiscal
-  if(cF)cF.destroy();cF=new Chart(document.getElementById('cF'),{type:'bar',data:{labels:Q,datasets:[{label:'Superavit',data:s.superavit,backgroundColor:s.superavit.map(function(v){return v>.5?'rgba(45,122,79,.5)':v>0?'rgba(160,125,28,.5)':'rgba(194,58,34,.5)'}),borderRadius:3,borderSkipped:false}]},options:sO(true,'left',function(v){return v+'%'})});
-  // Verdicts
-  var vb=document.getElementById('verdictBar');
-  var mk=function(d,c){var w=60,h=14,n=d.length,mn=Math.min.apply(null,d),mx=Math.max.apply(null,d),r=mx-mn||1,p=[];for(var i=0;i<n;i++)p.push(((i/(n-1))*w).toFixed(1)+','+(h-((d[i]-mn)/r)*h).toFixed(1));return'<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><polyline fill="none" stroke="'+c+'" stroke-width="1.5" points="'+p.join(' ')+'"/></svg>';};
-  var vi=[
-    {l:'Reservas',v:s.reservas[7]+'B',c:s.reservas[7]>10?'green':s.reservas[7]>3?'gold':'red',d:s.reservas},
-    {l:'Inflacion',v:s.inflacion[7]+'%',c:s.inflacion[7]<2?'green':s.inflacion[7]<4?'gold':'red',d:s.inflacion},
-    {l:'Salario',v:s.salario_real[7],c:s.salario_real[7]>100?'green':s.salario_real[7]>90?'gold':'red',d:s.salario_real},
-    {l:'Consumo',v:s.demanda[7],c:s.demanda[7]>90?'green':s.demanda[7]>75?'gold':'red',d:s.demanda},
-    {l:'Mora',v:s.morosidad[7]+'%',c:s.morosidad[7]<10?'green':s.morosidad[7]<15?'gold':'red',d:s.morosidad},
-    {l:'Empleo',v:s.empleo_ind[7],c:s.empleo_ind[7]>95?'green':s.empleo_ind[7]>85?'gold':'red',d:s.empleo_ind},
-    {l:'Riesgo',v:s.riesgo_pais[7],c:s.riesgo_pais[7]<600?'green':s.riesgo_pais[7]<1000?'gold':'red',d:s.riesgo_pais},
-    {l:'Fiscal',v:s.superavit[7]+'%',c:s.superavit[7]>.5?'green':s.superavit[7]>0?'gold':'red',d:s.superavit}];
-  vb.innerHTML='';vi.forEach(function(it){var bg=it.c==='green'?'var(--green-l)':it.c==='gold'?'var(--gold-l)':'var(--red-l)';var fg=it.c==='green'?'var(--green)':it.c==='gold'?'var(--gold)':'var(--red)';var sc=it.c==='green'?'#2d7a4f':it.c==='gold'?'#a07d1c':'#c23a22';vb.innerHTML+='<div class="verdict" style="background:'+bg+'"><div class="vv" style="color:'+fg+'">'+it.v+'</div><div class="vl">'+it.l+'</div><div class="spark">'+mk(it.d,sc)+'</div></div>';});
-  // Alerts
-  var ab=document.getElementById('alerts');ab.innerHTML='';al.sort(function(a,b){return a.q-b.q});al.forEach(function(a){ab.innerHTML+='<div class="alert alert-'+a.type+'">'+a.text+'</div>';});
-  // Loops
-  var lb=document.getElementById('loopsBar');
-  [{id:'geo_shield',n:'🇺🇸 Escudo geo',t:'geo'},{id:'paradox',n:'🔄 Paradoja',t:'neg'},{id:'carry_spiral',n:'💸 Carry',t:'neg'},{id:'industrial',n:'🏭 Industria→fiscal',t:'neg'},{id:'fiscal_virtue',n:'✅ Virtud fiscal',t:'pos'},{id:'debt_spiral',n:'🏠 Deuda fam.→banco',t:'neg'},{id:'wall',n:'⏰ Muro deuda',t:'neg'}].forEach(function(l){lb.innerHTML+='<span class="lp'+(la[l.id]?' on '+l.t:'')+'">'+l.n+'</span>';});
-  // Narrative
-  var nb=document.getElementById('narrative');
-  var fR=s.reservas[7],fI=s.inflacion[7],fSR=s.salario_real[7],fDm=s.demanda[7],fM=s.morosidad[7],fRP=s.riesgo_pais[7],fRPn=s.riesgo_sin_usa[7],fE=s.empleo_ind[7];
-  var cc=al.filter(function(a){return a.type==='red'}).length;var gP=fRPn-fRP;
-  var tone='central';if(cc>=3||fR<0)tone='crisis';else if(cc>=1||fM>15||fR<5)tone='stress';else if(fR>12&&fI<2&&fRP<600)tone='boom';
-  var titles={boom:'🌿 Consolidacion favorable',central:'📊 El equilibrista',stress:'⚠️ Estres creciente',crisis:'🌑 Ruptura sistemica'};
-  var colors={boom:'var(--green)',central:'var(--gold)',stress:'var(--red)',crisis:'var(--ink)'};
-  var t='<h4 style="color:'+colors[tone]+'">'+titles[tone]+'</h4><p>';
-  // Social dimension always present
-  var socialTxt='<strong>Dimension social</strong> (calculee par le moteur): salario real '+fSR+' (base 100=nov.2023), consumo '+fDm+' (base 100=2023, Scentia), morosidad '+fM+'%, empleo industrial '+fE+'. ';
-  if(fSR<90)socialTxt+='<em>Le salaire reel n\'a pas recupere le niveau pre-Milei.</em> ';
-  if(fDm<80)socialTxt+='<em>La consommation est en dessous du creux de 2024 — crise de demande.</em> ';
-  if(fM>15)socialTxt+='<em>La morosidad depasse le seuil de stress bancaire.</em> ';
+var currentLevel=0; // 0=simple, 1=interesado, 2=experto
+var lastSe,lastAl,lastLa,lastP; // store for level switching
+function setLevel(l){
+  currentLevel=l;
+  document.querySelectorAll('.lt-btn').forEach(function(b,i){b.classList.toggle('active',i===l)});
+  document.querySelectorAll('.sq-expert').forEach(function(e){e.classList.toggle('show',l>=2)});
+  if(lastSe)renderStory(lastSe,lastAl,lastLa,lastP);
+}
 
-  if(tone==='boom'){
-    t+='Cercle vertueux. ';if(p.usa===2)t+='Escudo geopolitico a pleno: premium -'+gP+' bps. ';
-    t+='Reservas USD '+fR+'B, riesgo '+fRP+', inflacion '+fI+'%. ';
-    t+=socialTxt;
-    t+='Mais ITCRM '+s.itcrm[7]+' = Argentine chere. Le modele croit par le haut (energie, finance) mais pas par le bas (industrie, emploi).';
-  }else if(tone==='central'){
-    t+='Programme se maintient avec tensions. Reservas '+fR+'B, inflacion '+fI+'%. ';
-    if(gP>30)t+='<strong>Facteur EE.UU.:</strong> sans appui, riesgo serait '+fRPn+' vs '+fRP+' (-'+gP+' bps). ';
-    t+=socialTxt;
-    if(la.wall)t+='Mur de dette 2028 '+(p.usa>=1?'avec filet':'sans filet')+'. ';
-    t+='Fonctionne mais pas pour tous — et depend de Washington.';
-  }else if(tone==='stress'){
-    t+='Fissures visibles. ';if(p.usa===0)t+='<strong>Sans escudo geopolitico, sans filet.</strong> ';
-    if(la.carry_spiral)t+='Carry en desarme: '+s.carry_flow[7]+'B/trim. ';
-    t+=socialTxt;
-    t+='Riesgo '+fRP+'. Parallele 2018: carry + reserves basses + peso apprecie.';
-  }else{
-    t+='<strong>Rupture systemique.</strong> Reserves '+fR+'B, inflation '+fI+'%, riesgo '+fRP+'. ';
-    t+=socialTxt;
-    if(p.usa===0)t+='La rupture de l\'axe Trump-Milei a ete le catalyseur. ';
-    t+='Changement de regime force.';
+function chOpts(showX,yP,yCb,ex){
+  var o={responsive:true,maintainAspectRatio:false,animation:{duration:300},
+    plugins:{legend:{display:true,position:'top',labels:{boxWidth:10,boxHeight:10,padding:8,color:'#18181b',font:{size:10},usePointStyle:true,filter:function(i){return i.text&&i.text.length>0}}},tooltip:{mode:'index',intersect:false,bodyFont:{size:11},titleFont:{size:11}}},
+    scales:{x:{grid:{color:'rgba(24,24,27,.06)'},ticks:{color:'#18181b',font:{size:10,weight:'600'}}},
+    y:{position:yP||'left',grid:{color:'rgba(24,24,27,.06)'},ticks:{color:'#18181b',font:{size:9},callback:yCb||function(v){return v},maxTicksLimit:5}}}};
+  if(ex)for(var k in ex)o.scales[k]=ex[k];return o;
+}
+
+var cFin,cSoc,cCom;
+function renderAll(s,al,la,p){
+  lastSe=s;lastAl=al;lastLa=la;lastP=p;
+  renderVerdict(s,al,la,p);
+  renderMetrics(s);
+  renderFrise(al);
+  renderStory(s,al,la,p);
+  renderBigCharts(s);
+  renderLoopsExplained(la);
+}
+
+function renderVerdict(s,al,la,p){
+  var fR=s.reservas[7],fI=s.inflacion[7],fSR=s.salario_real[7],fDm=s.demanda[7],fM=s.morosidad[7],fRP=s.riesgo_pais[7];
+  var cc=al.filter(function(a){return a.type==='red'}).length;
+  var tone='central';
+  if(cc>=3||fR<0)tone='crisis';else if(cc>=1||fM>15||fR<5)tone='stress';else if(fR>12&&fI<2&&fRP<600)tone='boom';
+
+  var icons={boom:'🌿',central:'📊',stress:'⚠️',crisis:'🌑'};
+  var titles={boom:'Consolidacion favorable',central:'El equilibrista avanza',stress:'Estres creciente',crisis:'Ruptura sistemica'};
+  var phrases={
+    boom:'En 8 trimestres, la combinacion de factores produce un circulo virtuoso. Las reservas suben a USD '+fR+'B, la inflacion baja a '+fI+'%/mes, y el riesgo pais cae a '+fRP+' puntos. Pero el salario real termina en '+fSR+' (base 100) y el empleo industrial en '+s.empleo_ind[7]+'. <strong>El programa funciona para los numeros — ¿funciona para la gente?</strong>',
+    central:'El programa se sostiene pero con tensiones. Las reservas llegan a USD '+fR+'B, la inflacion a '+fI+'%/mes. La morosidad de las familias esta en '+fM+'% y el consumo en '+fDm+' (base 100=2023). <strong>Es el escenario del "funciona pero no para todos" — y depende de variables que Argentina no controla.</strong>',
+    stress:'Las fisuras se acumulan. Reservas USD '+fR+'B, inflacion '+fI+'%, morosidad '+fM+'%, consumo '+fDm+'. '+cc+' alerta(s) roja(s) se activaron. <strong>El modelo muestra los mismos sintomas que en 2018: carry en desarme, reservas bajo presion, peso apreciado.</strong>',
+    crisis:'Ruptura. Reservas USD '+fR+'B, inflacion '+fI+'%, riesgo '+fRP+'. La morosidad de las familias llega a '+fM+'% y el consumo cae a '+fDm+'. <strong>Se impone un cambio de regimen: devaluacion forzada, posible retorno de controles cambiarios.</strong>'
+  };
+  var b=document.getElementById('verdictBanner');
+  b.className='verdict-banner vb-'+tone;
+  b.innerHTML='<div class="vb-title">'+icons[tone]+' '+titles[tone]+'</div><div class="vb-phrase">'+phrases[tone]+'</div>';
+}
+
+function renderMetrics(s){
+  var b=document.getElementById('metricsBar');
+  var items=[
+    {l:'Reservas',v:'USD '+s.reservas[7]+'B',g:s.reservas[7]>10,y:s.reservas[7]>3,sub:s.reservas[7]>s.reservas[0]?'↗':'↘'},
+    {l:'Inflacion',v:s.inflacion[7]+'%/m',g:s.inflacion[7]<2,y:s.inflacion[7]<4,sub:s.inflacion[7]<s.inflacion[0]?'↘ baja':'↗ sube'},
+    {l:'Salario real',v:s.salario_real[7],g:s.salario_real[7]>100,y:s.salario_real[7]>90,sub:'base 100=nov.23'},
+    {l:'Consumo',v:s.demanda[7],g:s.demanda[7]>90,y:s.demanda[7]>75,sub:'base 100=2023'},
+    {l:'Morosidad',v:s.morosidad[7]+'%',g:s.morosidad[7]<10,y:s.morosidad[7]<15,sub:s.morosidad[7]>15?'estres bancario':''},
+    {l:'Empleo ind.',v:s.empleo_ind[7],g:s.empleo_ind[7]>95,y:s.empleo_ind[7]>85,sub:'2019=100'},
+    {l:'Riesgo pais',v:s.riesgo_pais[7]+' bps',g:s.riesgo_pais[7]<600,y:s.riesgo_pais[7]<1000,sub:s.riesgo_pais[7]>900?'dificil refinanciar':''},
+    {l:'Fiscal',v:s.superavit[7]+'% PBI',g:s.superavit[7]>.5,y:s.superavit[7]>0,sub:s.superavit[7]>1?'ancla solida':s.superavit[7]<0?'programa en riesgo':'erosionado'}
+  ];
+  b.innerHTML='';items.forEach(function(it){
+    var bg=it.g?'var(--green-l)':it.y?'var(--gold-l)':'var(--red-l)';
+    var fg=it.g?'var(--green)':it.y?'var(--gold)':'var(--red)';
+    b.innerHTML+='<div class="metric" style="background:'+bg+'"><div class="mv" style="color:'+fg+'">'+it.v+'</div><div class="ml">'+it.l+'</div><div class="mt" style="color:'+fg+'">'+it.sub+'</div></div>';
+  });
+}
+
+function renderFrise(al){
+  var line=document.getElementById('friseLine');
+  var Q=['T2-26','T3-26','T4-26','T1-27','T2-27','T3-27','T4-27','T1-28'];
+  var h='';
+  // Quarter markers
+  Q.forEach(function(q,i){
+    var pct=(i/(Q.length-1))*100;
+    h+='<div class="frise-q" style="left:'+pct+'%">'+q+'</div>';
+  });
+  // Event dots
+  al.sort(function(a,b){return a.q-b.q});
+  var placed=0;
+  al.forEach(function(a){
+    var pct=(a.q/(Q.length-1))*100;
+    var col=a.type==='red'?'#c23a22':a.type==='purple'?'#6b21a8':a.type==='gold'?'#a07d1c':a.type==='green'?'#2d7a4f':'#1e5f8a';
+    h+='<div class="frise-dot" style="left:'+pct+'%;background:'+col+'" title="'+a.text+'"></div>';
+    var alt=placed%2===1?'frise-evt-alt':'';
+    h+='<div class="frise-evt '+alt+'" style="left:'+pct+'%;color:'+col+'">'+a.text.replace(/^.*?:\s*/,'').substring(0,50)+'</div>';
+    placed++;
+  });
+  line.innerHTML=h;
+}
+
+function renderStory(s,al,la,p){
+  var Q=['T2-26','T3-26','T4-26','T1-27','T2-27','T3-27','T4-27','T1-28'];
+  var Qfull=['Abril-Junio 2026','Julio-Sept. 2026','Oct.-Dic. 2026','Enero-Marzo 2027','Abril-Junio 2027','Julio-Sept. 2027','Oct.-Dic. 2027','Enero-Marzo 2028'];
+  var box=document.getElementById('storyBox');
+  var h='';
+  for(var i=0;i<8;i++){
+    // Determine status color
+    var score=0;
+    if(s.reservas[i]<5)score+=2;if(s.inflacion[i]>5)score+=2;if(s.morosidad[i]>15)score+=2;
+    if(s.riesgo_pais[i]>1000)score+=2;if(s.superavit[i]<0)score+=3;if(s.salario_real[i]<85)score+=2;
+    var cls=score>=5?'sq-red':score>=2?'sq-gold':'sq-green';
+    var statusCls=score>=5?'sq-status-r':score>=2?'sq-status-y':'sq-status-g';
+    var statusTxt=score>=5?'🔴 Alerta':score>=2?'🟡 Tension':'🟢 Estable';
+    // Quarter events
+    var qEvents=al.filter(function(a){return a.q===i});
+    // Generate narrative
+    var txt=genQNarrative(i,s,qEvents,la,p);
+    var expert=genQExpert(i,s,la);
+
+    h+='<div class="story-q '+cls+'">';
+    h+='<div class="sq-head"><span class="sq-qname">'+Q[i]+' — '+Qfull[i]+'</span><span class="sq-status '+statusCls+'">'+statusTxt+'</span></div>';
+    h+='<div class="sq-body">'+txt+'</div>';
+    // Data line
+    h+='<div class="sq-data">';
+    h+='<span>Reservas: <strong>'+s.reservas[i]+'B</strong></span>';
+    h+='<span>Inflacion: <strong>'+s.inflacion[i]+'%</strong></span>';
+    h+='<span>Salario: <strong>'+s.salario_real[i]+'</strong></span>';
+    h+='<span>Consumo: <strong>'+s.demanda[i]+'</strong></span>';
+    h+='<span>Mora: <strong>'+s.morosidad[i]+'%</strong></span>';
+    h+='<span>Riesgo: <strong>'+s.riesgo_pais[i]+'</strong></span>';
+    h+='<span>ITCRM: <strong>'+s.itcrm[i]+'</strong></span>';
+    h+='<span>Fiscal: <strong>'+s.superavit[i]+'%</strong></span>';
+    h+='</div>';
+    if(expert)h+='<div class="sq-expert'+(currentLevel>=2?' show':'')+'">'+expert+'</div>';
+    // Events
+    if(qEvents.length>0){
+      h+='<div style="margin-top:6px">';
+      qEvents.forEach(function(e){
+        var ec=e.type==='red'?'var(--red)':e.type==='green'?'var(--green)':e.type==='purple'?'var(--purple)':e.type==='gold'?'var(--gold)':'var(--blue)';
+        h+='<div style="font-size:10px;color:'+ec+';font-weight:600;padding:2px 0">'+e.text+'</div>';
+      });
+      h+='</div>';
+    }
+    h+='</div>';
   }
-  t+='</p><p style="font-size:9px;color:var(--mut);margin-top:6px">12 bucles de retroalimentacion: paradoja del exito, carry spiral, declive industrial→fiscal, virtud fiscal, deuda familias→banco, muro de deuda, escudo geopolitico, desinflacion por demanda, drain touristique, credit→consommation, tarif→inflation→fiscal, Brasil→competitivite. Effets retardes: pass-through lag 1Q, paritarias lag 1Q. Sources: CRS R48780, BCRA IEF, INDEC, Scentia, CEPA, UBS, OCDE, CIFRA.</p>';
-  nb.innerHTML=t;
+  box.innerHTML=h;
+}
+
+function genQNarrative(q,s,events,la,p){
+  var lvl=currentLevel;
+  var t='';
+  // Different narrative styles based on level
+  if(q===0){ // T2-26 — first quarter
+    if(lvl===0) t+='<p>Arranca la simulacion. ';
+    else t+='<p>Primer trimestre del escenario. ';
+    if(s.reservas[0]>10) t+='Las reservas arrancan bien (USD '+s.reservas[0]+'B). ';
+    else if(s.reservas[0]<5) t+='Las reservas arrancan bajas (USD '+s.reservas[0]+'B) — poco margen de error. ';
+    if(s.carry_flow[0]>1) t+=(lvl===0?'Los inversores siguen trayendo dolares al pais (carry trade positivo). ':'Flujo neto de carry: +'+s.carry_flow[0]+'B. ');
+    t+='</p>';
+  }else{
+    var dR=s.reservas[q]-s.reservas[q-1];
+    var dI=s.inflacion[q]-s.inflacion[q-1];
+    var dSR=s.salario_real[q]-s.salario_real[q-1];
+    var dM=s.morosidad[q]-s.morosidad[q-1];
+    t+='<p>';
+    // Reserves movement
+    if(Math.abs(dR)>1){
+      if(lvl===0) t+=dR>0?'Entran dolares al pais (+'+dR.toFixed(1)+'B). ':'Salen dolares (-'+Math.abs(dR).toFixed(1)+'B) — las reservas bajan. ';
+      else t+='Reservas '+(dR>0?'+':'')+dR.toFixed(1)+'B ('+(dR>0?'acumulacion':'perdida')+' neta). ';
+    }
+    // Inflation
+    if(Math.abs(dI)>0.3){
+      if(lvl===0) t+=dI>0?'Los precios suben mas rapido que antes. ':'Los precios se calman un poco. ';
+      else t+='Inflacion '+(dI>0?'sube':'baja')+' a '+s.inflacion[q]+'%/mes. ';
+    }
+    // Salary
+    if(Math.abs(dSR)>1){
+      if(lvl===0) t+=dSR<0?'Los sueldos pierden poder de compra — la gente puede comprar menos cosas con lo que gana. ':'Los sueldos recuperan un poco de lo perdido. ';
+      else t+='Salario real '+(dSR>0?'+':'')+dSR.toFixed(1)+' puntos. ';
+    }
+    // Morosidad
+    if(dM>1){
+      if(lvl===0) t+='Mas familias no pueden pagar sus deudas — la morosidad sube a '+s.morosidad[q]+'%. ';
+      else t+='Morosidad: '+s.morosidad[q]+'% (+'+dM.toFixed(1)+' pp). ';
+      if(s.morosidad[q]>15&&lvl===0) t+='Esto es grave: los bancos empiezan a restringir los creditos, lo que frena toda la economia. ';
+    }
+    t+='</p>';
+  }
+  // Special events narrative
+  if(q===2){ // T4-26 = midterms
+    if(lvl===0) t+='<p>🗳️ <strong>Noviembre 2026:</strong> elecciones de medio termino en EE.UU. Son clave porque el apoyo de Trump a Milei depende de su resultado politico. ';
+    else t+='<p>Midterms nov. 2026. ';
+    if(p.usa===2) t+='Con apoyo total, el mercado espera continuidad. Pero si Trump pierde terreno, el premium geopolitico puede erosionarse.</p>';
+    else if(p.usa===0) t+='Sin apoyo de EE.UU., les midterms n\'ont pas d\'impact direct — le mal est deja fait.</p>';
+    else t+='L\'apoyo ya esta erosionado — les midterms pourraient accelerer la degradation.</p>';
+  }
+  if(q===6){ // T4-27 = debt wall
+    if(lvl===0) t+='<p>🧱 <strong>Fin 2027:</strong> empiezan a vencer las deudas con el FMI. Argentina tiene que devolver miles de millones de dolares. Si el riesgo pais es alto ('+s.riesgo_pais[q]+' puntos), nadie le presta para refinanciar — como alguien que tiene que pagar la tarjeta pero ningun banco le da un credito nuevo.</p>';
+    else t+='<p>Vencimientos FMI + bonos. Riesgo pais: '+s.riesgo_pais[q]+'. Refinanciamiento '+(s.riesgo_pais[q]>1200?'practicamente cerrado':s.riesgo_pais[q]>900?'dificil y caro':'posible')+'.</p>';
+  }
+  return t;
+}
+
+function genQExpert(q,s,la){
+  var t='';
+  t+='<strong>Bucles activos este trimestre:</strong> ';
+  var active=[];
+  if(la.paradox&&s.itcrm[q]<105)active.push('Paradoja (ITCRM='+s.itcrm[q]+')');
+  if(la.carry_spiral&&s.carry_flow[q]<-1)active.push('Carry spiral (flujo='+s.carry_flow[q]+'B)');
+  if(la.industrial&&s.empleo_ind[q]<85)active.push('Declive industrial (emp='+s.empleo_ind[q]+')');
+  if(la.fiscal_virtue&&s.superavit[q]>1)active.push('Virtud fiscal');
+  if(la.debt_spiral&&s.morosidad[q]>15)active.push('Deuda familias (mora='+s.morosidad[q]+'%)');
+  if(la.wall&&q>=6)active.push('Muro de deuda');
+  if(la.geo_shield)active.push('Escudo geo');
+  t+=active.length?active.join(' · '):'Ninguno activado';
+  t+='. Pass-through lag: inflacion refleja presion del trimestre anterior.';
+  return t;
+}
+
+function renderBigCharts(s){
+  var Q=['T2-26','T3-26','T4-26','T1-27','T2-27','T3-27','T4-27','T1-28'];
+  // Chart 1: Finance — reserves + carry + riesgo
+  if(cFin)cFin.destroy();
+  var o1=chOpts(true,'left',function(v){return v+'B'},{y1:{position:'right',grid:{display:false},ticks:{color:'#6b21a8',font:{size:9},maxTicksLimit:5}}});
+  cFin=new Chart(document.getElementById('chartFinance'),{type:'line',data:{labels:Q,datasets:[
+    {label:'Reservas netas (USD B)',data:s.reservas,borderColor:'#1e5f8a',backgroundColor:'rgba(30,95,138,.12)',fill:true,borderWidth:2.5,pointRadius:5,tension:.3,yAxisID:'y'},
+    {label:'Carry (USD B/trim)',data:s.carry_flow,borderColor:'#a07d1c',borderWidth:2,borderDash:[6,3],pointRadius:4,tension:.3,fill:false,yAxisID:'y'},
+    {label:'Riesgo pais (bps)',data:s.riesgo_pais,borderColor:'#6b21a8',borderWidth:2,pointRadius:4,tension:.3,fill:false,yAxisID:'y1'},
+    {label:'Riesgo sin EE.UU.',data:s.riesgo_sin_usa,borderColor:'rgba(107,33,168,.2)',borderWidth:1.5,borderDash:[4,4],pointRadius:0,tension:.3,fill:false,yAxisID:'y1'},
+    {label:'',data:[3,3,3,3,3,3,3,3],borderColor:'rgba(194,58,34,.2)',borderWidth:1,borderDash:[3,3],pointRadius:0,fill:false,yAxisID:'y'}
+  ]},options:o1});
+
+  // Chart 2: Social — salario real + consumo + morosidad
+  if(cSoc)cSoc.destroy();
+  var o2=chOpts(true,'left',null,{y1:{position:'right',grid:{display:false},ticks:{color:'#c23a22',font:{size:9},callback:function(v){return v+'%'},maxTicksLimit:5}}});
+  cSoc=new Chart(document.getElementById('chartSocial'),{type:'line',data:{labels:Q,datasets:[
+    {label:'Salario real (100=nov.2023)',data:s.salario_real,borderColor:'#2d7a4f',backgroundColor:'rgba(45,122,79,.1)',fill:true,borderWidth:2.5,pointRadius:5,tension:.3,yAxisID:'y'},
+    {label:'Consumo (100=2023)',data:s.demanda,borderColor:'#c2651c',borderWidth:2.5,pointRadius:5,tension:.3,fill:false,yAxisID:'y'},
+    {label:'Morosidad familias (%)',data:s.morosidad,borderColor:'#c23a22',borderWidth:2,borderDash:[6,3],pointRadius:4,tension:.3,fill:false,yAxisID:'y1'},
+    {label:'',data:[15,15,15,15,15,15,15,15],borderColor:'rgba(194,58,34,.15)',borderWidth:1,borderDash:[3,3],pointRadius:0,fill:false,yAxisID:'y1'},
+    {label:'',data:[100,100,100,100,100,100,100,100],borderColor:'rgba(45,122,79,.15)',borderWidth:1,borderDash:[3,3],pointRadius:0,fill:false,yAxisID:'y'}
+  ]},options:o2});
+
+  // Chart 3: Competitiveness — ITCRM + empleo + inflacion
+  if(cCom)cCom.destroy();
+  var o3=chOpts(true,'left',null,{y1:{position:'right',grid:{display:false},ticks:{color:'#c23a22',font:{size:9},callback:function(v){return v+'%'},maxTicksLimit:5}}});
+  cCom=new Chart(document.getElementById('chartCompet'),{type:'line',data:{labels:Q,datasets:[
+    {label:'ITCRM competitividad',data:s.itcrm,borderColor:'#1e5f8a',backgroundColor:'rgba(30,95,138,.08)',fill:true,borderWidth:2.5,pointRadius:5,tension:.3,yAxisID:'y'},
+    {label:'Empleo industrial (2019=100)',data:s.empleo_ind,borderColor:'#2d7a4f',borderWidth:2.5,pointRadius:5,tension:.3,fill:false,yAxisID:'y'},
+    {label:'Inflacion %/mes',data:s.inflacion,borderColor:'#c23a22',borderWidth:2,borderDash:[6,3],pointRadius:4,tension:.3,fill:false,yAxisID:'y1'},
+    {label:'',data:[85,85,85,85,85,85,85,85],borderColor:'rgba(194,58,34,.15)',borderWidth:1,borderDash:[3,3],pointRadius:0,fill:false,yAxisID:'y'}
+  ]},options:o3});
+}
+
+function renderLoopsExplained(la){
+  var b=document.getElementById('loopsSection');
+  var loops=[
+    {id:'geo_shield',name:'🇺🇸 Escudo geopolitico',desc:'EE.UU. respalda con swap + FMI flexible → premium de confianza → menos riesgo → mas tiempo',t:'geo'},
+    {id:'paradox',name:'🔄 Paradoja del exito',desc:'Dolares entran (petroleo, carry) → peso se aprecia → industria sufre → empleo cae',t:'neg'},
+    {id:'carry_spiral',name:'💸 Espiral del carry',desc:'Inversores pierden confianza → sacan dolares → peso baja → mas inversores salen → espiral',t:'neg'},
+    {id:'industrial',name:'🏭 Declive industrial → fiscal',desc:'Fabricas cierran → menos empleo → menos consumo → menos recaudacion (IVA) → superavit se erosiona',t:'neg'},
+    {id:'fiscal_virtue',name:'✅ Circulo virtuoso fiscal',desc:'Superavit → credibilidad → inflacion baja → tasas bajan → credito sube → actividad sube',t:'pos'},
+    {id:'debt_spiral',name:'🏠 Deuda familias → bancos',desc:'Inflacion + desempleo → familias no pagan → morosidad sube → bancos restringen credito → menos actividad',t:'neg'},
+    {id:'wall',name:'⏰ Muro de deuda 2028',desc:'Vencimientos FMI + bonos → si riesgo pais alto, no se puede refinanciar → crisis de pagos',t:'neg'}
+  ];
+  var extra=[
+    {name:'📉 Desinflacion por demanda',desc:'Cuando la gente no puede pagar, los precios dejan de subir — no por disciplina monetaria sino por pobreza',active:true,t:'neg'},
+    {name:'✈️ Drain turistico',desc:'Peso fuerte (ITCRM bajo) = argentinos viajan al exterior = dolares se van = reservas bajan',active:true,t:'neg'},
+    {name:'💳 Credito → consumo',desc:'Morosidad baja → bancos prestan → consumo sube / Morosidad alta → credito se corta → consumo cae',active:true,t:'neg'},
+    {name:'⚡ Tarifas → inflacion → fiscal',desc:'Subir tarifas = mas inflacion a corto plazo pero menos subsidios = mejor fiscal a mediano plazo',active:true,t:'neg'},
+    {name:'🇧🇷 Brasil → competitividad',desc:'Real debil → Argentina cara relativamente → exportaciones industriales caen → empleo cae',active:true,t:'neg'}
+  ];
+  var h='<h4>Bucles de retroalimentacion (12)</h4>';
+  h+='<div style="font-size:9px;color:var(--mut);margin-bottom:8px">Los bucles son mecanismos en cadena que se auto-refuerzan. Cuando un bucle negativo se "activa", el problema empeora por si solo.</div>';
+  loops.forEach(function(l){
+    var active=la[l.id];
+    var cls=active?(l.t==='pos'?'le-positive':l.t==='geo'?'le-geo':'le-active'):'le-off';
+    h+='<div class="loop-explain '+cls+'"><span class="le-name">'+(active?'● ':'○ ')+l.name+'</span> — '+l.desc+'</div>';
+  });
+  extra.forEach(function(l){
+    h+='<div class="loop-explain" style="color:var(--mut)"><span class="le-name">○ '+l.name+'</span> — '+l.desc+'</div>';
+  });
+  b.innerHTML=h;
 }
 // Init consequences
 ['usa','fed','brasil','comm','vol','fiscal','cambio','indus','tarif','res','infl0'].forEach(function(p){upd(p);});
